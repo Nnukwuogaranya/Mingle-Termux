@@ -1,0 +1,57 @@
+.app {
+  min-height: 100vh;
+  background: #f5f7fb;
+  font-family: Arial, sans-serif;
+  color: #222;
+}
+
+.hero {
+  text-align: center;
+  padding: 40px 20px;
+  background: white;
+}
+
+.logo {
+  font-size: 32px;
+  font-weight: bold;
+  color: #7b2cff;
+}
+
+.hero h1 {
+  margin-top: 20px;
+  font-size: 32px;
+}
+
+.hero p {
+  color: #555;
+  font-size: 18px;
+}
+
+.pi-btn {
+  margin-top: 20px;
+  padding: 14px 30px;
+  border: none;
+  border-radius: 30px;
+  background: #7b2cff;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.content {
+  padding: 20px;
+}
+
+.card {
+  background: white;
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.footer {
+  text-align: center;
+  padding: 20px;
+  color: #777;
+}
