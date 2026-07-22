@@ -1,152 +1,119 @@
-.mingle-app {
-  min-height: 100vh;
-  padding: 20px;
-  background: linear-gradient(135deg, #09001a, #3b0066, #7b2cff);
-  color: white;
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
   font-family: Arial, sans-serif;
 }
 
+.mingle-screen {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #050b24, #35105c);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
 
-/* Discover Header */
-
-.discover-header {
+.mingle-card {
+  width: 350px;
+  padding: 35px 25px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid #d4af37;
+  border-radius: 30px;
   text-align: center;
-  padding: 25px;
-  border-radius: 30px;
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(15px);
+  box-shadow: 0 0 35px rgba(123, 44, 255, 0.5);
 }
 
-.discover-header h1 {
-  font-size: 42px;
-  margin: 0;
-}
-
-
-.search-box {
-  margin-top: 20px;
-  padding: 15px;
-  border-radius: 30px;
-  background: rgba(255,255,255,0.2);
-  text-align: left;
-  color: #ddd;
-}
-
-
-/* Communities */
-
-.trend-section,
-.discover-section,
-.notification-box {
-  margin-top: 25px;
-}
-
-
-.community-row {
-  display: flex;
-  gap: 15px;
-  overflow-x: auto;
-}
-
-
-.community-card {
-  min-width: 120px;
-  padding: 20px;
-  border-radius: 25px;
-  background: rgba(255,255,255,0.18);
-  backdrop-filter: blur(12px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 15px;
-}
-.profile-card {
-  display: flex;
-  gap: 15px;
-  align-items: center;
-  padding: 20px;
+.logo {
+  font-size: 55px;
+  font-weight: bold;
+  color: #d4af37;
+  letter-spacing: 2px;
+  text-shadow: 0 0 20px #7b2cff;
   margin-bottom: 15px;
-  border-radius: 25px;
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(15px);
 }
 
+.tagline {
+  color: white;
+  font-size: 18px;
+  letter-spacing: 2px;
+  margin-bottom: 35px;
+}
 
-.avatar {
-  width: 65px;
-  height: 65px;
+h2 {
+  color: #d4af37;
+  margin-bottom: 25px;
+}
+
+h3 {
+  color: white;
+  font-size: 24px;
+}
+
+input {
+  width: 100%;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 25px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+}
+
+button {
+  width: 100%;
+  padding: 15px;
+  margin-top: 15px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.join-btn {
+  background: #d4af37;
+  color: #050b24;
+}
+
+.login-btn {
+  background: #7b2cff;
+  color: white;
+}
+
+.pi-btn {
+  background: #ffcc00;
+  color: #222;
+}
+
+.recover-btn {
+  background: #0f9d58;
+  color: white;
+}
+
+.back-btn {
+  background: transparent;
+  color: white;
+  border: 1px solid #d4af37;
+}
+
+.forgot {
+  color: #d4af37;
+  margin: 15px;
+}
+
+.profile-photo {
+  width: 110px;
+  height: 110px;
   border-radius: 50%;
-  background: white;
-  color: #7b2cff;
+  margin: 0 auto 20px;
+  background: linear-gradient(135deg, #d4af37, #7b2cff);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 35px;
-}
-
-
-.pi-badge {
-  margin-left: 8px;
-  background: white;
-  color: #7b2cff;
-  padding: 3px 8px;
-  border-radius: 20px;
-  font-size: 13px;
-}
-
-
-.badges {
-  margin-top: 10px;
-  font-size: 13px;
-  background: rgba(255,255,255,0.2);
-  padding: 8px;
-  border-radius: 20px;
-  display: inline-block;
-}
-
-
-/* Notifications */
-
-.notification-box {
-  padding: 20px;
-  border-radius: 25px;
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(15px);
-}
-
-
-.notification-box p {
-  padding: 10px;
-  border-bottom: 1px solid rgba(255,255,255,0.2);
-}
-
-
-/* Bottom Navigation */
-
-.bottom-nav {
-  position: sticky;
-  bottom: 10px;
-  margin-top: 30px;
-  display: flex;
-  justify-content: space-around;
-  padding: 15px;
-  border-radius: 30px;
-  background: rgba(255,255,255,0.18);
-  backdrop-filter: blur(15px);
-}
-
-
-.bottom-nav div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 13px;
-}
-
-
-.create-btn {
-  background: white;
-  color: #7b2cff;
-  padding: 10px;
-  border-radius: 50%;
+  font-weight: bold;
+  color: white;
 }
