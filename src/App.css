@@ -1,119 +1,122 @@
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
+  background: #07132d;
 }
 
-.mingle-screen {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #050b24, #35105c);
+.splash-screen {
+  height: 100vh;
+  background: linear-gradient(135deg, #08112d, #32135f);
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   color: white;
+  animation: fadeIn 1s ease;
 }
 
-.mingle-card {
-  width: 350px;
-  padding: 35px 25px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid #d4af37;
-  border-radius: 30px;
-  text-align: center;
-  box-shadow: 0 0 35px rgba(123, 44, 255, 0.5);
+.logo-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7a2cff, #f5c242);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 35px rgba(245, 194, 66, .6);
 }
 
-.logo {
-  font-size: 55px;
-  font-weight: bold;
-  color: #d4af37;
-  letter-spacing: 2px;
-  text-shadow: 0 0 20px #7b2cff;
-  margin-bottom: 15px;
+.logo-circle h1 {
+  font-size: 64px;
+  color: white;
+}
+
+.logo-text {
+  margin-top: 20px;
+  font-size: 42px;
+  color: #f5c242;
 }
 
 .tagline {
-  color: white;
-  font-size: 18px;
-  letter-spacing: 2px;
-  margin-bottom: 35px;
-}
-
-h2 {
-  color: #d4af37;
-  margin-bottom: 25px;
-}
-
-h3 {
-  color: white;
-  font-size: 24px;
-}
-
-input {
-  width: 100%;
-  padding: 15px;
-  margin: 10px 0;
-  border-radius: 25px;
-  border: none;
-  outline: none;
-  font-size: 16px;
-}
-
-button {
-  width: 100%;
-  padding: 15px;
   margin-top: 15px;
-  border-radius: 30px;
+  text-align: center;
+  color: #ffffff;
+  opacity: .9;
+  line-height: 1.6;
+}
+
+.welcome-screen {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #07132d, #2b1255);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.welcome-card {
+  width: 100%;
+  max-width: 420px;
+  background: rgba(255,255,255,.08);
+  border-radius: 24px;
+  padding: 35px;
+  backdrop-filter: blur(12px);
+  text-align: center;
+  color: white;
+  border: 1px solid rgba(255,255,255,.15);
+}
+
+.welcome-card h1 {
+  color: #f5c242;
+  margin-bottom: 15px;
+}
+
+.welcome-text {
+  line-height: 1.7;
+  margin-bottom: 30px;
+}
+
+.gold-btn,
+.purple-btn {
+  width: 100%;
+  padding: 16px;
   border: none;
-  cursor: pointer;
+  border-radius: 14px;
   font-size: 17px;
   font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 15px;
 }
 
-.join-btn {
-  background: #d4af37;
-  color: #050b24;
+.gold-btn {
+  background: #f5c242;
+  color: #111;
 }
 
-.login-btn {
-  background: #7b2cff;
+.purple-btn {
+  background: #7a2cff;
   color: white;
 }
 
-.pi-btn {
-  background: #ffcc00;
-  color: #222;
+.links {
+  margin-top: 20px;
+  color: #d9d9d9;
+  font-size: 14px;
 }
 
-.recover-btn {
-  background: #0f9d58;
-  color: white;
-}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(.95);
+  }
 
-.back-btn {
-  background: transparent;
-  color: white;
-  border: 1px solid #d4af37;
-}
-
-.forgot {
-  color: #d4af37;
-  margin: 15px;
-}
-
-.profile-photo {
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  margin: 0 auto 20px;
-  background: linear-gradient(135deg, #d4af37, #7b2cff);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 35px;
-  font-weight: bold;
-  color: white;
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
