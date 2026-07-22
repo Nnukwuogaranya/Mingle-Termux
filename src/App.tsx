@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import "./App.css";
 
 function Home() {
   const [showSplash, setShowSplash] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -36,7 +37,6 @@ function Home() {
   return (
     <div className="welcome-screen">
       <div className="welcome-card">
-
         <h1>Mingle</h1>
 
         <p className="welcome-text">
@@ -44,18 +44,23 @@ function Home() {
           friendships, communities and the Pi ecosystem.
         </p>
 
-        <button className="gold-btn">
+        <button
+          className="gold-btn"
+          onClick={() => navigate("/register")}
+        >
           Join Mingle
         </button>
 
-        <button className="purple-btn">
+        <button
+          className="purple-btn"
+          onClick={() => navigate("/login")}
+        >
           Login
         </button>
 
         <p className="links">
           Forgot Password? • Recover with Email • Continue with Pi
         </p>
-
       </div>
     </div>
   );
