@@ -1,20 +1,18 @@
 import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
-import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(true);
   const [loading, setLoading] = useState(false);
 
-  const login = async () => {
+  async function login() {
     if (!email || !password) {
-      alert("Please enter email and password");
+      alert("Please enter your email and password.");
       return;
     }
 
@@ -27,29 +25,20 @@ export default function Login() {
         password
       );
 
-      alert("Welcome back to Mingle!");
+      alert("🎉 Welcome back to Mingle!");
 
       navigate("/");
-
     } catch (error: any) {
       alert(error.message);
     } finally {
       setLoading(false);
     }
-  };
-
+  }
 
   return (
     <div className="auth-page">
 
-      <h1>
-        Welcome Back
-      </h1>
-
-      <p>
-        Login to continue your Mingle journey.
-      </p>
-
+      <h1>Welcome Back</h1>
 
       <input
         type="email"
@@ -58,63 +47,30 @@ export default function Login() {
         onChange={(e) => setEmail(e.target.value)}
       />
 
-
       <input
-        type={showPassword ? "text" : "password"}
+        type="password"
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
 
+      <button onClick={login}>
+        {loading ? "Signing In..." : "Login"}
+      </button>
 
-      <label>
-        <input
-          type="checkbox"
-          checked={showPassword}
-          onChange={() => setShowPassword(!showPassword)}
-        />
-        Show Password
-      </label>
-
-
-      <label>
-        <input
-          type="checkbox"
-          checked={rememberMe}
-          onChange={() => setRememberMe(!rememberMe)}
-        />
-        Remember Me
-      </label>
-
-
-      <button
-        className="purple-btn"
-        onClick={login}
-        disabled={loading}
+      <p
+        className="links"
+        onClick={() => navigate("/forgot-password")}
       >
-        {loading ? "Logging in..." : "Login"}
-      </button>
-
-
-      <button className="gold-btn">
-        Continue with Pi
-      </button>
-
-
-      <p>
-        <Link to="/forgot-password">
-          Forgot Password?
-        </Link>
+        Forgot Password?
       </p>
 
-
-      <p>
-        Don't have an account?{" "}
-        <Link to="/register">
-          Register
-        </Link>
+      <p
+        className="links"
+        onClick={() => navigate("/register")}
+      >
+        Don't have an account? Register
       </p>
-
 
     </div>
   );

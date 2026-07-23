@@ -1,122 +1,148 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
 
-body {
-  background: #07132d;
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#07111f;
+  color:#fff;
 }
 
-.splash-screen {
-  height: 100vh;
-  background: linear-gradient(135deg, #08112d, #32135f);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  animation: fadeIn 1s ease;
+.mingle-app{
+  min-height:100vh;
+  background:linear-gradient(180deg,#081426,#101d3d,#19113a);
+  padding-bottom:90px;
 }
 
-.logo-circle {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #7a2cff, #f5c242);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 0 35px rgba(245, 194, 66, .6);
+.home-container{
+  padding:18px;
 }
 
-.logo-circle h1 {
-  font-size: 64px;
-  color: white;
+.home-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px;
+  position:sticky;
+  top:0;
+  background:rgba(8,20,38,.95);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,.08);
 }
 
-.logo-text {
-  margin-top: 20px;
-  font-size: 42px;
-  color: #f5c242;
+.mingle-logo{
+  color:#FFD700;
+  font-size:30px;
+  font-weight:bold;
 }
 
-.tagline {
-  margin-top: 15px;
-  text-align: center;
-  color: #ffffff;
-  opacity: .9;
-  line-height: 1.6;
+.mingle-tagline{
+  font-size:12px;
+  color:#cfcfcf;
 }
 
-.welcome-screen {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #07132d, #2b1255);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
+.header-actions{
+  display:flex;
+  gap:10px;
 }
 
-.welcome-card {
-  width: 100%;
-  max-width: 420px;
-  background: rgba(255,255,255,.08);
-  border-radius: 24px;
-  padding: 35px;
-  backdrop-filter: blur(12px);
-  text-align: center;
-  color: white;
-  border: 1px solid rgba(255,255,255,.15);
+.header-btn{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  border:none;
+  background:#222b45;
+  color:#fff;
+  font-size:18px;
 }
 
-.welcome-card h1 {
-  color: #f5c242;
-  margin-bottom: 15px;
+.search-card{
+  display:flex;
+  gap:10px;
+  margin:18px 0;
 }
 
-.welcome-text {
-  line-height: 1.7;
-  margin-bottom: 30px;
+.search-card input{
+  flex:1;
+  padding:14px;
+  border:none;
+  border-radius:25px;
 }
 
-.gold-btn,
-.purple-btn {
-  width: 100%;
-  padding: 16px;
-  border: none;
-  border-radius: 14px;
-  font-size: 17px;
-  font-weight: bold;
-  cursor: pointer;
-  margin-bottom: 15px;
+.search-button{
+  padding:14px 18px;
+  border:none;
+  border-radius:25px;
+  background:#6C3BFF;
+  color:#fff;
 }
 
-.gold-btn {
-  background: #f5c242;
-  color: #111;
+.discover-grid,
+.pihub-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+  margin:20px 0;
 }
 
-.purple-btn {
-  background: #7a2cff;
-  color: white;
+.discover-card,
+.pihub-grid button{
+  background:#152544;
+  border-radius:18px;
+  padding:18px;
+  text-align:center;
+  color:#fff;
 }
 
-.links {
-  margin-top: 20px;
-  color: #d9d9d9;
-  font-size: 14px;
+.discover-icon{
+  font-size:30px;
+  margin-bottom:10px;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(.95);
-  }
+.welcome-card,
+.create-post-card,
+.post-card,
+.friend-suggestions,
+.messenger-card,
+.pihub-card{
+  background:#132340;
+  border-radius:20px;
+  padding:20px;
+  margin:20px 0;
+}
 
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+.welcome-badge{
+  color:#FFD700;
+  font-weight:bold;
+  margin-bottom:10px;
+}
+
+.welcome-btn{
+  margin-top:18px;
+  background:#FFD700;
+  color:#111;
+  border:none;
+  padding:12px 22px;
+  border-radius:25px;
+  font-weight:bold;
+}
+
+.bottom-navigation{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  display:flex;
+  justify-content:space-around;
+  padding:14px;
+  background:#09101f;
+  border-top:1px solid rgba(255,255,255,.08);
+}
+
+.bottom-navigation button{
+  background:none;
+  border:none;
+  color:#fff;
 }
