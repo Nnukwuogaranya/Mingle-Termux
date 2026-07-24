@@ -1,0 +1,313 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:Arial, Helvetica, sans-serif;
+  overflow:hidden;
+}
+
+.login-page{
+
+  height:100vh;
+
+  background:
+  radial-gradient(circle at top,#6f2cff22 0%,transparent 35%),
+  linear-gradient(180deg,#061326,#12002f,#08111f);
+
+  display:flex;
+
+  justify-content:center;
+
+  align-items:center;
+
+  overflow:hidden;
+
+  padding:18px;
+
+}
+
+.login-container{
+
+  width:100%;
+  max-width:420px;
+
+}
+
+
+.brand-section{
+
+  text-align:center;
+
+  margin-bottom:25px;
+
+}
+
+
+.logo-circle{
+
+  width:82px;
+
+  height:82px;
+
+  margin:auto;
+
+  border-radius:50%;
+
+  display:flex;
+
+  justify-content:center;
+
+  align-items:center;
+
+  background:linear-gradient(135deg,#FFD700,#F6C344);
+
+  color:#2c0054;
+
+  font-size:42px;
+
+  font-weight:bold;
+
+  box-shadow:0 0 30px rgba(255,215,0,.45);
+
+}
+
+
+.brand-section h1{
+
+  color:#fff;
+
+  font-size:34px;
+
+  margin-top:12px;
+
+}
+
+
+.brand-section p{
+
+  color:#f3f3f3;
+
+  font-size:14px;
+
+  line-height:1.6;
+
+  margin-top:10px;
+
+}
+
+
+.login-card{
+
+  background:#fff;
+
+  border-radius:25px;
+
+  padding:22px;
+
+  box-shadow:0 15px 35px rgba(0,0,0,.30);
+
+}
+
+
+.switch-row{
+
+  display:flex;
+
+  gap:8px;
+
+  margin-bottom:16px;
+
+}
+
+
+.switch-row button{
+
+  flex:1;
+
+  padding:12px;
+
+  border:none;
+
+  border-radius:12px;
+
+  background:#ececec;
+
+  font-weight:bold;
+
+}
+
+
+.switch-row .active{
+
+  background:#6f2cff;
+
+  color:#fff;
+
+}
+
+
+.phone-row{
+
+  display:flex;
+
+  gap:8px;
+
+  margin-bottom:12px;
+
+}
+
+
+.phone-row select{
+
+  width:85px;
+
+  padding:12px;
+
+  border-radius:12px;
+
+  border:1px solid #ddd;
+
+}
+
+
+.phone-row input{
+
+  flex:1;
+
+}
+
+
+.login-card input{
+
+  width:100%;
+
+  padding:13px;
+
+  border-radius:12px;
+
+  border:1px solid #ddd;
+
+}
+
+
+.password-row{
+
+  display:flex;
+
+  gap:8px;
+
+  margin-top:12px;
+
+}
+
+
+.password-row input{
+
+  flex:1;
+
+}
+
+
+.eye-button{
+
+  width:50px;
+
+  border:none;
+
+  border-radius:12px;
+
+  background:#eee;
+
+}
+
+
+.forgot-password{
+
+  text-align:right;
+
+  color:#6f2cff;
+
+  font-size:13px;
+
+  margin:14px 0;
+
+}
+
+
+.login-button,
+.register-button,
+.pi-button{
+
+  width:100%;
+
+  padding:14px;
+
+  border-radius:12px;
+
+  font-size:15px;
+
+  font-weight:bold;
+
+}
+
+
+.login-button{
+
+  background:#6f2cff;
+
+  color:white;
+
+  border:none;
+
+}
+
+
+.register-button{
+
+  margin-top:12px;
+
+  background:white;
+
+  border:2px solid #FFD700;
+
+}
+
+
+.pi-button{
+
+  margin-top:12px;
+
+  border:none;
+
+  background:#FFD700;
+
+}
+
+
+.divider{
+
+  margin:16px 0;
+
+  text-align:center;
+
+  color:#888;
+
+}
+
+
+.terms{
+
+  margin-top:16px;
+
+  text-align:center;
+
+  color:#777;
+
+  font-size:12px;
+
+  line-height:1.5;
+
+}

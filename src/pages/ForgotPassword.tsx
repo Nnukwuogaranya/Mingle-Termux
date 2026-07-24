@@ -1,52 +1,59 @@
-import { useState } from "react";
-import { sendPasswordResetEmail } from "firebase/auth";
-import { auth } from "../firebase";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import "./Auth.css";
 
 export default function ForgotPassword() {
-  const [email, setEmail] = useState("");
 
-  const resetPassword = async () => {
-    if (!email) {
-      alert("Please enter your email address.");
+  const [contact, setContact] = useState("");
+
+  const resetPassword = () => {
+
+    if (!contact) {
+      alert("Enter your email or phone number");
       return;
     }
 
-    try {
-      await sendPasswordResetEmail(auth, email);
-      alert("A password reset link has been sent to your email.");
-    } catch (error: any) {
-      alert(error.message);
-    }
+    alert("Password reset link/verification sent");
   };
 
+
   return (
+
     <div className="auth-page">
-      <h1>Forgot Password</h1>
 
-      <p>
-        Enter your email address and we'll send you a password reset link.
-      </p>
+      <div className="auth-card">
 
-      <input
-        type="email"
-        placeholder="Email Address"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+        <div className="auth-logo">
+          M
+        </div>
 
-      <button
-        className="purple-btn"
-        onClick={resetPassword}
-      >
-        Send Reset Link
-      </button>
 
-      <p>
-        <Link to="/login">
-          Back to Login
-        </Link>
-      </p>
+        <h1>Reset Password</h1>
+
+        <p>
+          Recover your Mingle account securely.
+        </p>
+
+
+        <input
+          placeholder="Email or Phone Number"
+          value={contact}
+          onChange={(e) => setContact(e.target.value)}
+        />
+
+
+        <button onClick={resetPassword}>
+          Send Verification
+        </button>
+
+
+        <button className="finger-button">
+          🔐 Use Account Recovery
+        </button>
+
+
+      </div>
+
     </div>
+
   );
 }

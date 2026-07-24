@@ -1,81 +1,121 @@
-import { useState } from "react";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
-import { auth } from "../firebase";
+import React, { useState } from "react";
+import "./Auth.css";
 
 export default function Register() {
-  const navigate = useNavigate();
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [form, setForm] = useState({
+    name: "",
+    username: "",
+    phone: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
-  async function register() {
-    if (!name || !email || !password) {
-      alert("Please complete all fields.");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+
+  const register = () => {
+
+    if (form.password !== form.confirmPassword) {
+      alert("Passwords do not match");
       return;
     }
 
-    try {
-      setLoading(true);
+    alert("Welcome to Mingle 🎉");
+  };
 
-      const result = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
-      await updateProfile(result.user, {
-        displayName: name,
-      });
-
-      alert("🎉 Welcome to Mingle, " + name + "!");
-
-      navigate("/");
-    } catch (error: any) {
-      alert(error.message);
-    } finally {
-      setLoading(false);
-    }
-  }
 
   return (
     <div className="auth-page">
 
-      <h1>Create Your Mingle Account</h1>
+      <div className="auth-card">
 
-      <input
-        type="text"
-        placeholder="Full Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
+        <div className="auth-logo">
+          M
+        </div>
 
-      <input
-        type="email"
-        placeholder="Email Address"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
 
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+        <h1>Join Mingle</h1>
 
-      <button onClick={register}>
-        {loading ? "Creating Account..." : "Create Account"}
-      </button>
+        <p>
+          Where People Don't Just Connect… They Belong.
+        </p>
 
-      <p
-        className="links"
-        onClick={() => navigate("/login")}
-      >
-        Already have an account? Login
-      </p>
+
+        <input
+          name="name"
+          placeholder="Full Name"
+          value={form.name}
+          onChange={handleChange}
+        />
+
+
+        <input
+          name="username"
+          placeholder="Username"
+          value={form.username}
+          onChange={handleChange}
+        />
+
+
+        <input
+          name="phone"
+          placeholder="Phone Number"
+          value={form.phone}
+          onChange={handleChange}
+        />
+
+
+        <input
+          name="email"
+          type="email"
+          placeholder="Email Address"
+          value={form.email}
+          onChange={handleChange}
+        />
+
+
+        <input
+          name="password"
+          type="password"
+          placeholder="Password"
+          value={form.password}
+          onChange={handleChange}
+        />
+
+
+        <input
+          name="confirmPassword"
+          type="password"
+          placeholder="Confirm Password"
+          value={form.confirmPassword}
+          onChange={handleChange}
+        />
+
+
+        <button onClick={register}>
+          Create Mingle Account
+        </button>
+
+
+        <button className="pi-button">
+          🟣 Continue with Pi
+        </button>
+
+
+        <button className="finger-button">
+          🔐 Use Fingerprint Login
+        </button>
+
+
+      </div>
 
     </div>
   );

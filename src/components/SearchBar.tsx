@@ -1,24 +1,19 @@
-import React, { useState } from "react";
+import { FaSearch } from "react-icons/fa";
+import "./SearchBar.css";
 
-const SearchBar = () => {
-  const [query, setQuery] = useState("");
-
+function SearchBar() {
   return (
-    <div className="search-card">
+    <section className="search-section">
+      <div className="search-box">
+        <FaSearch className="search-icon" />
 
-      <input
-        type="text"
-        placeholder="Search people, posts, businesses..."
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-      />
-
-      <button className="search-button">
-        Search
-      </button>
-
-    </div>
+        <input
+          type="text"
+          placeholder="Search people, posts, videos..."
+        />
+      </div>
+    </section>
   );
-};
+}
 
 export default SearchBar;

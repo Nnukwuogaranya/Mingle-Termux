@@ -1,0 +1,72 @@
+.home-header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  margin:-20px -20px 20px;
+  padding:24px 20px 18px;
+  background:linear-gradient(
+    180deg,
+    rgba(255,255,255,.96),
+    rgba(248,244,255,.90)
+  );
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(111,66,193,.08);
+}
+
+.top-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.brand h1{
+  margin:0;
+  font-size:34px;
+  font-weight:800;
+  color:#6f42c1;
+  letter-spacing:-1px;
+}
+
+.brand span{
+  display:block;
+  margin-top:4px;
+  font-size:13px;
+  color:#777;
+}
+
+.actions{
+  display:flex;
+  gap:12px;
+}
+
+.actions button{
+  width:48px;
+  height:48px;
+  border:none;
+  border-radius:50%;
+  background:rgba(255,255,255,.88);
+  box-shadow:
+    0 8px 25px rgba(111,66,193,.10),
+    0 2px 8px rgba(0,0,0,.05);
+  color:#6f42c1;
+  font-size:18px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  position:relative;
+}
+
+.notify small{
+  position:absolute;
+  top:4px;
+  right:4px;
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  background:#ff2d55;
+  color:#fff;
+  font-size:10px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}

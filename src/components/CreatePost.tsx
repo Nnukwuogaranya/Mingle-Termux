@@ -1,67 +1,27 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import "./CreatePost.css";
 
-interface CreatePostProps {
-  onPostCreated?: (post: {
-    text: string;
-    time: string;
-  }) => void;
-}
+function CreatePost() {
+  const [post, setPost] = useState("");
 
-const CreatePost: React.FC<CreatePostProps> = ({ onPostCreated }) => {
-  const [postText, setPostText] = useState("");
+  const handlePost = () => {
+    if (!post.trim()) return;
 
-  const createPost = () => {
-    if (!postText.trim()) return;
-
-    const newPost = {
-      text: postText,
-      time: "Just now",
-    };
-
-    if (onPostCreated) {
-      onPostCreated(newPost);
-    }
-
-    setPostText("");
+    alert("Post created successfully!");
+    setPost("");
   };
 
   return (
-    <div className="create-post-card">
+    <section className="create-post">
+      <textarea
+        placeholder="What's happening on Mingle?"
+        value={post}
+        onChange={(e) => setPost(e.target.value)}
+      />
 
-      <div className="create-post-header">
-        <div className="avatar">
-          M
-        </div>
-
-        <input
-          type="text"
-          placeholder="What's on your mind?"
-          value={postText}
-          onChange={(e) => setPostText(e.target.value)}
-        />
-      </div>
-
-      <div className="post-actions">
-
-        <button>
-          📷 Photo
-        </button>
-
-        <button>
-          😊 Feeling
-        </button>
-
-        <button
-          className="post-button"
-          onClick={createPost}
-        >
-          Post
-        </button>
-
-      </div>
-
-    </div>
+      <button onClick={handlePost}>Share Post</button>
+    </section>
   );
-};
+}
 
 export default CreatePost;

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .home{
   min-height:100vh;
   background:#08142b;
@@ -142,4 +143,92 @@
 
 .bottom-nav span{
   font-size:11px;
+=======
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:
+  radial-gradient(circle at top,#ffffff 0%,#eef5ff 25%,#e5e6ff 45%,#d8d4ff 65%,#f7f9ff 100%);
+  min-height:100vh;
+}
+
+.app{
+  min-height:100vh;
+  background:transparent;
+}
+
+.header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  padding:18px;
+  background:rgba(255,255,255,.55);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,255,255,.7);
+}
+
+.search-box{
+  background:white;
+  border-radius:40px;
+  box-shadow:
+  0 10px 35px rgba(90,70,255,.15),
+  inset 0 1px 2px rgba(255,255,255,.9);
+}
+
+.stories{
+  display:flex;
+  gap:15px;
+  overflow-x:auto;
+  padding:18px;
+}
+
+.story{
+  min-width:105px;
+  height:180px;
+  border-radius:28px;
+  background:linear-gradient(180deg,#9d4dff,#4f2bc8);
+  box-shadow:
+  0 20px 40px rgba(92,64,255,.25),
+  0 0 25px rgba(255,255,255,.45);
+}
+
+.feed{
+  padding:18px;
+}
+
+.post{
+  background:rgba(255,255,255,.92);
+  border-radius:32px;
+  padding:22px;
+  margin-bottom:22px;
+  backdrop-filter:blur(25px);
+
+  box-shadow:
+  0 15px 45px rgba(65,40,180,.12),
+  0 0 35px rgba(255,255,255,.9);
+}
+
+.post img,
+.post video{
+  width:100%;
+  border-radius:24px;
+  object-fit:cover;
+}
+
+.bottom-nav{
+  position:fixed;
+  left:16px;
+  right:16px;
+  bottom:18px;
+
+  background:rgba(255,255,255,.75);
+  backdrop-filter:blur(30px);
+
+  border-radius:40px;
+
+  box-shadow:
+  0 15px 40px rgba(80,70,170,.20);
+
+  padding:16px;
+>>>>>>> 4f86ed4 (Mingle Authentication Progress)
 }

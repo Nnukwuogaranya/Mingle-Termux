@@ -1,58 +1,37 @@
-import React, { useState } from "react";
+import "./Feed.css";
 
-interface Post {
-  text: string;
-  time: string;
-}
+const posts = [
+  {
+    id: 1,
+    author: "Mingle",
+    time: "Just now",
+    content:
+      "🎉 Welcome to Mingle! This is the beginning of your journey. Connect. Share. Grow. Where People Don't Just Connect... They Belong.",
+  },
+  {
+    id: 2,
+    author: "Grace",
+    time: "10 min ago",
+    content:
+      "Good morning everyone! Wishing you a productive and blessed day.",
+  },
+];
 
-const Feed = () => {
-  const [posts, setPosts] = useState<Post[]>([
-    {
-      text: "🎉 Welcome to Mingle!\nThis is the beginning of your journey. Connect. Share. Grow. Where People Don't Just Connect... They Belong.",
-      time: "Welcome",
-    },
-  ]);
-
-  const addPost = (post: Post) => {
-    setPosts([post, ...posts]);
-  };
-
+function Feed() {
   return (
-    <div className="feed">
-
-      <div className="feed-title">
-        📰 Feed
-      </div>
-
-      {posts.map((post, index) => (
-        <div className="post-card" key={index}>
-
-          <div className="post-user">
-            <div className="avatar">
-              M
-            </div>
-
-            <div>
-              <h4>Mingle User</h4>
-              <small>{post.time}</small>
-            </div>
+    <section className="feed">
+      {posts.map((post) => (
+        <article className="feed-card" key={post.id}>
+          <div className="feed-header">
+            <strong>{post.author}</strong>
+            <span>{post.time}</span>
           </div>
 
-          <p>
-            {post.text}
-          </p>
-
-          <div className="post-footer">
-            ❤️ Like
-            💬 Comment
-            ↗ Share
-          </div>
-
-        </div>
+          <p>{post.content}</p>
+        </article>
       ))}
-
-    </div>
+    </section>
   );
-};
+}
 
 export default Feed;

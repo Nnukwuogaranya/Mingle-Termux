@@ -1,58 +1,140 @@
 import React, { useState } from "react";
+import "./Messenger.css";
 
 const Messenger = () => {
 
   const [message, setMessage] = useState("");
 
-  const sendMessage = () => {
-    if (!message.trim()) return;
+  const [messages, setMessages] = useState([
+    {
+      text: "Welcome to Mingle 👋",
+      sender: "Sarah"
+    },
+    {
+      text: "This is the beginning of our journey 💜",
+      sender: "Sarah"
+    }
+  ]);
 
-    alert(`Message sent: ${message}`);
+
+  const sendMessage = () => {
+
+    if (message.trim() === "") return;
+
+
+    setMessages([
+      ...messages,
+      {
+        text: message,
+        sender: "You"
+      }
+    ]);
+
 
     setMessage("");
+
   };
 
+
+
   return (
-    <div className="messenger-card">
+    <div className="messenger-page">
 
-      <div className="messenger-header">
-        💬 Messenger
-      </div>
 
-      <div className="chat-preview">
-        <div className="avatar">
-          M
-        </div>
+      <header className="messenger-header">
 
         <div>
-          <h4>
-            Mingle Community
-          </h4>
 
-          <p>
-            Start connecting with people.
-          </p>
+          <h1>
+            💬 Sarah Johnson
+          </h1>
+
+          <small>
+            🟢 Online
+          </small>
+
         </div>
-      </div>
 
 
-      <div className="message-box">
+        <div className="call-actions">
 
-        <input
-          type="text"
-          placeholder="Write a message..."
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-        />
+          <button>
+            📞
+          </button>
 
-        <button onClick={sendMessage}>
-          Send
+          <button>
+            📹
+          </button>
+
+        </div>
+
+      </header>
+
+
+
+      <section className="chat-messages">
+
+        {messages.map((msg,index)=>(
+
+          <div
+            key={index}
+            className={
+              msg.sender === "You"
+              ? "my-message"
+              : "their-message"
+            }
+          >
+
+            <strong>
+              {msg.sender}
+            </strong>
+
+            <p>
+              {msg.text}
+            </p>
+
+          </div>
+
+        ))}
+
+      </section>
+
+
+
+
+
+      <div className="chat-box">
+
+
+        <button>
+          📎
         </button>
 
+
+        <input
+
+          value={message}
+
+          onChange={(e)=>setMessage(e.target.value)}
+
+          placeholder="Type a message..."
+
+        />
+
+
+
+        <button onClick={sendMessage}>
+          ➤
+        </button>
+
+
       </div>
+
+
 
     </div>
   );
 };
+
 
 export default Messenger;

@@ -1,0 +1,287 @@
+.profile-page {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top, rgba(155,92,255,0.35), transparent 35%),
+    linear-gradient(180deg, #050b1c, #16002d, #050b1c);
+  color: white;
+  padding-bottom: 95px;
+  font-family: Arial, sans-serif;
+}
+
+
+/* Cover */
+
+.profile-cover {
+  height: 230px;
+  background:
+    linear-gradient(
+      135deg,
+      #2a0050,
+      #9b5cff,
+      #ffd700
+    );
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+  position: relative;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+}
+
+
+.profile-avatar {
+
+  position: absolute;
+
+  bottom: -55px;
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: 120px;
+
+  height: 120px;
+
+  border-radius:50%;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  font-size:50px;
+
+  background:
+  linear-gradient(135deg,#9b5cff,#ffd700);
+
+  border:6px solid #071426;
+
+  box-shadow:
+  0 0 30px rgba(255,215,0,.6);
+
+}
+
+
+
+/* Info */
+
+.profile-info {
+
+  margin-top:75px;
+
+  text-align:center;
+
+  padding:20px;
+
+}
+
+
+.profile-info h1 {
+
+  color:#ffd700;
+
+}
+
+
+.profile-info p {
+
+  color:#ddd;
+
+}
+
+
+
+.edit-btn {
+
+ background:#9b5cff;
+
+ color:white;
+
+ border:none;
+
+ padding:12px 30px;
+
+ border-radius:30px;
+
+ font-weight:bold;
+
+}
+
+
+
+/* Stats */
+
+.profile-stats {
+
+ display:flex;
+
+ justify-content:space-around;
+
+ margin-top:25px;
+
+ padding:20px;
+
+ background:rgba(255,255,255,.08);
+
+ border-radius:25px;
+
+ backdrop-filter:blur(15px);
+
+}
+
+
+.profile-stats div {
+
+ display:flex;
+
+ flex-direction:column;
+
+}
+
+
+.profile-stats strong {
+
+ color:#ffd700;
+
+ font-size:22px;
+
+}
+
+
+
+/* Cards */
+
+.badge-card,
+.wallet-card,
+.post-card {
+
+ margin:16px;
+
+ padding:20px;
+
+ border-radius:25px;
+
+ background:
+ linear-gradient(
+ 145deg,
+ rgba(255,255,255,.12),
+ rgba(255,255,255,.04)
+ );
+
+ border:1px solid rgba(255,215,0,.25);
+
+ backdrop-filter:blur(15px);
+
+}
+
+
+
+.badge-card h2,
+.wallet-card h2,
+.user-posts h2 {
+
+ color:#ffd700;
+
+}
+
+
+
+/* Pi */
+
+.wallet-card {
+
+ background:
+ radial-gradient(circle at top,#6425ff,#16002d);
+
+}
+
+
+.wallet-card button {
+
+ background:#ffd700;
+
+ color:#111;
+
+ border:none;
+
+ padding:12px 25px;
+
+ border-radius:30px;
+
+ font-weight:bold;
+
+}
+
+
+
+/* Posts */
+
+.post-card h3 {
+
+ color:#9b5cff;
+
+}
+
+
+.post-card small {
+
+ color:#ccc;
+
+}
+
+
+
+/* Bottom Navigation */
+
+.profile-nav {
+
+ position:fixed;
+
+ bottom:12px;
+
+ left:12px;
+
+ right:12px;
+
+ height:70px;
+
+ border-radius:35px;
+
+ background:rgba(10,12,35,.92);
+
+ backdrop-filter:blur(20px);
+
+ display:flex;
+
+ justify-content:space-around;
+
+ align-items:center;
+
+ border:1px solid rgba(255,215,0,.4);
+
+ box-shadow:
+ 0 0 30px rgba(155,92,255,.4);
+
+}
+
+
+.profile-nav button {
+
+ background:none;
+
+ border:none;
+
+ color:white;
+
+ font-size:20px;
+
+}
+
+
+.profile-nav span {
+
+ display:block;
+
+ font-size:11px;
+
+}

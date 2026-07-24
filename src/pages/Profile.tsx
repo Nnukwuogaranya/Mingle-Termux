@@ -1,65 +1,195 @@
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import "./Profile.css";
 
-export default function Profile() {
-  const navigate = useNavigate();
-
+const Profile = () => {
   return (
     <div className="profile-page">
-      <div className="profile-cover"></div>
 
-      <div className="profile-card">
+      {/* Cover Area */}
+      <section className="profile-cover">
+
         <div className="profile-avatar">
-          JP
+          👤
         </div>
 
-        <h2>PST Juddy Praise</h2>
+      </section>
 
-        <p style={{ color: "#777", marginTop: "10px" }}>
-          Founder of Mingle
+
+      {/* Profile Info */}
+      <section className="profile-info">
+
+        <h1>
+          Mingle User
+        </h1>
+
+        <p>
+          🌍 Connecting people. Sharing moments.
+          Building belonging.
         </p>
 
-        <p
-          style={{
-            marginTop: "20px",
-            lineHeight: "1.8"
-          }}
-        >
-          Welcome to my profile. Mingle is a premium social network
-          created to bring people together, build communities,
-          support businesses and connect the Pi ecosystem.
-        </p>
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-around",
-            marginTop: "30px"
-          }}
-        >
-          <div>
-            <h3>0</h3>
-            <small>Posts</small>
-          </div>
-
-          <div>
-            <h3>0</h3>
-            <small>Friends</small>
-          </div>
-
-          <div>
-            <h3>0</h3>
-            <small>Followers</small>
-          </div>
-        </div>
-
-        <button
-          className="gold-btn"
-          onClick={() => navigate("/")}
-          style={{ marginTop: "30px" }}
-        >
-          Back Home
+        <button className="edit-btn">
+          Edit Profile
         </button>
-      </div>
+
+
+        <div className="profile-stats">
+
+          <div>
+            <strong>120</strong>
+            <span>Posts</span>
+          </div>
+
+
+          <div>
+            <strong>2.5K</strong>
+            <span>Followers</span>
+          </div>
+
+
+          <div>
+            <strong>500</strong>
+            <span>Following</span>
+          </div>
+
+
+        </div>
+
+
+      </section>
+
+
+
+      {/* Premium Badge */}
+
+      <section className="badge-card">
+
+        <h2>
+          ✨ Mingle Identity
+        </h2>
+
+        <p>
+          Active member of the Mingle community.
+        </p>
+
+      </section>
+
+
+
+      {/* Pi Area */}
+
+      <section className="wallet-card">
+
+        <h2>
+          🟣 Pi Connection
+        </h2>
+
+        <p>
+          Connect your Pi identity and explore
+          Mingle opportunities.
+        </p>
+
+
+        <button>
+          Connect Pi
+        </button>
+
+
+      </section>
+
+
+
+
+      {/* User Posts */}
+
+      <section className="user-posts">
+
+        <h2>
+          📰 Posts
+        </h2>
+
+
+        <div className="post-card">
+
+          <h3>
+            Mingle User
+          </h3>
+
+          <p>
+            Welcome to my Mingle journey 💜
+          </p>
+
+          <small>
+            ❤️ 45 Likes • 💬 8 Comments
+          </small>
+
+
+        </div>
+
+
+
+        <div className="post-card">
+
+          <h3>
+            Mingle User
+          </h3>
+
+          <p>
+            Connecting with amazing people.
+          </p>
+
+          <small>
+            ❤️ 21 Likes • 💬 4 Comments
+          </small>
+
+        </div>
+
+
+      </section>
+
+
+
+
+      {/* Bottom Navigation */}
+
+      <nav className="profile-nav">
+
+        <button>
+          🏠
+          <span>Home</span>
+        </button>
+
+
+        <button>
+          🔎
+          <span>Explore</span>
+        </button>
+
+
+        <button>
+          ➕
+          <span>Create</span>
+        </button>
+
+
+        <button>
+          💬
+          <span>Chat</span>
+        </button>
+
+
+        <button>
+          👤
+          <span>Profile</span>
+        </button>
+
+
+      </nav>
+
+
     </div>
   );
-}
+};
+
+
+export default Profile;

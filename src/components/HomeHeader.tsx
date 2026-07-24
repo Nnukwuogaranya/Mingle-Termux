@@ -1,37 +1,47 @@
-import React from "react";
+import {
+  FaSearch,
+  FaBell,
+  FaComments
+} from "react-icons/fa";
+import "./HomeHeader.css";
 
-const HomeHeader = () => {
+function HomeHeader() {
   return (
     <header className="home-header">
 
-      <div className="logo-section">
-        <h1 className="mingle-logo">
-          Mingle
-        </h1>
+      <div className="top-row">
 
-        <p className="mingle-tagline">
-          Where People Don't Just Connect... They Belong.
-        </p>
-      </div>
+        <div className="brand">
 
-      <div className="header-actions">
+          <h1>Mingle</h1>
 
-        <button className="header-btn">
-          🔍
-        </button>
+          <span>
+            Where People Don't Just Connect...
+          </span>
 
-        <button className="header-btn">
-          🔔
-        </button>
+        </div>
 
-        <button className="header-btn">
-          💬
-        </button>
+        <div className="actions">
+
+          <button>
+            <FaSearch />
+          </button>
+
+          <button>
+            <FaComments />
+          </button>
+
+          <button className="notify">
+            <FaBell />
+            <small>3</small>
+          </button>
+
+        </div>
 
       </div>
 
     </header>
   );
-};
+}
 
 export default HomeHeader;

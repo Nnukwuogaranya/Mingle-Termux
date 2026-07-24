@@ -1,0 +1,26 @@
+.live-news {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 20px;
+  padding: 14px 18px;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.live-badge {
+  background: #d90429;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 6px 10px;
+  border-radius: 999px;
+}
+
+.live-text {
+  color: #1f2a44;
+  font-size: 0.95rem;
+  font-weight: 500;
+}

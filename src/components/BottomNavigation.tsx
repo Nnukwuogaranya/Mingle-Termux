@@ -1,49 +1,35 @@
-import React from "react";
+import {
+  FaHome,
+  FaUserFriends,
+  FaComments,
+  FaBell,
+} from "react-icons/fa";
+import "./BottomNavigation.css";
 
-const BottomNavigation = () => {
-
-  const menuItems = [
-    {
-      icon: "🏠",
-      name: "Home",
-    },
-    {
-      icon: "👥",
-      name: "Friends",
-    },
-    {
-      icon: "➕",
-      name: "Create",
-    },
-    {
-      icon: "🛒",
-      name: "Market",
-    },
-    {
-      icon: "👤",
-      name: "Profile",
-    },
-  ];
-
+function BottomNavigation() {
   return (
-    <div className="bottom-navigation">
+    <nav className="bottom-nav">
+      <button className="active">
+        <FaHome />
+        <span>Home</span>
+      </button>
 
-      {menuItems.map((item, index) => (
-        <button key={index}>
+      <button>
+        <FaUserFriends />
+        <span>Friends</span>
+      </button>
 
-          <span>
-            {item.icon}
-          </span>
+      <button>
+        <FaComments />
+        <span>Chats</span>
+      </button>
 
-          <small>
-            {item.name}
-          </small>
-
-        </button>
-      ))}
-
-    </div>
+      <button>
+        <FaBell />
+        <span>Alerts</span>
+      </button>
+    </nav>
   );
-};
+}
 
 export default BottomNavigation;

@@ -1,76 +1,114 @@
-import { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
-import { auth } from "../firebase";
+import React, { useState } from "react";
+import "./Auth.css";
 
-export default function Login() {
-  const navigate = useNavigate();
+type LoginProps = {
+  onLogin: () => void;
+};
 
-  const [email, setEmail] = useState("");
+export default function Login({ onLogin }: LoginProps) {
+
+  const [emailOrPhone, setEmailOrPhone] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
 
-  async function login() {
-    if (!email || !password) {
-      alert("Please enter your email and password.");
+  const login = () => {
+
+    if (!emailOrPhone.trim()) {
+      alert("Enter your email or phone number.");
       return;
     }
 
-    try {
-      setLoading(true);
-
-      await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
-      alert("🎉 Welcome back to Mingle!");
-
-      navigate("/");
-    } catch (error: any) {
-      alert(error.message);
-    } finally {
-      setLoading(false);
+    if (!password.trim()) {
+      alert("Enter your password.");
+      return;
     }
-  }
+
+    // Temporary login.
+    // Firebase authentication will replace this.
+    onLogin();
+  };
 
   return (
     <div className="auth-page">
 
-      <h1>Welcome Back</h1>
+      <div className="auth-card">
 
-      <input
-        type="email"
-        placeholder="Email Address"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+        <div className="auth-logo">
+          M
+        </div>
 
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+        <h1>Welcome Back</h1>
 
-      <button onClick={login}>
-        {loading ? "Signing In..." : "Login"}
-      </button>
+        <p>
+          Sign in to continue your Mingle journey.
+        </p>
 
-      <p
-        className="links"
-        onClick={() => navigate("/forgot-password")}
-      >
-        Forgot Password?
-      </p>
+        <input
+          type="text"
+          placeholder="Email or Phone Number"
+          value={emailOrPhone}
+          onChange={(e) =>
+            setEmailOrPhone(e.target.value)
+          }
+        />
 
-      <p
-        className="links"
-        onClick={() => navigate("/register")}
-      >
-        Don't have an account? Register
-      </p>
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) =>
+            setPassword(e.target.value)
+          }
+        />
+
+        <button onClick={login}>
+          Login
+        </button>
+
+        <button className="pi-button">
+          🟣 Continue with Pi
+        </button>
+
+        <button className="finger-button">
+          🔐 Login with Fingerprint
+        </button>
+
+        <div className="auth-links">
+
+          <a href="#">
+            Forgot Password?
+          </a>
+
+        </div>
+
+        <div className="auth-divider">
+          OR
+        </div>
+
+   
+        <button className="pi-button">
+          🟣 Continue with Pi
+        </button>
+
+        <button className="finger-button">
+          🔐 Login with Fingerprint
+        </button>
+
+        <div className="auth-links">
+
+          <a href="#">
+            Forgot Password?
+          </a>
+
+        </div>
+
+        <div className="auth-divider">
+          OR
+        </div>
+
+        <button className="secondary-button">
+          Create New Mingle Account
+        </button>
+      </div>
 
     </div>
   );

@@ -1,0 +1,287 @@
+.messenger-page {
+  min-height:100vh;
+  background:
+    radial-gradient(circle at top, rgba(155,92,255,.35), transparent 35%),
+    linear-gradient(180deg,#050b1c,#16002d,#050b1c);
+  color:white;
+  padding-bottom:95px;
+  font-family:Arial,sans-serif;
+}
+
+
+/* Header */
+
+.messenger-header {
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding:20px;
+
+  background:rgba(8,12,35,.85);
+
+  backdrop-filter:blur(15px);
+
+  border-bottom:1px solid rgba(255,215,0,.35);
+
+}
+
+
+.messenger-header h1 {
+
+  color:#ffd700;
+
+  font-size:22px;
+
+}
+
+
+.messenger-header small {
+
+  color:#00ff88;
+
+}
+
+
+
+.call-actions button {
+
+  width:42px;
+  height:42px;
+
+  margin-left:8px;
+
+  border-radius:50%;
+
+  border:none;
+
+  background:#9b5cff;
+
+  color:white;
+
+  font-size:20px;
+
+}
+
+
+
+
+/* Search */
+
+.message-search {
+
+ margin:18px;
+
+ padding:15px 20px;
+
+ border-radius:30px;
+
+ background:rgba(255,255,255,.1);
+
+ color:#ddd;
+
+}
+
+
+
+
+/* Conversation */
+
+.conversation-list h2 {
+
+ color:#ffd700;
+
+ margin-left:18px;
+
+}
+
+
+.conversation-card {
+
+ margin:15px;
+
+ padding:18px;
+
+ border-radius:22px;
+
+ background:
+ linear-gradient(
+ 145deg,
+ rgba(255,255,255,.12),
+ rgba(255,255,255,.04)
+ );
+
+ border:1px solid rgba(255,215,0,.25);
+
+ backdrop-filter:blur(15px);
+
+}
+
+
+.conversation-card h3 {
+
+ color:#9b5cff;
+
+}
+
+
+.conversation-card small {
+
+ color:#bbb;
+
+}
+
+
+
+
+/* Message Composer */
+
+.chat-box {
+
+ position:fixed;
+
+ bottom:90px;
+
+ left:15px;
+
+ right:15px;
+
+ display:flex;
+
+ align-items:center;
+
+ gap:8px;
+
+ padding:12px;
+
+ border-radius:35px;
+
+ background:rgba(10,12,35,.95);
+
+ border:1px solid rgba(255,215,0,.35);
+
+ backdrop-filter:blur(20px);
+
+}
+
+
+.chat-box input {
+
+ flex:1;
+
+ background:transparent;
+
+ border:none;
+
+ outline:none;
+
+ color:white;
+
+ font-size:15px;
+
+}
+
+
+
+.chat-box button {
+
+ background:#9b5cff;
+
+ border:none;
+
+ width:38px;
+
+ height:38px;
+
+ border-radius:50%;
+
+ color:white;
+
+}
+
+
+
+
+/* Floating Button */
+
+.new-message {
+
+ position:fixed;
+
+ right:25px;
+
+ bottom:170px;
+
+ width:60px;
+
+ height:60px;
+
+ border-radius:50%;
+
+ border:none;
+
+ background:#ffd700;
+
+ color:#111;
+
+ font-size:30px;
+
+}
+
+
+
+
+/* Bottom Nav */
+
+.message-nav {
+
+ position:fixed;
+
+ bottom:12px;
+
+ left:12px;
+
+ right:12px;
+
+ height:70px;
+
+ border-radius:35px;
+
+ background:rgba(10,12,35,.92);
+
+ display:flex;
+
+ justify-content:space-around;
+
+ align-items:center;
+
+ border:1px solid rgba(255,215,0,.4);
+
+ box-shadow:
+ 0 0 30px rgba(155,92,255,.4);
+
+}
+
+
+
+.message-nav button {
+
+ background:none;
+
+ border:none;
+
+ color:white;
+
+ font-size:20px;
+
+}
+
+
+.message-nav span {
+
+ display:block;
+
+ font-size:11px;
+
+}

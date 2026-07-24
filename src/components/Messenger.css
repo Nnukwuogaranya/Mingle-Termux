@@ -1,0 +1,259 @@
+0.messenger-page {
+
+  min-height:100vh;
+
+  background:#fff8e7;
+
+  color:#1a1a1a;
+
+  padding-bottom:130px;
+
+  font-family:Arial, sans-serif;
+
+}
+
+
+/* Header */
+
+.messenger-header {
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  padding:18px 20px;
+
+  background:#ffffff;
+
+  border-bottom:1px solid #e8c766;
+
+  box-shadow:0 3px 15px rgba(0,0,0,0.08);
+
+  position:sticky;
+
+  top:0;
+
+  z-index:10;
+
+}
+
+
+.messenger-header h1 {
+
+  margin:0;
+
+  color:#5b2ca0;
+
+  font-size:22px;
+
+}
+
+
+.messenger-header small {
+
+  color:#16a34a;
+
+}
+
+
+
+/* Call Buttons */
+
+.call-actions button {
+
+  width:42px;
+
+  height:42px;
+
+  border-radius:50%;
+
+  border:none;
+
+  margin-left:8px;
+
+  background:#ffd700;
+
+  color:#3a2600;
+
+  font-size:18px;
+
+}
+
+
+
+/* Chat Area */
+
+.chat-messages {
+
+  padding:20px;
+
+  min-height:60vh;
+
+}
+
+
+
+/* Received Message */
+
+.their-message {
+
+  max-width:75%;
+
+  background:#ffffff;
+
+  color:#333;
+
+  padding:14px 16px;
+
+  margin:12px 0;
+
+  border-radius:22px;
+
+  border-bottom-left-radius:5px;
+
+  box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+}
+
+
+
+/* My Message */
+
+.my-message {
+
+  max-width:75%;
+
+  background:#6f2cff;
+
+  color:white;
+
+  padding:14px 16px;
+
+  margin:12px 0 12px auto;
+
+  border-radius:22px;
+
+  border-bottom-right-radius:5px;
+
+  box-shadow:0 5px 15px rgba(111,44,255,.25);
+
+}
+
+
+
+.my-message strong,
+.their-message strong {
+
+  font-size:13px;
+
+  color:#d4a900;
+
+}
+
+
+.my-message p,
+.their-message p {
+
+  margin:6px 0 0;
+
+}
+
+
+
+/* Message Composer */
+
+.chat-box {
+
+  position:fixed;
+
+  bottom:85px;
+
+  left:15px;
+
+  right:15px;
+
+  display:flex;
+
+  align-items:center;
+
+  gap:8px;
+
+  background:white;
+
+  padding:12px;
+
+  border-radius:35px;
+
+  border:1px solid #e8c766;
+
+  box-shadow:0 8px 25px rgba(0,0,0,.15);
+
+  z-index:20;
+
+}
+
+
+
+.chat-box input {
+
+  flex:1;
+
+  border:none;
+
+  outline:none;
+
+  background:#fff8e7;
+
+  padding:13px 16px;
+
+  border-radius:25px;
+
+  color:#333;
+
+  font-size:16px;
+
+}
+
+
+
+.chat-box input::placeholder {
+
+  color:#777;
+
+}
+
+
+
+.chat-box button {
+
+  width:42px;
+
+  height:42px;
+
+  border:none;
+
+  border-radius:50%;
+
+  background:#ffd700;
+
+  color:#111;
+
+  font-size:18px;
+
+}
+
+
+
+/* Mobile spacing */
+
+@media(max-width:600px){
+
+  .chat-messages {
+
+    padding-bottom:120px;
+
+  }
+
+}

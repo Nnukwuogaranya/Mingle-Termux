@@ -1,0 +1,35 @@
+.feed {
+  padding: 0 20px 20px;
+}
+
+.feed-card {
+  margin-bottom: 18px;
+  padding: 18px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.feed-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.feed-header strong {
+  color: #6f42c1;
+  font-size: 1rem;
+}
+
+.feed-header span {
+  color: #777;
+  font-size: 0.85rem;
+}
+
+.feed-card p {
+  margin: 0;
+  color: #333;
+  line-height: 1.6;
+}

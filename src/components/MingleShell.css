@@ -1,0 +1,175 @@
+.mingle-shell {
+
+  min-height:100vh;
+
+  position:relative;
+
+  overflow:hidden;
+
+  background:
+  linear-gradient(
+    160deg,
+    #050b1c,
+    #21004d,
+    #050b1c
+  );
+
+  color:white;
+
+}
+
+
+
+/* Luxury Glow */
+
+.mingle-glow {
+
+  position:absolute;
+
+  width:300px;
+
+  height:300px;
+
+  border-radius:50%;
+
+  filter:blur(90px);
+
+  opacity:.5;
+
+}
+
+
+
+.glow-one {
+
+  background:#8b5cf6;
+
+  top:-100px;
+
+  right:-100px;
+
+}
+
+
+
+.glow-two {
+
+  background:#ffd700;
+
+  bottom:-120px;
+
+  left:-120px;
+
+}
+
+
+
+
+/* Top Brand Bar */
+
+.mingle-top-bar {
+
+  position:relative;
+
+  z-index:2;
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  padding:18px 22px;
+
+  background:rgba(255,255,255,.08);
+
+  backdrop-filter:blur(15px);
+
+  border-bottom:1px solid rgba(255,215,0,.25);
+
+}
+
+
+
+
+.mingle-brand {
+
+  display:flex;
+
+  align-items:center;
+
+  gap:10px;
+
+}
+
+
+
+.mingle-symbol {
+
+  width:42px;
+
+  height:42px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  border-radius:50%;
+
+  background:#ffd700;
+
+  color:#21004d;
+
+  font-size:25px;
+
+  font-weight:bold;
+
+}
+
+
+
+.mingle-brand h2 {
+
+  color:#ffd700;
+
+  margin:0;
+
+}
+
+
+
+
+.mingle-actions button {
+
+  background:rgba(255,255,255,.15);
+
+  border:none;
+
+  color:white;
+
+  width:40px;
+
+  height:40px;
+
+  border-radius:50%;
+
+  margin-left:8px;
+
+  font-size:18px;
+
+}
+
+
+
+
+.mingle-content {
+
+  position:relative;
+
+  z-index:1;
+
+  padding:15px;
+
+}
