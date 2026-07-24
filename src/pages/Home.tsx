@@ -1,237 +1,113 @@
+import { useState } from "react";
+import {
+  FaHome,
+  FaUserFriends,
+  FaBell,
+  FaComments,
+  FaPlusCircle,
+  FaSearch,
+} from "react-icons/fa";
 import "./Home.css";
 
-const Home = () => {
+type Post = {
+  id: number;
+  author: string;
+  text: string;
+  time: string;
+};
+
+function Home() {
+  const [posts, setPosts] = useState<Post[]>([
+    {
+      id: 1,
+      author: "Mingle",
+      text: "🎉 Welcome to Mingle! This is the beginning of your journey. Connect. Share. Grow. Where People Don't Just Connect... They Belong.",
+      time: "Just now",
+    },
+  ]);
+
+  const [text, setText] = useState("");
+
+  const createPost = () => {
+    if (!text.trim()) return;
+
+    setPosts([
+      {
+        id: Date.now(),
+        author: "You",
+        text,
+        time: "Now",
+      },
+      ...posts,
+    ]);
+
+    setText("");
+  };
+
   return (
     <div className="home">
-
-      {/* Header */}
       <header className="topbar">
+        <h1 className="logo">Mingle</h1>
 
-        <div className="brand">
-
-          <div className="logo">
-            M
-          </div>
-
-          <h1>Mingle</h1>
-
+        <div className="top-icons">
+          <FaSearch />
+          <FaBell />
         </div>
-
-        <div className="header-actions">
-
-          <button className="header-btn">🔍</button>
-
-          <button className="header-btn">🔔</button>
-
-          <button className="header-btn">💬</button>
-
-        </div>
-
       </header>
 
-      {/* Live News */}
+      <section className="welcome-card">
+        <h2>Welcome to Mingle</h2>
+        <p>Where People Don't Just Connect... They Belong.</p>
+      </section>
 
-      <div className="live-news">
-
-        <span className="live-dot"></span>
-
-        <marquee>
-
-          🔥 Pi Network • Trending Posts • Live Events • Marketplace • Verified Businesses • New Friends • Videos • Communities
-
-        </marquee>
-
-      </div>
-
-      {/* Search */}
-
-      <div className="search-area">
-
-        <input
-          type="text"
-          placeholder="Search Mingle..."
-        />
-
-      </div>
-
-      {/* Stories */}
-
-      <div className="stories">
-
-        <div className="story create">
-
-          <div className="story-image plus">
-
-            +
-
-          </div>
-
-          <span>Create Story</span>
-
-        </div>
-
-        <div className="story">
-
-          <img
-            src="https://i.pravatar.cc/200?img=1"
-            alt=""
-          />
-
-          <span>Grace</span>
-
-        </div>
-
-        <div className="story">
-
-          <img
-            src="https://i.pravatar.cc/200?img=5"
-            alt=""
-          />
-
-          <span>Daniel</span>
-
-        </div>
-
-        <div className="story">
-
-          <img
-            src="https://i.pravatar.cc/200?img=8"
-            alt=""
-          />
-
-          <span>Chioma</span>
-
-        </div>
-
-        <div className="story">
-
-          <img
-            src="https://i.pravatar.cc/200?img=10"
-            alt=""
-          />
-
-          <span>Samuel</span>
-
-        </div>
-                <div className="story">
-
-          <img
-            src="https://i.pravatar.cc/200?img=15"
-            alt=""
-          />
-
-          <span>Esther</span>
-
-        </div>
-
-      </div>
-
-      {/* Create Post */}
-
-      <div className="create-post">
-
-        <img
-          className="avatar"
-          src="https://i.pravatar.cc/200?img=12"
-          alt=""
-        />
-
-        <input
-          type="text"
+      <section className="create-post">
+        <textarea
           placeholder="What's on your mind?"
-          readOnly
+          value={text}
+          onChange={(e) => setText(e.target.value)}
         />
 
-        <button className="photo-btn">
-          📷
+        <button onClick={createPost}>
+          <FaPlusCircle /> Share
         </button>
+      </section>
 
-      </div>
-
-      {/* Feed */}
-
-      <div className="feed">
-
-        <div className="post">
-
-          <div className="post-header">
-
-            <img
-              className="avatar"
-              src="https://i.pravatar.cc/200?img=20"
-              alt=""
-            />
-
-            <div>
-
-              <h3>Pst Juddy Praise</h3>
-
-              <small>Just now • Public</small>
-
+      <section className="feed">
+        {posts.map((post) => (
+          <article className="post" key={post.id}>
+            <div className="post-header">
+              <strong>{post.author}</strong>
+              <span>{post.time}</span>
             </div>
 
-          </div>
-
-          <p>
-
-            Welcome to the next generation of social networking.
-            Mingle is being designed for beautiful conversations,
-            quality communities and the Pi ecosystem.
-
-          </p>
-
-          <img
-            className="post-image"
-            src="https://picsum.photos/900/600"
-            alt=""
-          />
-
-          <div className="post-actions">
-
-            <button>❤️ Like</button>
-
-            <button>💬 Comment</button>
-
-            <button>↗ Share</button>
-
-          </div>
-
-        </div>
-
-      </div>
-            {/* Bottom Navigation */}
+            <p>{post.text}</p>
+          </article>
+        ))}
+      </section>
 
       <nav className="bottom-nav">
-
-        <button className="active">
-          🏠
+        <button>
+          <FaHome />
           <span>Home</span>
         </button>
 
         <button>
-          🔍
-          <span>Discover</span>
+          <FaUserFriends />
+          <span>Friends</span>
         </button>
 
         <button>
-          ➕
-          <span>Create</span>
+          <FaComments />
+          <span>Chat</span>
         </button>
 
         <button>
-          💬
-          <span>Chats</span>
+          <FaBell />
+          <span>Alerts</span>
         </button>
-
-        <button>
-          👤
-          <span>Profile</span>
-        </button>
-
       </nav>
-
     </div>
   );
-};
+}
 
 export default Home;
