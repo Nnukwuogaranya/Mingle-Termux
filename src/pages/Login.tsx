@@ -1,115 +1,93 @@
 import React, { useState } from "react";
 import "./Auth.css";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { app } from "./firebase";
+
+const auth = getAuth(app);
 
 type LoginProps = {
   onLogin: () => void;
 };
 
 export default function Login({ onLogin }: LoginProps) {
+  const = useState("");
+  const = useState("");
+  const = useState("");[emailOrPhone][setEmailOrPhone][password][setPassword][error][setError]
 
-  const [emailOrPhone, setEmailOrPhone] = useState("");
-  const [password, setPassword] = useState("");
-
-  const login = () => {
-
-    if (!emailOrPhone.trim()) {
-      alert("Enter your email or phone number.");
+  const handleLogin = async () => {
+    setError("");
+    if (!emailOrPhone.trim() ||!password.trim()) {
+      setError("Please enter email and password");
       return;
     }
+    try {
+      await signInWithEmailAndPassword(auth, emailOrPhone, password);
+      onLogin();
+    } catch (err: any) {
+      setError(err.message);
+    }
+  };
 
-    if (!password.trim()) {
-      alert("Enter your password.");
+  const handleSignup = async () => {
+    setError("");
+    if (!emailOrPhone.trim() ||!password.trim()) {
+      setError("Please enter email and password");
       return;
     }
+    try {
+      await createUserWithEmailAndPassword(auth, emailOrPhone, password);
+      alert("Account Created!");
+      onLogin();
+    } catch (err: any) {
+      setError(err.message);
+    }
+  };
 
-    // Temporary login.
-    // Firebase authentication will replace this.
-    onLogin();
+  const handlePiLogin = () => {
+    // @ts-ignore
+    http://window.Pi.authenticate(['username', 'payments'],
+      function(auth) {
+        http://console.log("Pi Login Success", auth);
+        onLogin();
+      },
+      function(error) {
+        http://console.error(error);
+        setError("Pi Login Failed");
+      }
+    );
   };
 
   return (
     <div className="auth-page">
-
       <div className="auth-card">
-
-        <div className="auth-logo">
-          M
-        </div>
-
+        <div className="auth-logo">M</div>
         <h1>Welcome Back</h1>
-
-        <p>
-          Sign in to continue your Mingle journey.
-        </p>
-
+        <p>Sign in to continue your Mingle journey.</p>
         <input
-          type="text"
-          placeholder="Email or Phone Number"
+          type="email"
+          placeholder="Email"
           value={emailOrPhone}
-          onChange={(e) =>
-            setEmailOrPhone(e.target.value)
-          }
+          onChange={(e) => setEmailOrPhone(e.target.value)}
         />
-
         <input
           type="password"
           placeholder="Password"
           value={password}
-          onChange={(e) =>
-            setPassword(e.target.value)
-          }
+          onChange={(e) => setPassword(e.target.value)}
         />
-
-        <button onClick={login}>
-          Login
-        </button>
-
-        <button className="pi-button">
-          🟣 Continue with Pi
-        </button>
-
-        <button className="finger-button">
-          🔐 Login with Fingerprint
-        </button>
-
-        <div className="auth-links">
-
-          <a href="#">
-            Forgot Password?
-          </a>
-
-        </div>
-
-        <div className="auth-divider">
-          OR
-        </div>
-
-   
-        <button className="pi-button">
-          🟣 Continue with Pi
-        </button>
-
-        <button className="finger-button">
-          🔐 Login with Fingerprint
-        </button>
-
-        <div className="auth-links">
-
-          <a href="#">
-            Forgot Password?
-          </a>
-
-        </div>
-
-        <div className="auth-divider">
-          OR
-        </div>
-
-        <button className="secondary-button">
+        {error && <p style={{color: 'red', fontSize: '12px'}}>{error}</p>}
+        <button onClick={handleLogin}>Login</button>
+        <button className="secondary-button" onClick={handleSignup}>
           Create New Mingle Account
         </button>
+        <div className="auth-divider">OR</div>
+        <button className="pi-button" onClick={handlePiLogin}>
+          🟣 Continue with Pi
+        </button>
+        <div className="auth-links">
+          <a href="#">Forgot Password?</a>
+        </div>
       </div>
-
     </div>
   );
 }
