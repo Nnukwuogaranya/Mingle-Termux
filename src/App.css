@@ -1,148 +1,145 @@
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-
-body{
-  font-family:Arial,Helvetica,sans-serif;
-  background:#07111f;
-  color:#fff;
-}
-
-.mingle-app{
+.home{
   min-height:100vh;
-  background:linear-gradient(180deg,#081426,#101d3d,#19113a);
-  padding-bottom:90px;
+  background:#08142b;
+  color:#fff;
+  padding-bottom:80px;
+  font-family:Arial,Helvetica,sans-serif;
 }
 
-.home-container{
-  padding:18px;
-}
-
-.home-header{
+.topbar{
   display:flex;
   justify-content:space-between;
   align-items:center;
   padding:18px;
+  background:#101c3d;
   position:sticky;
   top:0;
-  background:rgba(8,20,38,.95);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid rgba(255,255,255,.08);
 }
 
-.mingle-logo{
-  color:#FFD700;
-  font-size:30px;
+.logo{
+  margin:0;
+  color:#d7a300;
+  font-size:28px;
   font-weight:bold;
 }
 
-.mingle-tagline{
-  font-size:12px;
-  color:#cfcfcf;
-}
-
-.header-actions{
+.top-icons{
   display:flex;
-  gap:10px;
-}
-
-.header-btn{
-  width:42px;
-  height:42px;
-  border-radius:50%;
-  border:none;
-  background:#222b45;
-  color:#fff;
-  font-size:18px;
-}
-
-.search-card{
-  display:flex;
-  gap:10px;
-  margin:18px 0;
-}
-
-.search-card input{
-  flex:1;
-  padding:14px;
-  border:none;
-  border-radius:25px;
-}
-
-.search-button{
-  padding:14px 18px;
-  border:none;
-  border-radius:25px;
-  background:#6C3BFF;
+  gap:18px;
+  font-size:20px;
   color:#fff;
 }
 
-.discover-grid,
-.pihub-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:15px;
-  margin:20px 0;
-}
-
-.discover-card,
-.pihub-grid button{
-  background:#152544;
-  border-radius:18px;
-  padding:18px;
-  text-align:center;
-  color:#fff;
-}
-
-.discover-icon{
-  font-size:30px;
-  margin-bottom:10px;
-}
-
-.welcome-card,
-.create-post-card,
-.post-card,
-.friend-suggestions,
-.messenger-card,
-.pihub-card{
-  background:#132340;
-  border-radius:20px;
+.welcome-card{
+  margin:18px;
   padding:20px;
-  margin:20px 0;
+  border-radius:16px;
+  background:linear-gradient(135deg,#4b1fa8,#182b6b);
 }
 
-.welcome-badge{
-  color:#FFD700;
+.welcome-card h2{
+  margin:0 0 10px;
+  color:#ffd54a;
+}
+
+.welcome-card p{
+  margin:0;
+  color:#f3f3f3;
+}
+
+.create-post{
+  margin:18px;
+  padding:18px;
+  background:#13244d;
+  border-radius:16px;
+}
+
+.create-post textarea{
+  width:100%;
+  height:90px;
+  resize:none;
+  border:none;
+  outline:none;
+  border-radius:10px;
+  padding:12px;
+  background:#fff;
+  color:#111;
+  font-size:15px;
+  box-sizing:border-box;
+}
+
+.create-post button{
+  margin-top:12px;
+  width:100%;
+  border:none;
+  border-radius:10px;
+  padding:12px;
+  background:#d7a300;
+  color:#08142b;
+  font-size:16px;
   font-weight:bold;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  cursor:pointer;
+}
+
+.feed{
+  padding:0 18px;
+}
+
+.post{
+  background:#13244d;
+  border-radius:16px;
+  padding:16px;
+  margin-bottom:16px;
+}
+
+.post-header{
+  display:flex;
+  justify-content:space-between;
   margin-bottom:10px;
 }
 
-.welcome-btn{
-  margin-top:18px;
-  background:#FFD700;
-  color:#111;
-  border:none;
-  padding:12px 22px;
-  border-radius:25px;
-  font-weight:bold;
+.post-header strong{
+  color:#ffd54a;
 }
 
-.bottom-navigation{
+.post-header span{
+  color:#cfcfcf;
+  font-size:12px;
+}
+
+.post p{
+  margin:0;
+  line-height:1.6;
+}
+
+.bottom-nav{
   position:fixed;
-  left:0;
-  right:0;
   bottom:0;
+  left:0;
+  width:100%;
+  background:#101c3d;
   display:flex;
   justify-content:space-around;
-  padding:14px;
-  background:#09101f;
-  border-top:1px solid rgba(255,255,255,.08);
+  padding:10px 0;
+  border-top:1px solid #243d77;
 }
 
-.bottom-navigation button{
+.bottom-nav button{
   background:none;
   border:none;
   color:#fff;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+  font-size:18px;
+  cursor:pointer;
+}
+
+.bottom-nav span{
+  font-size:11px;
 }
