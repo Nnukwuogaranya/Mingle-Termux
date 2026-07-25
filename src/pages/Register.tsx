@@ -1,122 +1,213 @@
 import React, { useState } from "react";
 import "./Auth.css";
 
-export default function Register() {
-
-  const [form, setForm] = useState({
-    name: "",
-    username: "",
-    phone: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
+import { registerUser } from "../services/auth";
 
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
+type RegisterProps = {
+  onRegister?: () => void;
+};
 
 
-  const register = () => {
+export default function Register({
+  onRegister,
+}: RegisterProps) {
 
-    if (form.password !== form.confirmPassword) {
-      alert("Passwords do not match");
+
+  const [name, setName] = useState("");
+
+  const [email, setEmail] = useState("");
+
+  const [password, setPassword] = useState("");
+
+  const [showPassword, setShowPassword] = useState(false);
+
+
+  const [error, setError] = useState("");
+
+  const [success, setSuccess] = useState("");
+
+  const [loading, setLoading] = useState(false);
+
+
+
+  const register = async () => {
+
+    setError("");
+    setSuccess("");
+
+
+    if (!name || !email || !password) {
+
+      setError(
+        "Please fill all fields."
+      );
+
       return;
+
     }
 
-    alert("Welcome to Mingle 🎉");
+
+    try {
+
+      setLoading(true);
+
+
+      await registerUser(
+        name,
+        email,
+        password
+      );
+
+
+      setSuccess(
+        "Account created successfully!"
+      );
+
+
+      if (onRegister) {
+        onRegister();
+      }
+
+
+
+    } catch (err: any) {
+
+      setError(
+        err.message ||
+        "Registration failed."
+      );
+
+
+    } finally {
+
+      setLoading(false);
+
+    }
+
   };
+
 
 
   return (
+
     <div className="auth-page">
 
       <div className="auth-card">
+
 
         <div className="auth-logo">
           M
         </div>
 
 
-        <h1>Join Mingle</h1>
+        <h1>
+          Join Mingle
+        </h1>
+
 
         <p>
-          Where People Don't Just Connect… They Belong.
+          Create your account and belong.
         </p>
 
 
+
+        {error && (
+          <div className="auth-error">
+            {error}
+          </div>
+        )}
+
+
+
+        {success && (
+          <div className="auth-success">
+            {success}
+          </div>
+        )}
+
+
+
         <input
-          name="name"
+          type="text"
           placeholder="Full Name"
-          value={form.name}
-          onChange={handleChange}
+          value={name}
+          onChange={(e) =>
+            setName(e.target.value)
+          }
         />
 
 
-        <input
-          name="username"
-          placeholder="Username"
-          value={form.username}
-          onChange={handleChange}
-        />
-
 
         <input
-          name="phone"
-          placeholder="Phone Number"
-          value={form.phone}
-          onChange={handleChange}
-        />
-
-
-        <input
-          name="email"
           type="email"
           placeholder="Email Address"
-          value={form.email}
-          onChange={handleChange}
+          value={email}
+          onChange={(e) =>
+            setEmail(e.target.value)
+          }
         />
 
 
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          value={form.password}
-          onChange={handleChange}
-        />
+
+        <div className="password-box">
+
+          <input
+            type={
+              showPassword
+                ? "text"
+                : "password"
+            }
+            placeholder="Password"
+            value={password}
+            onChange={(e) =>
+              setPassword(e.target.value)
+            }
+          />
 
 
-        <input
-          name="confirmPassword"
-          type="password"
-          placeholder="Confirm Password"
-          value={form.confirmPassword}
-          onChange={handleChange}
-        />
+          <button
+            type="button"
+            className="eye-button"
+            onClick={() =>
+              setShowPassword(!showPassword)
+            }
+          >
+
+            {showPassword ? "🙈" : "👁️"}
+
+          </button>
 
 
-        <button onClick={register}>
-          Create Mingle Account
+        </div>
+
+
+
+
+        <button
+          onClick={register}
+          disabled={loading}
+        >
+
+          {loading
+            ? "Creating..."
+            : "Create Account"
+          }
+
         </button>
+
 
 
         <button className="pi-button">
-          🟣 Continue with Pi
+          🟣 Join with Pi
         </button>
 
-
-        <button className="finger-button">
-          🔐 Use Fingerprint Login
-        </button>
 
 
       </div>
 
     </div>
+
   );
+
 }

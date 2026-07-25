@@ -1,115 +1,205 @@
 import React, { useState } from "react";
 import "./Auth.css";
 
+import { loginUser } from "../services/auth";
+
 type LoginProps = {
   onLogin: () => void;
+  onRegister: () => void;
+  onForgotPassword: () => void;
 };
 
-export default function Login({ onLogin }: LoginProps) {
 
-  const [emailOrPhone, setEmailOrPhone] = useState("");
+export default function Login({
+  onLogin,
+  onRegister,
+  onForgotPassword,
+}: LoginProps) {
+
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const login = () => {
+  const [showPassword, setShowPassword] = useState(false);
 
-    if (!emailOrPhone.trim()) {
-      alert("Enter your email or phone number.");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+
+
+  const login = async () => {
+
+    setError("");
+
+    if (!email || !password) {
+      setError("Enter email and password.");
       return;
     }
 
-    if (!password.trim()) {
-      alert("Enter your password.");
-      return;
+
+    try {
+
+      setLoading(true);
+
+      await loginUser(
+        email,
+        password
+      );
+
+      onLogin();
+
+
+    } catch {
+
+      setError(
+        "Invalid email or password."
+      );
+
+
+    } finally {
+
+      setLoading(false);
+
     }
 
-    // Temporary login.
-    // Firebase authentication will replace this.
-    onLogin();
   };
 
+
+
   return (
+
     <div className="auth-page">
 
       <div className="auth-card">
+
 
         <div className="auth-logo">
           M
         </div>
 
-        <h1>Welcome Back</h1>
+
+        <h1>
+          Welcome Back
+        </h1>
+
 
         <p>
           Sign in to continue your Mingle journey.
         </p>
 
+
+
+        {error && (
+          <div className="auth-error">
+            {error}
+          </div>
+        )}
+
+
+
         <input
-          type="text"
-          placeholder="Email or Phone Number"
-          value={emailOrPhone}
+          type="email"
+          placeholder="Email Address"
+          value={email}
           onChange={(e) =>
-            setEmailOrPhone(e.target.value)
+            setEmail(e.target.value)
           }
         />
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) =>
-            setPassword(e.target.value)
-          }
-        />
 
-        <button onClick={login}>
-          Login
+
+        <div className="password-box">
+
+          <input
+            type={
+              showPassword
+                ? "text"
+                : "password"
+            }
+            placeholder="Password"
+            value={password}
+            onChange={(e) =>
+              setPassword(e.target.value)
+            }
+          />
+
+
+          <button
+            type="button"
+            className="eye-button"
+            onClick={() =>
+              setShowPassword(!showPassword)
+            }
+          >
+
+            {showPassword ? "🙈" : "👁️"}
+
+          </button>
+
+
+        </div>
+
+
+
+        <button
+          onClick={login}
+          disabled={loading}
+        >
+
+          {loading
+            ? "Logging in..."
+            : "Login"
+          }
+
         </button>
+
+
 
         <button className="pi-button">
           🟣 Continue with Pi
         </button>
 
-        <button className="finger-button">
-          🔐 Login with Fingerprint
-        </button>
 
-        <div className="auth-links">
-
-          <a href="#">
-            Forgot Password?
-          </a>
-
-        </div>
-
-        <div className="auth-divider">
-          OR
-        </div>
-
-   
-        <button className="pi-button">
-          🟣 Continue with Pi
-        </button>
 
         <button className="finger-button">
           🔐 Login with Fingerprint
         </button>
 
+
+
         <div className="auth-links">
 
-          <a href="#">
+          <button
+            className="link-button"
+            onClick={onForgotPassword}
+          >
             Forgot Password?
-          </a>
+          </button>
 
         </div>
+
+
 
         <div className="auth-divider">
           OR
         </div>
 
-        <button className="secondary-button">
+
+
+        <button
+          className="secondary-button"
+          onClick={onRegister}
+        >
+
           Create New Mingle Account
+
         </button>
+
+
+
       </div>
 
     </div>
+
   );
+
 }

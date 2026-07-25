@@ -1,19 +1,62 @@
 import React, { useState } from "react";
 import "./Auth.css";
 
+import { forgotPassword } from "../services/auth";
+
+
 export default function ForgotPassword() {
 
-  const [contact, setContact] = useState("");
+  const [email, setEmail] = useState("");
 
-  const resetPassword = () => {
+  const [message, setMessage] = useState("");
 
-    if (!contact) {
-      alert("Enter your email or phone number");
+  const [error, setError] = useState("");
+
+  const [loading, setLoading] = useState(false);
+
+
+
+  const resetPassword = async () => {
+
+    setMessage("");
+    setError("");
+
+
+    if (!email.trim()) {
+      setError("Enter your email address.");
       return;
     }
 
-    alert("Password reset link/verification sent");
+
+    try {
+
+      setLoading(true);
+
+
+      await forgotPassword(email);
+
+
+      setMessage(
+        "Password reset link has been sent to your email."
+      );
+
+
+    } catch (err: any) {
+
+      setError(
+        err.message ||
+        "Unable to send reset email."
+      );
+
+
+    } finally {
+
+      setLoading(false);
+
+    }
+
   };
+
 
 
   return (
@@ -22,33 +65,72 @@ export default function ForgotPassword() {
 
       <div className="auth-card">
 
+
         <div className="auth-logo">
           M
         </div>
 
 
-        <h1>Reset Password</h1>
+        <h1>
+          Forgot Password?
+        </h1>
+
 
         <p>
-          Recover your Mingle account securely.
+          Enter your email and we will help you recover your account.
         </p>
 
 
+
+        {error && (
+          <div className="auth-error">
+            {error}
+          </div>
+        )}
+
+
+
+        {message && (
+          <div className="auth-success">
+            {message}
+          </div>
+        )}
+
+
+
         <input
-          placeholder="Email or Phone Number"
-          value={contact}
-          onChange={(e) => setContact(e.target.value)}
+          type="email"
+          placeholder="Email Address"
+          value={email}
+          onChange={(e) =>
+            setEmail(e.target.value)
+          }
         />
 
 
-        <button onClick={resetPassword}>
-          Send Verification
+
+        <button
+          onClick={resetPassword}
+          disabled={loading}
+        >
+
+          {loading
+            ? "Sending..."
+            : "Send Reset Link"
+          }
+
         </button>
 
 
-        <button className="finger-button">
-          🔐 Use Account Recovery
-        </button>
+
+        <div className="auth-links">
+
+          <a href="/login">
+            Back to Login
+          </a>
+
+        </div>
+
 
 
       </div>
@@ -56,4 +138,5 @@ export default function ForgotPassword() {
     </div>
 
   );
+
 }
