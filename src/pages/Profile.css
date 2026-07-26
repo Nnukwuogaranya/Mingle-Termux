@@ -1,287 +1,609 @@
-.profile-page {
-  min-height: 100vh;
+/* =========================================================
+   MINGLE PROFILE V1
+   Part 1/4
+========================================================= */
+
+.profile-page{
+  min-height:100vh;
   background:
-    radial-gradient(circle at top, rgba(155,92,255,0.35), transparent 35%),
-    linear-gradient(180deg, #050b1c, #16002d, #050b1c);
-  color: white;
-  padding-bottom: 95px;
-  font-family: Arial, sans-serif;
+    radial-gradient(circle at top,#6d28d9 0%,transparent 35%),
+    linear-gradient(180deg,#071426,#120027,#071426);
+  color:#fff;
+  font-family:Inter,Arial,sans-serif;
+  padding-bottom:120px;
 }
 
+/* ===========================
+   BANNER
+=========================== */
 
-/* Cover */
+.profile-cover{
+  position:relative;
 
-.profile-cover {
-  height: 230px;
-  background:
-    linear-gradient(
-      135deg,
-      #2a0050,
-      #9b5cff,
-      #ffd700
-    );
-  border-bottom-left-radius: 40px;
-  border-bottom-right-radius: 40px;
-  position: relative;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-}
+  height:320px;
 
+  margin:15px;
 
-.profile-avatar {
+  border-radius:30px;
 
-  position: absolute;
-
-  bottom: -55px;
-
-  left: 50%;
-
-  transform: translateX(-50%);
-
-  width: 120px;
-
-  height: 120px;
-
-  border-radius:50%;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  font-size:50px;
+  overflow:hidden;
 
   background:
-  linear-gradient(135deg,#9b5cff,#ffd700);
-
-  border:6px solid #071426;
+  linear-gradient(
+    135deg,
+    #1e3a8a,
+    #6d28d9,
+    #ffd700
+  );
 
   box-shadow:
-  0 0 30px rgba(255,215,0,.6);
+  0 20px 45px rgba(0,0,0,.45);
+}
+
+/* animated shine */
+
+.profile-cover::before{
+
+content:"";
+
+position:absolute;
+
+top:0;
+
+left:-120%;
+
+width:60%;
+
+height:100%;
+
+background:
+linear-gradient(
+90deg,
+transparent,
+rgba(255,255,255,.25),
+transparent
+);
+
+animation:
+bannerShine 8s linear infinite;
 
 }
 
+@keyframes bannerShine{
 
+0%{
+left:-120%;
+}
 
-/* Info */
-
-.profile-info {
-
-  margin-top:75px;
-
-  text-align:center;
-
-  padding:20px;
+100%{
+left:160%;
+}
 
 }
 
+/* ===========================
+   MINGLE IDENTITY CARD
+=========================== */
 
-.profile-info h1 {
+.profile-avatar{
 
-  color:#ffd700;
+position:absolute;
+
+left:30px;
+
+bottom:25px;
+
+width:145px;
+
+height:190px;
+
+border-radius:24px;
+
+background:
+rgba(255,255,255,.12);
+
+backdrop-filter:blur(18px);
+
+border:2px solid rgba(255,215,0,.7);
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:70px;
+
+box-shadow:
+0 15px 35px rgba(0,0,0,.45),
+0 0 25px rgba(255,215,0,.25);
+
+overflow:hidden;
+
+}
+/* =========================================================
+   MINGLE PROFILE V1
+   Part 2/4
+========================================================= */
+
+/* Profile Information */
+
+.profile-info{
+
+margin-top:30px;
+
+padding:25px;
+
+text-align:center;
 
 }
 
+.profile-info h1{
 
-.profile-info p {
+font-size:34px;
 
-  color:#ddd;
+font-weight:800;
 
-}
+color:#ffd700;
 
+margin-bottom:10px;
 
-
-.edit-btn {
-
- background:#9b5cff;
-
- color:white;
-
- border:none;
-
- padding:12px 30px;
-
- border-radius:30px;
-
- font-weight:bold;
+letter-spacing:.5px;
 
 }
 
+.profile-info p{
 
+max-width:650px;
 
-/* Stats */
+margin:0 auto;
 
-.profile-stats {
+line-height:1.8;
 
- display:flex;
+color:rgba(255,255,255,.85);
 
- justify-content:space-around;
-
- margin-top:25px;
-
- padding:20px;
-
- background:rgba(255,255,255,.08);
-
- border-radius:25px;
-
- backdrop-filter:blur(15px);
+font-size:16px;
 
 }
 
+/* Mingle ID */
 
-.profile-stats div {
+.mingle-id{
 
- display:flex;
+display:inline-block;
 
- flex-direction:column;
+margin-top:15px;
 
-}
+padding:10px 20px;
 
+border-radius:30px;
 
-.profile-stats strong {
+background:rgba(255,215,0,.12);
 
- color:#ffd700;
+border:1px solid rgba(255,215,0,.35);
 
- font-size:22px;
+color:#ffd700;
 
-}
+font-weight:700;
 
-
-
-/* Cards */
-
-.badge-card,
-.wallet-card,
-.post-card {
-
- margin:16px;
-
- padding:20px;
-
- border-radius:25px;
-
- background:
- linear-gradient(
- 145deg,
- rgba(255,255,255,.12),
- rgba(255,255,255,.04)
- );
-
- border:1px solid rgba(255,215,0,.25);
-
- backdrop-filter:blur(15px);
+letter-spacing:1px;
 
 }
 
+/* Edit Button */
 
+.edit-btn{
 
-.badge-card h2,
-.wallet-card h2,
-.user-posts h2 {
+margin-top:25px;
 
- color:#ffd700;
+padding:14px 34px;
 
-}
+border:none;
 
+border-radius:18px;
 
+cursor:pointer;
 
-/* Pi */
+font-size:16px;
 
-.wallet-card {
+font-weight:700;
 
- background:
- radial-gradient(circle at top,#6425ff,#16002d);
+background:
+linear-gradient(
+135deg,
+#ffd700,
+#f6c453
+);
 
-}
+color:#111827;
 
+box-shadow:
+0 10px 30px rgba(255,215,0,.30);
 
-.wallet-card button {
-
- background:#ffd700;
-
- color:#111;
-
- border:none;
-
- padding:12px 25px;
-
- border-radius:30px;
-
- font-weight:bold;
+transition:.3s;
 
 }
 
+.edit-btn:hover{
 
+transform:translateY(-2px);
 
-/* Posts */
+box-shadow:
+0 15px 35px rgba(255,215,0,.45);
 
-.post-card h3 {
+}
+/* =========================================================
+   MINGLE PROFILE V1
+   Part 3/4
+========================================================= */
 
- color:#9b5cff;
+/* ===========================
+   PROFILE STATS
+=========================== */
+
+.profile-stats{
+
+display:grid;
+
+grid-template-columns:repeat(4,1fr);
+
+gap:15px;
+
+margin:35px 20px;
 
 }
 
+.profile-stats div{
 
-.post-card small {
+background:
+rgba(255,255,255,.08);
 
- color:#ccc;
+backdrop-filter:blur(18px);
 
-}
+border:1px solid rgba(255,255,255,.12);
 
+border-radius:22px;
 
+padding:20px 10px;
 
-/* Bottom Navigation */
+text-align:center;
 
-.profile-nav {
-
- position:fixed;
-
- bottom:12px;
-
- left:12px;
-
- right:12px;
-
- height:70px;
-
- border-radius:35px;
-
- background:rgba(10,12,35,.92);
-
- backdrop-filter:blur(20px);
-
- display:flex;
-
- justify-content:space-around;
-
- align-items:center;
-
- border:1px solid rgba(255,215,0,.4);
-
- box-shadow:
- 0 0 30px rgba(155,92,255,.4);
+transition:.3s;
 
 }
 
+.profile-stats div:hover{
 
-.profile-nav button {
+transform:translateY(-6px);
 
- background:none;
+border-color:#ffd700;
 
- border:none;
-
- color:white;
-
- font-size:20px;
+box-shadow:
+0 15px 30px rgba(0,0,0,.30);
 
 }
 
+.profile-stats strong{
 
-.profile-nav span {
+display:block;
 
- display:block;
+font-size:28px;
 
- font-size:11px;
+color:#ffd700;
+
+margin-bottom:8px;
 
 }
+
+.profile-stats span{
+
+font-size:14px;
+
+color:rgba(255,255,255,.82);
+
+}
+
+/* ===========================
+   MINGLE IDENTITY PANEL
+=========================== */
+
+.identity-panel{
+
+margin:25px 20px;
+
+padding:22px;
+
+border-radius:24px;
+
+background:
+rgba(255,255,255,.08);
+
+backdrop-filter:blur(20px);
+
+border:1px solid rgba(255,255,255,.12);
+
+box-shadow:
+0 15px 35px rgba(0,0,0,.25);
+
+}
+
+.identity-panel h3{
+
+color:#ffd700;
+
+margin-bottom:18px;
+
+font-size:22px;
+
+}
+
+.identity-item{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:12px 0;
+
+border-bottom:1px solid rgba(255,255,255,.08);
+
+}
+
+.identity-item:last-child{
+
+border-bottom:none;
+
+}
+
+.identity-label{
+
+color:rgba(255,255,255,.75);
+
+font-size:15px;
+
+}
+
+.identity-value{
+
+font-weight:700;
+
+color:#ffffff;
+
+}
+
+/* ===========================
+   QUICK ACTIONS
+=========================== */
+
+.quick-actions{
+
+display:flex;
+
+flex-wrap:wrap;
+
+gap:15px;
+
+justify-content:center;
+
+margin:30px 20px;
+
+}
+
+.quick-actions button{
+
+padding:14px 24px;
+
+border:none;
+
+border-radius:18px;
+
+cursor:pointer;
+
+font-weight:700;
+
+background:
+linear-gradient(
+135deg,
+#6d28d9,
+#8b5cf6
+);
+
+color:#fff;
+
+transition:.3s;
+
+}
+
+.quick-actions button:hover{
+
+transform:translateY(-3px);
+
+box-shadow:
+0 10px 25px rgba(109,40,217,.35);
+
+}
+/* =========================================================
+   MINGLE PROFILE V1
+   Part 4/4
+========================================================= */
+
+/* ===========================
+   MINGLE COMMAND DOCK
+=========================== */
+
+.profile-tabs{
+
+display:flex;
+
+justify-content:space-around;
+
+align-items:center;
+
+gap:12px;
+
+margin:35px 20px;
+
+padding:12px;
+
+border-radius:24px;
+
+background:rgba(255,255,255,.08);
+
+backdrop-filter:blur(20px);
+
+border:1px solid rgba(255,255,255,.12);
+
+box-shadow:
+0 15px 35px rgba(0,0,0,.25);
+
+}
+
+.profile-tab{
+
+flex:1;
+
+padding:14px 10px;
+
+border-radius:16px;
+
+text-align:center;
+
+cursor:pointer;
+
+font-weight:700;
+
+color:#ffffff;
+
+transition:.3s;
+
+}
+
+.profile-tab:hover{
+
+background:
+linear-gradient(
+135deg,
+#6d28d9,
+#8b5cf6
+);
+
+transform:translateY(-2px);
+
+}
+
+.profile-tab.active{
+
+background:
+linear-gradient(
+135deg,
+#ffd700,
+#f6c453
+);
+
+color:#111827;
+
+box-shadow:
+0 8px 20px rgba(255,215,0,.35);
+
+}
+
+/* ===========================
+   CONTENT CARD
+=========================== */
+
+.profile-content{
+
+margin:20px;
+
+padding:24px;
+
+border-radius:24px;
+
+background:rgba(255,255,255,.08);
+
+border:1px solid rgba(255,255,255,.10);
+
+backdrop-filter:blur(18px);
+
+min-height:300px;
+
+box-shadow:
+0 15px 35px rgba(0,0,0,.20);
+
+}
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media(max-width:768px){
+
+.profile-cover{
+
+height:270px;
+
+margin:10px;
+
+}
+
+.profile-avatar{
+
+left:20px;
+
+bottom:20px;
+
+width:120px;
+
+height:165px;
+
+font-size:60px;
+
+}
+
+.profile-info h1{
+
+font-size:28px;
+
+}
+
+.profile-stats{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+.profile-tabs{
+
+overflow-x:auto;
+
+justify-content:flex-start;
+
+}
+
+.profile-tab{
+
+min-width:110px;
+
+}
+
+.quick-actions{
+
+flex-direction:column;
+
+}
+
+.quick-actions button{
+
+width:100%;
+
+}
+
+}
+
+/* ===========================
+   DESIGNED FOR MINGLE
+   Where People Don't Just Connect...
+   They Belong.
+=========================== */

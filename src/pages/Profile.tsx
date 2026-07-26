@@ -1,195 +1,160 @@
 import React from "react";
 import "./Profile.css";
 
-const Profile = () => {
+export default function Profile() {
   return (
     <div className="profile-page">
 
-      {/* Cover Area */}
+      {/* =========================
+          MINGLE BANNER
+      ========================== */}
+
       <section className="profile-cover">
 
         <div className="profile-avatar">
-          👤
+          📷
         </div>
 
       </section>
 
+      {/* =========================
+          PROFILE INFORMATION
+      ========================== */}
 
-      {/* Profile Info */}
       <section className="profile-info">
 
-        <h1>
-          Mingle User
-        </h1>
+        <h1>Juddy Praise</h1>
+
+        <div className="mingle-id">
+          ⭐ Mingle ID: MNG-000001
+        </div>
 
         <p>
-          🌍 Connecting people. Sharing moments.
-          Building belonging.
+          Where People Don't Just Connect...
+          They Belong.
         </p>
-
 
         <button className="edit-btn">
-          Edit Profile
+          Edit Identity
         </button>
-
-
-        <div className="profile-stats">
-
-          <div>
-            <strong>120</strong>
-            <span>Posts</span>
-          </div>
-
-
-          <div>
-            <strong>2.5K</strong>
-            <span>Followers</span>
-          </div>
-
-
-          <div>
-            <strong>500</strong>
-            <span>Following</span>
-          </div>
-
-
-        </div>
-
 
       </section>
 
+      {/* =========================
+          STATS
+      ========================== */}
 
+      <section className="profile-stats">
 
-      {/* Premium Badge */}
+        <div>
+          <strong>12</strong>
+          <span>Posts</span>
+        </div>
 
-      <section className="badge-card">
+        <div>
+          <strong>245</strong>
+          <span>Friends</span>
+        </div>
 
-        <h2>
-          ✨ Mingle Identity
-        </h2>
+        <div>
+          <strong>86</strong>
+          <span>Photos</span>
+        </div>
+
+        <div>
+          <strong>15</strong>
+          <span>Groups</span>
+        </div>
+
+      </section>
+      {/* =========================
+          MINGLE IDENTITY
+      ========================== */}
+
+      <section className="identity-panel">
+
+        <h3>Mingle Identity</h3>
+
+        <div className="identity-item">
+          <span className="identity-label">Status</span>
+          <span className="identity-value">🟢 Online</span>
+        </div>
+
+        <div className="identity-item">
+          <span className="identity-label">Location</span>
+          <span className="identity-value">Nigeria</span>
+        </div>
+
+        <div className="identity-item">
+          <span className="identity-label">Joined</span>
+          <span className="identity-value">2026</span>
+        </div>
+
+        <div className="identity-item">
+          <span className="identity-label">Verification</span>
+          <span className="identity-value">Coming Soon</span>
+        </div>
+
+      </section>
+
+      {/* =========================
+          QUICK ACTIONS
+      ========================== */}
+
+      <section className="quick-actions">
+
+        <button>Share Identity</button>
+
+        <button>My Photos</button>
+
+        <button>
+      {/* =========================
+          MINGLE COMMAND DOCK
+      ========================== */}
+
+      <section className="profile-tabs">
+
+        <div className="profile-tab active">
+          📝 Posts
+        </div>
+
+        <div className="profile-tab">
+          👥 Friends
+        </div>
+
+        <div className="profile-tab">
+          📷 Photos
+        </div>
+
+        <div className="profile-tab">
+          🛒 Market
+        </div>
+
+        <div className="profile-tab">
+          ℹ️ About
+        </div>
+
+      </section>
+
+      {/* =========================
+          CONTENT AREA
+      ========================== */}
+
+      <section className="profile-content">
+
+        <h2>Welcome to your Mingle Identity</h2>
 
         <p>
-          Active member of the Mingle community.
+          This is where your posts, photos, achievements,
+          memories and connections will appear.
+        </p>
+
+        <p>
+          🚀 More premium profile features are coming soon.
         </p>
 
       </section>
-
-
-
-      {/* Pi Area */}
-
-      <section className="wallet-card">
-
-        <h2>
-          🟣 Pi Connection
-        </h2>
-
-        <p>
-          Connect your Pi identity and explore
-          Mingle opportunities.
-        </p>
-
-
-        <button>
-          Connect Pi
-        </button>
-
-
-      </section>
-
-
-
-
-      {/* User Posts */}
-
-      <section className="user-posts">
-
-        <h2>
-          📰 Posts
-        </h2>
-
-
-        <div className="post-card">
-
-          <h3>
-            Mingle User
-          </h3>
-
-          <p>
-            Welcome to my Mingle journey 💜
-          </p>
-
-          <small>
-            ❤️ 45 Likes • 💬 8 Comments
-          </small>
-
-
-        </div>
-
-
-
-        <div className="post-card">
-
-          <h3>
-            Mingle User
-          </h3>
-
-          <p>
-            Connecting with amazing people.
-          </p>
-
-          <small>
-            ❤️ 21 Likes • 💬 4 Comments
-          </small>
-
-        </div>
-
-
-      </section>
-
-
-
-
-      {/* Bottom Navigation */}
-
-      <nav className="profile-nav">
-
-        <button>
-          🏠
-          <span>Home</span>
-        </button>
-
-
-        <button>
-          🔎
-          <span>Explore</span>
-        </button>
-
-
-        <button>
-          ➕
-          <span>Create</span>
-        </button>
-
-
-        <button>
-          💬
-          <span>Chat</span>
-        </button>
-
-
-        <button>
-          👤
-          <span>Profile</span>
-        </button>
-
-
-      </nav>
-
 
     </div>
   );
-};
-
-
-export default Profile;
+}
