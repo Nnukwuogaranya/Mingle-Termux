@@ -1,66 +1,24 @@
-import React, { useState } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
 import Home from "./pages/Home";
-
+import Profile from "./pages/Profile";
 
 function App() {
-
-  const [page, setPage] = useState("login");
-
-  const [loggedIn, setLoggedIn] = useState(false);
-
-
-
-  if (loggedIn) {
-    return <Home />;
-  }
-
-
-
-  if (page === "register") {
-
-    return (
-
-      <Register
-        onRegister={() => setPage("login")}
-      />
-
-    );
-
-  }
-
-
-
-  if (page === "forgot") {
-
-    return (
-
-      <ForgotPassword />
-
-    );
-
-  }
-
-
-
   return (
+    <Routes>
+      <Route path="/" element={<Navigate to="/login" replace />} />
 
-    <Login
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
 
-      onLogin={() => setLoggedIn(true)}
-
-      onRegister={() => setPage("register")}
-
-      onForgotPassword={() => setPage("forgot")}
-
-    />
-
+      <Route path="/home" element={<Home />} />
+      <Route path="/profile" element={<Profile />} />
+    </Routes>
   );
-
 }
-
 
 export default App;
