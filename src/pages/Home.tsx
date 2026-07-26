@@ -17,15 +17,7 @@ type Post = {
 };
 
 function Home() {
-  const [posts, setPosts] = useState<Post[]>([
-    {
-      id: 1,
-      author: "Mingle",
-      text: "🎉 Welcome to Mingle! This is the beginning of your journey. Connect. Share. Grow. Where People Don't Just Connect... They Belong.",
-      time: "Just now",
-    },
-  ]);
-
+  const [posts, setPosts] = useState<Post[]>([]);
   const [text, setText] = useState("");
 
   const createPost = () => {
@@ -36,7 +28,7 @@ function Home() {
         id: Date.now(),
         author: "You",
         text,
-        time: "Now",
+        time: "Just now",
       },
       ...posts,
     ]);
@@ -55,11 +47,6 @@ function Home() {
         </div>
       </header>
 
-      <section className="welcome-card">
-        <h2>Welcome to Mingle</h2>
-        <p>Where People Don't Just Connect... They Belong.</p>
-      </section>
-
       <section className="create-post">
         <textarea
           placeholder="What's on your mind?"
@@ -73,16 +60,30 @@ function Home() {
       </section>
 
       <section className="feed">
-        {posts.map((post) => (
-          <article className="post" key={post.id}>
+        {posts.length === 0 ? (
+          <article className="post">
             <div className="post-header">
-              <strong>{post.author}</strong>
-              <span>{post.time}</span>
+              <strong>Mingle</strong>
+              <span>Now</span>
             </div>
 
-            <p>{post.text}</p>
+            <p>
+              Your feed is empty.
+              Create your first post and start connecting.
+            </p>
           </article>
-        ))}
+        ) : (
+          posts.map((post) => (
+            <article className="post" key={post.id}>
+              <div className="post-header">
+                <strong>{post.author}</strong>
+                <span>{post.time}</span>
+              </div>
+
+              <p>{post.text}</p>
+            </article>
+          ))
+        )}
       </section>
 
       <nav className="bottom-nav">
