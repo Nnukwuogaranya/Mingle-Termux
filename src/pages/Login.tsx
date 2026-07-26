@@ -1,205 +1,93 @@
 import React, { useState } from "react";
 import "./Auth.css";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { app } from "./firebase";
 
-import { loginUser } from "../services/auth";
+const auth = getAuth(app);
 
 type LoginProps = {
   onLogin: () => void;
-  onRegister: () => void;
-  onForgotPassword: () => void;
 };
 
+export default function Login({ onLogin }: LoginProps) {
+  const = useState("");
+  const = useState("");
+  const = useState("");[emailOrPhone][setEmailOrPhone][password][setPassword][error][setError]
 
-export default function Login({
-  onLogin,
-  onRegister,
-  onForgotPassword,
-}: LoginProps) {
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const [showPassword, setShowPassword] = useState(false);
-
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-
-
-
-  const login = async () => {
-
+  const handleLogin = async () => {
     setError("");
-
-    if (!email || !password) {
-      setError("Enter email and password.");
+    if (!emailOrPhone.trim() ||!password.trim()) {
+      setError("Please enter email and password");
       return;
     }
-
-
     try {
-
-      setLoading(true);
-
-      await loginUser(
-        email,
-        password
-      );
-
+      await signInWithEmailAndPassword(auth, emailOrPhone, password);
       onLogin();
-
-
-    } catch {
-
-      setError(
-        "Invalid email or password."
-      );
-
-
-    } finally {
-
-      setLoading(false);
-
+    } catch (err: any) {
+      setError(err.message);
     }
-
   };
 
+  const handleSignup = async () => {
+    setError("");
+    if (!emailOrPhone.trim() ||!password.trim()) {
+      setError("Please enter email and password");
+      return;
+    }
+    try {
+      await createUserWithEmailAndPassword(auth, emailOrPhone, password);
+      alert("Account Created!");
+      onLogin();
+    } catch (err: any) {
+      setError(err.message);
+    }
+  };
 
+  const handlePiLogin = () => {
+    // @ts-ignore
+    http://window.Pi.authenticate(['username', 'payments'],
+      function(auth) {
+        http://console.log("Pi Login Success", auth);
+        onLogin();
+      },
+      function(error) {
+        http://console.error(error);
+        setError("Pi Login Failed");
+      }
+    );
+  };
 
   return (
-
     <div className="auth-page">
-
       <div className="auth-card">
-
-
-        <div className="auth-logo">
-          M
-        </div>
-
-
-        <h1>
-          Welcome Back
-        </h1>
-
-
-        <p>
-          Sign in to continue your Mingle journey.
-        </p>
-
-
-
-        {error && (
-          <div className="auth-error">
-            {error}
-          </div>
-        )}
-
-
-
+        <div className="auth-logo">M</div>
+        <h1>Welcome Back</h1>
+        <p>Sign in to continue your Mingle journey.</p>
         <input
           type="email"
-          placeholder="Email Address"
-          value={email}
-          onChange={(e) =>
-            setEmail(e.target.value)
-          }
+          placeholder="Email"
+          value={emailOrPhone}
+          onChange={(e) => setEmailOrPhone(e.target.value)}
         />
-
-
-
-        <div className="password-box">
-
-          <input
-            type={
-              showPassword
-                ? "text"
-                : "password"
-            }
-            placeholder="Password"
-            value={password}
-            onChange={(e) =>
-              setPassword(e.target.value)
-            }
-          />
-
-
-          <button
-            type="button"
-            className="eye-button"
-            onClick={() =>
-              setShowPassword(!showPassword)
-            }
-          >
-
-            {showPassword ? "🙈" : "👁️"}
-
-          </button>
-
-
-        </div>
-
-
-
-        <button
-          onClick={login}
-          disabled={loading}
-        >
-
-          {loading
-            ? "Logging in..."
-            : "Login"
-          }
-
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        {error && <p style={{color: 'red', fontSize: '12px'}}>{error}</p>}
+        <button onClick={handleLogin}>Login</button>
+        <button className="secondary-button" onClick={handleSignup}>
+          Create New Mingle Account
         </button>
-
-
-
-        <button className="pi-button">
+        <div className="auth-divider">OR</div>
+        <button className="pi-button" onClick={handlePiLogin}>
           🟣 Continue with Pi
         </button>
-
-
-
-        <button className="finger-button">
-          🔐 Login with Fingerprint
-        </button>
-
-
-
         <div className="auth-links">
-
-          <button
-            className="link-button"
-            onClick={onForgotPassword}
-          >
-            Forgot Password?
-          </button>
-
+          <a href="#">Forgot Password?</a>
         </div>
-
-
-
-        <div className="auth-divider">
-          OR
-        </div>
-
-
-
-        <button
-          className="secondary-button"
-          onClick={onRegister}
-        >
-
-          Create New Mingle Account
-
-        </button>
-
-
-
       </div>
-
     </div>
-
   );
-
 }
