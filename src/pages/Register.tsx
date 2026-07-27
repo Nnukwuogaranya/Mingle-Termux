@@ -21,13 +21,8 @@ export default function Register({
   const [password, setPassword] = useState("");
 
   const [showPassword, setShowPassword] = useState(false);
-
-
   const [error, setError] = useState("");
-
-  const [success, setSuccess] = useState("");
-
-  const [loading, setLoading] = useState(false);
+const [confirmPassword, setConfirmPassword] = useState("");  cons  const [loading, setLoading] = useState(false);
 
 
 
