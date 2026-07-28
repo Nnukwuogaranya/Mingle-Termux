@@ -1,39 +1,33 @@
-import { useState } from "react";
-import { Eye, EyeOff, Mail, Phone, Lock, User } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
-import "./Auth.css";
+import { useState } from 'react';
+import { Phone, Mail, Lock, User, Eye, EyeOff } from 'lucide-react';
 
-export default function Register() {
-  const [activeTab, setActiveTab] = useState<'phone' | 'email'>('phone');
+const Register = () => {
+  const [activeTab, setActiveTab] = useState('phone');
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
 
-  const handlePiRegister = async () => {
-    // TODO: We will connect Pi SDK here next
-    alert('Pi Register coming next!');
+  const handleRegister = (e: React.FormEvent) => {
+    e.preventDefault();
+    // will connect backend register here
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // TODO: connect backend register here
-    navigate('/');
+  const handlePiRegister = () => {
+    // will connect Pi SDK here next
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 to-purple-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-8">
-        <h1 className="text-3xl font-bold text-center mb-2">Create Account</h1>
+        <h1 className="text-2xl font-bold text-center mb-2">Register</h1>
         <p className="text-gray-500 text-center mb-6">Join Mingle today</p>
 
-        {/* Tabs */}
         <div className="flex bg-gray-100 rounded-lg p-1 mb-6">
-          <button 
+          <button
             onClick={() => setActiveTab('phone')}
             className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-md ${activeTab === 'phone' ? 'bg-white shadow' : ''}`}
           >
             <Phone size={18} /> Phone
           </button>
-          <button 
+          <button
             onClick={() => setActiveTab('email')}
             className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-md ${activeTab === 'email' ? 'bg-white shadow' : ''}`}
           >
@@ -41,7 +35,7 @@ export default function Register() {
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleRegister} className="space-y-4">
           <div className="relative">
             <User className="absolute left-3 top-3 text-gray-400" size={20} />
             <input type="text" placeholder="Full name" className="w-full pl-10 pr-4 py-2 border rounded-lg" />
@@ -61,10 +55,10 @@ export default function Register() {
 
           <div className="relative">
             <Lock className="absolute left-3 top-3 text-gray-400" size={20} />
-            <input 
-              type={showPassword ? "text" : "password"} 
-              placeholder="Password" 
-              className="w-full pl-10 pr-10 py-2 border rounded-lg" 
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              className="w-full pl-10 pr-10 py-2 border rounded-lg"
             />
             <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-3">
               {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
@@ -76,17 +70,15 @@ export default function Register() {
           </button>
         </form>
 
-        <button 
+        <button
           onClick={handlePiRegister}
           className="w-full mt-4 border border-purple-500 text-purple-500 py-3 rounded-lg font-semibold"
         >
-          Sign up with Pi
+          Register with Pi
         </button>
-
-        <p className="text-center mt-6 text-sm">
-          Already have an account? <Link to="/login" className="text-pink-500">Login</Link>
-        </p>
       </div>
     </div>
   );
-}
+};
+
+export default Register;
