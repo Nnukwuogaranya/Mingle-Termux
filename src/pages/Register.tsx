@@ -18,11 +18,13 @@ export default function Register({
 
   const [email, setEmail] = useState("");
 
-  const [password, setPassword] = useState("");
+
+const [success, setSuccess] = useState("");  const [password, setPassword] = useState("");
 
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
-const [confirmPassword, setConfirmPassword] = useState("");  cons  const [loading, setLoading] = useState(false);
+const [confirmPassword, setConfirmPassword] = useState("");
+const [loading, setLoading] = useState(false);
 
 
 

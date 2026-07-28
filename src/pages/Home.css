@@ -1,515 +1,481 @@
-/* =========================================================
-   MINGLE HOME V2.0
-   Part 1/4
-========================================================= */
+/* ==========================================================
+   GLOBAL RESET
+========================================================== */
 
-*{
-  box-sizing:border-box;
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-body{
-  margin:0;
-  background:#071426;
+html {
+  scroll-behavior: smooth;
 }
 
-.home{
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #0d1224;
+  color: #ffffff;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
 
-  min-height:100vh;
+/* ==========================================================
+   ROOT VARIABLES
+========================================================== */
 
-  color:#ffffff;
+:root {
 
-  background:
-  radial-gradient(circle at top,#6d28d9 0%,transparent 35%),
-  linear-gradient(180deg,#071426,#120027,#071426);
+  --primary: #6d28d9;
+  --secondary: #1e3a8a;
+  --gold: #fbbf24;
+  --success: #16a34a;
+  --danger: #dc2626;
+  --warning: #f59e0b;
 
-  padding-bottom:110px;
+  --white: #ffffff;
+  --light: #f5f5f5;
+  --dark: #111827;
 
-  font-family:Inter,Arial,sans-serif;
+  --text: #e5e7eb;
+  --text-light: #9ca3af;
+
+  --radius: 12px;
+  --shadow: 0 10px 25px rgba(0,0,0,.25);
+
+  --transition: .3s ease;
+}
+
+/* ==========================================================
+   LINKS
+========================================================== */
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+/* ==========================================================
+   IMAGES
+========================================================== */
+
+img{
+    width:100%;
+    display:block;
+}
+
+/* ==========================================================
+   HEADINGS
+========================================================== */
+
+h1,h2,h3,h4,h5,h6{
+    font-weight:700;
+    line-height:1.2;
+}
+
+p{
+    color:var(--text);
+}
+
+/* ==========================================================
+   CONTAINERS
+========================================================== */
+
+.container{
+    width:90%;
+    max-width:1200px;
+    margin:auto;
+}
+
+.section{
+    padding:70px 0;
+}
+
+/* ==========================================================
+   FLEX UTILITIES
+========================================================== */
+
+.flex{
+    display:flex;
+}
+
+.flex-center{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.flex-between{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.flex-column{
+    display:flex;
+    flex-direction:column;
+}
+
+.gap-10{gap:10px;}
+.gap-20{gap:20px;}
+.gap-30{gap:30px;}
+
+/* ==========================================================
+   GRID
+========================================================== */
+
+.grid{
+    display:grid;
+    gap:20px;
+}
+
+.grid-2{
+    grid-template-columns:repeat(2,1fr);
+}
+
+.grid-3{
+    grid-template-columns:repeat(3,1fr);
+}
+
+.grid-4{
+    grid-template-columns:repeat(4,1fr);
+}
+
+/* ==========================================================
+   BUTTONS
+========================================================== */
+
+.btn{
+    padding:12px 22px;
+    border:none;
+    border-radius:var(--radius);
+    cursor:pointer;
+    transition:var(--transition);
+    font-weight:600;
+}
+
+.btn-primary{
+    background:var(--primary);
+    color:#fff;
+}
+
+.btn-primary:hover{
+    background:#5820b5;
+}
+
+.btn-secondary{
+    background:var(--secondary);
+    color:#fff;
+}
+
+.btn-gold{
+    background:var(--gold);
+    color:#111;
+}
+
+.btn-danger{
+    background:var(--danger);
+    color:white;
+}
+
+/* ==========================================================
+   CARDS
+========================================================== */
+
+.card{
+    background:#161d36;
+    padding:20px;
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+/* ==========================================================
+   INPUTS
+========================================================== */
+
+input,
+textarea,
+select{
+
+    width:100%;
+    padding:12px;
+    border-radius:10px;
+    border:1px solid #2d3557;
+    background:#1c2442;
+    color:white;
+    outline:none;
+}
+
+input:focus,
+textarea:focus{
+    border-color:var(--gold);
+}
+
+/* ==========================================================
+   TABLES
+========================================================== */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,
+td{
+    padding:12px;
+    border:1px solid #2d3557;
+}
+
+th{
+    background:var(--secondary);
+}
+
+/* ==========================================================
+   ALERTS
+========================================================== */
+
+.success{
+    background:#14532d;
+    color:white;
+    padding:15px;
+    border-radius:10px;
+}
+
+.error{
+    background:#7f1d1d;
+    color:white;
+    padding:15px;
+    border-radius:10px;
+}
+
+.warning{
+    background:#78350f;
+    color:white;
+    padding:15px;
+    border-radius:10px;
+}
+
+/* ==========================================================
+   BADGES
+========================================================== */
+
+.badge{
+    display:inline-block;
+    padding:5px 12px;
+    border-radius:50px;
+    font-size:12px;
+}
+
+.badge-primary{
+    background:var(--primary);
+}
+
+.badge-success{
+    background:var(--success);
+}
+
+.badge-gold{
+    background:var(--gold);
+    color:#111;
+}
+
+/* ==========================================================
+   SHADOWS
+========================================================== */
+
+.shadow{
+    box-shadow:var(--shadow);
+}
+
+/* ==========================================================
+   RADIUS
+========================================================== */
+
+.rounded{
+    border-radius:var(--radius);
+}
+
+.round{
+    border-radius:50%;
+}
+
+/* ==========================================================
+   TEXT ALIGNMENT
+========================================================== */
+
+.text-center{
+    text-align:center;
+}
+
+.text-left{
+    text-align:left;
+}
+
+.text-right{
+    text-align:right;
+}
+
+/* ==========================================================
+   MARGINS
+========================================================== */
+
+.mt-10{margin-top:10px;}
+.mt-20{margin-top:20px;}
+.mt-30{margin-top:30px;}
+.mt-50{margin-top:50px;}
+
+.mb-10{margin-bottom:10px;}
+.mb-20{margin-bottom:20px;}
+.mb-30{margin-bottom:30px;}
+.mb-50{margin-bottom:50px;}
+
+/* ==========================================================
+   PADDING
+========================================================== */
+
+.p-10{padding:10px;}
+.p-20{padding:20px;}
+.p-30{padding:30px;}
+
+/* ==========================================================
+   DISPLAY
+========================================================== */
+
+.hidden{
+    display:none;
+}
+
+.block{
+    display:block;
+}
+
+/* ==========================================================
+   ANIMATIONS
+========================================================== */
+
+.fade-in{
+    animation:fade .5s ease;
+}
+
+@keyframes fade{
+
+    from{
+        opacity:0;
+    }
+
+    to{
+        opacity:1;
+    }
 
 }
 
-/* ===========================
-   TOP BAR
-=========================== */
+.slide-up{
+    animation:slide .4s ease;
+}
 
-.topbar{
+@keyframes slide{
 
-  position:sticky;
+    from{
+        transform:translateY(40px);
+        opacity:0;
+    }
 
-  top:0;
-
-  z-index:100;
-
-  display:flex;
-
-  justify-content:space-between;
-
-  align-items:center;
-
-  padding:18px 20px;
-
-  background:
-  rgba(8,16,35,.78);
-
-  backdrop-filter:blur(18px);
-
-  border-bottom:1px solid rgba(255,255,255,.08);
+    to{
+        transform:translateY(0);
+        opacity:1;
+    }
 
 }
 
-.logo{
+.spin{
+    animation:spin 1s linear infinite;
+}
 
-  margin:0;
+@keyframes spin{
 
-  font-size:32px;
-
-  font-weight:800;
-
-  color:#ffd700;
-
-  letter-spacing:1px;
+    to{
+        transform:rotate(360deg);
+    }
 
 }
 
-.top-icons{
-
-  display:flex;
-
-  gap:18px;
-
-  font-size:24px;
-
-}
-
-.top-icons svg{
-
-  cursor:pointer;
-
-  transition:.3s;
-
-}
-
-.top-icons svg:hover{
-
-  color:#ffd700;
-
-  transform:scale(1.08);
-
-}
-
-/* ===========================
-   STORIES
-=========================== */
-
-.stories{
-
-  display:flex;
-
-  gap:15px;
-
-  overflow-x:auto;
-
-  padding:18px;
-
-}
-
-.story{
-
-  min-width:78px;
-
-  text-align:center;
-
-}
-
-.story-avatar{
-
-  width:68px;
-
-  height:68px;
-
-  border-radius:18px;
-
-  background:
-  linear-gradient(135deg,#6d28d9,#ffd700);
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  font-size:28px;
-
-  border:2px solid rgba(255,215,0,.4);
-
-}
-
-.story-name{
-
-  margin-top:8px;
-
-  font-size:12px;
-
-  color:#ddd;
-
-}
-/* =========================================================
-   MINGLE HOME V2.0
-   Part 2/4
-========================================================= */
-
-/* ===========================
-   CREATE POST
-=========================== */
-
-.create-post{
-
-margin:20px;
-
-padding:20px;
-
-border-radius:26px;
-
-background:rgba(255,255,255,.08);
-
-backdrop-filter:blur(20px);
-
-border:1px solid rgba(255,255,255,.10);
-
-box-shadow:0 15px 35px rgba(0,0,0,.25);
-
-}
-
-.create-post textarea{
-
-width:100%;
-
-min-height:120px;
-
-resize:none;
-
-padding:18px;
-
-border:none;
-
-outline:none;
-
-border-radius:18px;
-
-background:rgba(255,255,255,.08);
-
-color:#fff;
-
-font-size:16px;
-
-}
-
-.create-post textarea::placeholder{
-
-color:rgba(255,255,255,.55);
-
-}
-
-.create-post button{
-
-margin-top:16px;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-gap:10px;
-
-width:100%;
-
-padding:15px;
-
-border:none;
-
-border-radius:18px;
-
-cursor:pointer;
-
-font-size:17px;
-
-font-weight:700;
-
-background:linear-gradient(135deg,#ffd700,#f6c453);
-
-color:#111827;
-
-transition:.3s;
-
-}
-
-.create-post button:hover{
-
-transform:translateY(-2px);
-
-box-shadow:0 12px 25px rgba(255,215,0,.35);
-
-}
-
-/* ===========================
-   FEED
-=========================== */
-
-.feed{
-
-padding:0 20px;
-
-}
-
-.post{
-
-margin-bottom:22px;
-
-padding:20px;
-
-border-radius:24px;
-
-background:rgba(255,255,255,.08);
-
-backdrop-filter:blur(18px);
-
-border:1px solid rgba(255,255,255,.10);
-
-box-shadow:0 15px 30px rgba(0,0,0,.20);
-
-}
-
-.post-header{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-margin-bottom:15px;
-
-}
-
-.post-header strong{
-
-color:#ffd700;
-
-font-size:18px;
-
-}
-
-.post-header span{
-
-font-size:13px;
-
-color:#b
-/* =========================================================
-   MINGLE HOME V2.0
-   Part 3/4
-========================================================= */
-
-/* ===========================
-   WELCOME CARD
-=========================== */
-
-.welcome-card{
-
-margin:20px;
-
-padding:22px;
-
-border-radius:26px;
-
-background:linear-gradient(
-135deg,
-rgba(109,40,217,.30),
-rgba(255,215,0,.15)
-);
-
-border:1px solid rgba(255,215,0,.25);
-
-box-shadow:0 15px 35px rgba(0,0,0,.25);
-
-}
-
-.welcome-card h2{
-
-margin:0 0 10px;
-
-font-size:28px;
-
-color:#ffd700;
-
-}
-
-.welcome-card p{
-
-margin:0;
-
-line-height:1.7;
-
-color:rgba(255,255,255,.90);
-
-}
-
-/* ===========================
-   PREMIUM POST CARD EFFECT
-=========================== */
-
-.post:hover{
-
-transform:translateY(-4px);
-
-transition:.3s;
-
-border-color:rgba(255,215,0,.30);
-
-box-shadow:
-0 18px 40px rgba(0,0,0,.30);
-
-}
-
-/* ===========================
+/* ==========================================================
    SCROLLBAR
-=========================== */
+========================================================== */
 
 ::-webkit-scrollbar{
-
-width:8px;
-
-height:8px;
-
+    width:8px;
 }
 
 ::-webkit-scrollbar-thumb{
-
-background:#6d28d9;
-
-border-radius:20px;
-
+    background:var(--gold);
+    border-radius:20px;
 }
 
 ::-webkit-scrollbar-track{
-
-background:transparent;
-
-}
-/* =========================================================
-   MINGLE HOME V2.0
-   Part 4/4
-========================================================= */
-
-/* ===========================
-   FLOATING NAVIGATION
-=========================== */
-
-.bottom-nav{
-
-position:fixed;
-
-left:15px;
-
-right:15px;
-
-bottom:18px;
-
-display:flex;
-
-justify-content:space-around;
-
-align-items:center;
-
-padding:12px;
-
-border-radius:28px;
-
-background:rgba(12,18,38,.88);
-
-backdrop-filter:blur(20px);
-
-border:1px solid rgba(255,255,255,.08);
-
-box-shadow:
-0 15px 35px rgba(0,0,0,.45);
-
-z-index:1000;
-
+    background:#111827;
 }
 
-.bottom-nav button{
-
-background:none;
-
-border:none;
-
-color:#ffffff;
-
-display:flex;
-
-flex-direction:column;
-
-align-items:center;
-
-gap:6px;
-
-cursor:pointer;
-
-font-size:13px;
-
-transition:.3s;
-
-}
-
-.bottom-nav button svg{
-
-font-size:22px;
-
-}
-
-.bottom-nav button:hover{
-
-color:#ffd700;
-
-transform:translateY(-3px);
-
-}
-
-/* Active button */
-
-.bottom-nav button:first-child{
-
-color:#ffd700;
-
-}
-
-/* ===========================
+/* ==========================================================
    RESPONSIVE
-=========================== */
+========================================================== */
+
+@media(max-width:992px){
+
+.grid-4{
+    grid-template-columns:repeat(2,1fr);
+}
+
+.grid-3{
+    grid-template-columns:repeat(2,1fr);
+}
+
+}
 
 @media(max-width:768px){
 
-.home{
+.grid-2,
+.grid-3,
+.grid-4{
 
-padding-bottom:110px;
-
-}
-
-.logo{
-
-font-size:28px;
+    grid-template-columns:1fr;
 
 }
 
-.top-icons{
+.flex-between{
 
-font-size:22px;
+    flex-direction:column;
+    gap:15px;
 
 }
 
-.create-post{
+.container{
 
-margin:15px;
+    width:95%;
+
+}
+
+}
+
+@media(max-width:480px){
+
+body{
+
+    font-size:15px;
+
+}
+
+.btn{
+
+    width:100%;
+
+}
 
 }

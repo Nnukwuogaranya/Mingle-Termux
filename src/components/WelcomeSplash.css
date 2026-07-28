@@ -1,0 +1,38 @@
+.welcome-splash {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background:
+    radial-gradient(circle at top, #6f2cff33, transparent 35%),
+    linear-gradient(180deg, #061326, #12002f, #08111f);
+  color: white;
+  padding: 20px;
+}
+
+.welcome-image {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 55px;
+  background: linear-gradient(135deg, #ffd700, #f6c344);
+  margin-bottom: 25px;
+  box-shadow: 0 0 30px #ffd70055;
+}
+
+.welcome-splash h1 {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+.welcome-splash p {
+  font-size: 17px;
+  line-height: 1.6;
+  color: #dddddd;
+}

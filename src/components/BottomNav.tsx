@@ -1,6 +1,4 @@
-ano 9.1                                              src/
 import "./BottomNav.css";
-components/BottomNav.tsx
 import { NavLink } from "react-router-dom";
 import {
 FaHome,
@@ -12,7 +10,8 @@ FaUserCircle,
 
 const BottomNav = () => {
 return (
-<nav className="bottom-nav">                                                                                                                      <NavLink to="/home">
+<nav className="bottom-nav">
+<NavLink to="/home">
 <FaHome />
 <span>Home</span>
 </NavLink>

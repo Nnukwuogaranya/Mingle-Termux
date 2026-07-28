@@ -1,5 +1,3 @@
-import "./MingleShell.css";
-import BottomNav from "./BottomNav";
 import React from "react";
 import "./MingleShell.css";
 import BottomNav from "./BottomNav";
@@ -8,7 +6,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-const MingleShell = ({ children }: Props) => {
+export default function MingleShell({ children }: Props) {
   return (
     <div className="mingle-shell">
       <div className="mingle-glow glow-one"></div>
@@ -33,6 +31,4 @@ const MingleShell = ({ children }: Props) => {
       <BottomNav />
     </div>
   );
-};
-
-export default MingleShell;
+}
