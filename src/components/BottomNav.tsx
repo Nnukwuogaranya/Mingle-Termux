@@ -1,44 +1,24 @@
-ano 9.1                                              src/
-import "./BottomNav.css";
-components/BottomNav.tsx
-import { NavLink } from "react-router-dom";
-import {
-FaHome,
-FaUserFriends,
-FaComments,
-FaBell,
-FaUserCircle,
-} from "react-icons/fa";
+import { Home, Search, MessageCircle, Bell, User } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
 
-const BottomNav = () => {
-return (
-<nav className="bottom-nav">                                                                                                                      <NavLink to="/home">
-<FaHome />
-<span>Home</span>
-</NavLink>
+export default function BottomNav() {
+  const location = useLocation();
+  
+  const navItems = [
+    { icon: Home, path: '/' },
+    { icon: Search, path: '/discover' },
+    { icon: MessageCircle, path: '/messages' },
+    { icon: Bell, path: '/notifications' },
+    { icon: User, path: '/profile' },
+  ];
 
-<NavLink to="/friends">  
-    <FaUserFriends />  
-    <span>Friends</span>  
-  </NavLink>  
-
-  <NavLink to="/messenger">  
-    <FaComments />  
-    <span>Chat</span>  
-  </NavLink>  
-
-  <NavLink to="/notifications">  
-    <FaBell />  
-    <span>Alerts</span>  
-  </NavLink>  
-
-  <NavLink to="/profile">  
-    <FaUserCircle />  
-    <span>Profile</span>  
-  </NavLink>  
-</nav>
-
-);
-};
-
-export default BottomNav;
+  return (
+    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around py-2 md:hidden">
+      {navItems.map(({ icon: Icon, path }) => (
+        <Link key={path} to={path} className={location.pathname === path ? 'text-[#6B46C1]' : 'text-gray-400'}>
+          <Icon size={24} />
+        </Link>
+      ))}
+    </div>
+  );
+}
