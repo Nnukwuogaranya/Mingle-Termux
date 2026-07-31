@@ -1,137 +1,230 @@
-/* =========================================================
-   MINGLE AUTH V2.0
-   Part 1 of 4
-   ========================================================= */
-
-:root{
-  --navy:#071426;
-  --navy2:#0d1f39;
-  --purple:#6d28d9;
-  --purple2:#8b5cf6;
-  --gold:#f6c453;
-  --gold2:#ffd700;
-  --white:#ffffff;
-  --glass:rgba(255,255,255,.10);
-  --border:rgba(255,255,255,.18);
-}
+/* ==========================================================
+   MINGLE PREMIUM AUTH CSS
+   PART 1
+   ========================================================== */
 
 *{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html,body{
+width:100%;
+height:100%;
+font-family:Inter,"Segoe UI",sans-serif;
+overflow:hidden;
 }
 
 body{
-  font-family:Inter,Segoe UI,Roboto,sans-serif;
-  background:var(--navy);
+
+background:
+linear-gradient(rgba(5,8,18,.45),rgba(5,8,18,.70)),
+url("../assets/hero.png");
+
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+
+color: #fff;}
+
+.auth-container{
+
+position:relative;
+
+width:100%;
+
+height:100vh;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+padding:25px;
+
+overflow:hidden;
+
 }
 
-.auth-page{
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  overflow:hidden;
-  position:relative;
-  padding:24px;
-  background:
-  radial-gradient(circle at top,#5126c8 0%,#081221 55%,#040912 100%);
+.bg-blob{
+
+position:absolute;
+
+border-radius:50%;
+
+filter:blur(120px);
+
+opacity:.45;
+
+animation:blob 12s infinite ease-in-out;
+
 }
 
-/* Moving light */
+.blob1{
 
-.auth-page::before{
-  content:"";
-  position:absolute;
-  width:700px;
-  height:700px;
-  border-radius:50%;
-  background:rgba(139,92,246,.22);
-  filter:blur(120px);
-  animation:floatGlow 12s ease-in-out infinite;
+width:330px;
+
+height:330px;
+
+background:#FFD54A;
+
+top:-120px;
+
+left:-120px;
+
 }
 
-.auth-page::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background-image:
-  radial-gradient(rgba(255,255,255,.15) 1px,transparent 1px);
-  background-size:40px 40px;
-  opacity:.25;
+.blob2{
+
+width:280px;
+
+height:280px;
+
+background:#7C3AED;
+
+bottom:-100px;
+
+right:-80px;
+
 }
 
-@keyframes floatGlow{
+.blob3{
 
-0%{
-transform:translate(-120px,-60px);
+width:180px;
+
+height:180px;
+
+background:white;
+
+top:20%;
+
+right:12%;
+
+opacity:.18;
+
+}
+
+@keyframes blob{
+
+0%,100%{
+
+transform:translate(0,0);
+
 }
 
 50%{
-transform:translate(120px,60px);
-}
 
-100%{
-transform:translate(-120px,-60px);
-}
+transform:translate(40px,50px);
 
 }
 
-/* Main Card */
+}
 
 .auth-card{
 
 position:relative;
-z-index:2;
 
 width:100%;
-max-width:430px;
 
-padding:42px 34px;
+max-width:470px;
+
+padding:42px;
 
 border-radius:30px;
 
-background:var(--glass);
+background:rgba(255,255,255,.12);
 
-border:1px solid var(--border);
+border:1px solid rgba(255,255,255,.22);
 
-backdrop-filter:blur(20px);
+backdrop-filter:blur(24px);
+
+-webkit-backdrop-filter:blur(24px);
 
 box-shadow:
-0 25px 60px rgba(0,0,0,.45);
 
-text-align:center;
+0 25px 80px rgba(0,0,0,.45);
 
-animation:cardIn .9s ease;
+overflow:hidden;
+
+animation:card .8s ease;
 
 }
 
-@keyframes cardIn{
+@keyframes card{
 
 from{
 
 opacity:0;
-transform:translateY(35px);
+
+transform:translateY(40px);
 
 }
 
 to{
 
 opacity:1;
-transform:translateY(0);
+
+transform:none;
 
 }
 
 }
 
-/* Logo */
+.light-reflection{
+
+position:absolute;
+
+top:-120px;
+
+left:-120px;
+
+width:120px;
+
+height:700px;
+
+background:rgba(255,255,255,.16);
+
+transform:rotate(30deg);
+
+animation:shine 6s linear infinite;
+
+}
+
+@keyframes shine{
+
+0%{
+
+left:-180px;
+
+}
+
+100%{
+
+left:650px;
+
+}
+
+}
+/* ==========================================================
+   PART 2 - LOGO • FORM • INPUTS
+   ========================================================== */
 
 .auth-logo{
+display:flex;
+flex-direction:column;
+align-items:center;
+text-align:center;
+margin-bottom:30px;
+z-index:2;
+position:relative;
+}
 
-width:110px;
-height:110px;
+.logo-ring{
 
-margin:0 auto 22px;
+width:130px;
+height:130px;
 
 border-radius:50%;
 
@@ -139,238 +232,272 @@ display:flex;
 align-items:center;
 justify-content:center;
 
-font-size:56px;
-font-weight:800;
-
-color:var(--gold2);
-
-background:
-linear-gradient(
-145deg,
-#7c3aed,
-#1e3a8a
+background:conic-gradient(
+from 0deg,
+#FFD54A,
+#FFF5A3,
+#7C3AED,
+#FFD54A
 );
 
-position:relative;
+animation:ringRotate 12s linear infinite;
 
 box-shadow:
-0 0 30px rgba(255,215,0,.35);
+0 0 45px rgba(255,213,74,.45);
 
-animation:
-logoPulse 3s ease-in-out infinite;
+margin-bottom:18px;
 
 }
-/* =========================================================
-   MINGLE AUTH V2.0
-   Part 2 of 4
-   ========================================================= */
 
-.auth-logo::before{
-  content:"";
-  position:absolute;
-  inset:-10px;
-  border-radius:50%;
-  border:2px solid rgba(255,215,0,.25);
-  animation:orbit 8s linear infinite;
+@keyframes ringRotate{
+
+from{
+transform:rotate(0deg);
 }
 
-.auth-logo::after{
-  content:"";
-  position:absolute;
-  width:8px;
-  height:8px;
-  background:#fff7c2;
-  border-radius:50%;
-  top:8px;
-  right:18px;
-  box-shadow:
-    0 0 15px #ffd700,
-    0 0 25px #ffd700;
-  animation:sparkle 2.5s ease-in-out infinite;
+to{
+transform:rotate(360deg);
 }
 
-@keyframes orbit{
-  0%{
-    transform:rotate(0deg);
-  }
-  100%{
-    transform:rotate(360deg);
-  }
 }
 
-@keyframes logoPulse{
-  0%,100%{
-    transform:scale(1);
-    box-shadow:0 0 25px rgba(255,215,0,.35);
-  }
-  50%{
-    transform:scale(1.06);
-    box-shadow:0 0 45px rgba(255,215,0,.70);
-  }
-}
+.logo-circle{
 
-@keyframes sparkle{
-  0%,100%{
-    opacity:.4;
-    transform:scale(.7);
-  }
-  50%{
-    opacity:1;
-    transform:scale(1.5);
-  }
-}
+width:105px;
+height:105px;
 
-/* Heading */
+border-radius:50%;
 
-.auth-card h1{
-  color:#fff;
-  font-size:34px;
-  font-weight:800;
-  margin-bottom:8px;
-}
+display:flex;
+align-items:center;
+justify-content:center;
 
-.auth-card p{
-  color:rgba(255,255,255,.85);
-  line-height:1.6;
-  margin-bottom:28px;
-}
+font-size:54px;
 
-/* Inputs */
+font-weight:900;
 
-.auth-card input{
-  width:100%;
-  height:56px;
-  margin-bottom:18px;
-  padding:0 18px;
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,.15);
-  background:rgba(255,255,255,.08);
-  color:#fff;
-  font-size:16px;
-  outline:none;
-  transition:.3s;
-}
+color:#FFD54A;
 
-.auth-card input::placeholder{
-  color:rgba(255,255,255,.55);
-}
-
-.auth-card input:focus{
-  border-color:#ffd700;
-  box-shadow:
-    0 0 18px rgba(255,215,0,.30);
-}
-
-/* Password Box */
-
-.password-box{
-  position:relative;
-}
-
-.password-box button{
-  position:absolute;
-  top:12px;
-  right:12px;
-  background:none;
-  border:none;
-  color:#ffd700;
-  cursor:pointer;
-  font-size:14px;
-  font-weight:600;
-}
-/* =========================================================
-   MINGLE AUTH V2.0
-   Part 3 of 4
-   ========================================================= */
-
-/* Primary Button */
-
-.login-button{
-
-width:100%;
-height:56px;
-
-margin-top:10px;
-
-border:none;
-border-radius:16px;
-
-cursor:pointer;
-
-font-size:17px;
-font-weight:700;
-
-color:#111827;
-
-background:
-linear-gradient(
+background:linear-gradient(
 135deg,
-var(--gold),
-var(--gold2)
+#071126,
+#16284b
 );
 
-box-shadow:
-0 10px 30px rgba(255,215,0,.35);
-
-transition:
-transform .25s ease,
-box-shadow .25s ease;
+text-shadow:
+0 0 20px rgba(255,213,74,.7);
 
 }
 
-.login-button:hover{
+.auth-logo h1{
 
-transform:translateY(-2px);
+font-size:42px;
 
-box-shadow:
-0 15px 35px rgba(255,215,0,.50);
+font-weight:900;
 
-}
+letter-spacing:4px;
 
-.login-button:active{
-
-transform:scale(.98);
+margin-bottom:10px;
 
 }
 
-.login-button:disabled{
-
-opacity:.65;
-cursor:not-allowed;
-
-}
-
-/* Links */
-
-.link-button{
-
-background:none;
-
-border:none;
-
-color:var(--gold2);
+.auth-logo p{
 
 font-size:15px;
 
-font-weight:600;
+line-height:1.7;
+
+opacity:.92;
+
+color:#d8dff8;
+
+}
+
+.auth-form{
+
+display:flex;
+
+flex-direction:column;
+
+gap:18px;
+
+}
+
+.auth-form h2{
+
+text-align:center;
+
+margin-bottom:8px;
+
+font-size:28px;
+
+}
+
+.input-group{
+
+position:relative;
+
+}
+
+.input-icon{
+
+position:absolute;
+
+left:18px;
+
+top:50%;
+
+transform:translateY(-50%);
+
+color:#FFD54A;
+
+font-size:18px;
+
+}
+
+.auth-input{
+
+width:100%;
+
+padding:17px 55px;
+
+border-radius:18px;
+
+border:1px solid rgba(255,255,255,.18);
+
+background:rgba(255,255,255,.08);
+
+color:white;
+
+font-size:16px;
+
+outline:none;
+
+transition:.35s;
+
+}
+
+.auth-input::placeholder{
+
+color:#d8dff8;
+
+}
+
+.auth-input:focus{
+
+border-color:#FFD54A;
+
+background:rgba(255,255,255,.12);
+
+box-shadow:
+
+0 0 20px rgba(255,213,74,.28);
+
+}
+
+.show-password{
+
+position:absolute;
+
+right:18px;
+
+top:50%;
+
+transform:translateY(-50%);
+
+border:none;
+
+background:none;
+
+color:white;
+
+font-size:18px;
 
 cursor:pointer;
 
-transition:.25s;
+}
+
+.remember-row{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+font-size:14px;
+
+margin-top:-4px;
 
 }
 
-.link-button:hover{
+.forgot-password{
 
-color:#fff;
+color:#FFD54A;
+
+cursor:pointer;
+
+transition:.3s;
 
 }
 
-/* Bottom Links */
+.forgot-password:hover{
 
-.auth-links{
+text-decoration:underline;
 
-margin-top:24px;
+}
+
+.login-btn{
+
+width:100%;
+
+padding:18px;
+
+border:none;
+
+border-radius:18px;
+
+font-size:17px;
+
+font-weight:800;
+
+background:linear-gradient(
+135deg,
+#FFD54A,
+#F4B400
+);
+
+color:#111;
+
+cursor:pointer;
+
+transition:.35s;
+
+}
+
+.login-btn:hover{
+
+transform:translateY(-3px);
+
+box-shadow:
+0 20px 35px rgba(255,213,74,.40);
+
+}
+/* ==========================================================
+   PART 3 - PI BUTTON • FINGERPRINT • FOOTER • RESPONSIVE
+   ========================================================== */
+
+.pi-btn{
+
+width:100%;
+
+margin-top:10px;
+
+padding:17px;
+
+border:none;
+
+border-radius:18px;
 
 display:flex;
 
@@ -378,185 +505,271 @@ justify-content:center;
 
 align-items:center;
 
-gap:8px;
+gap:14px;
 
-flex-wrap:wrap;
+background:rgba(124,58,237,.18);
 
-color:rgba(255,255,255,.82);
+border:1px solid rgba(124,58,237,.45);
 
-font-size:15px;
+color:#fff;
+
+font-size:16px;
+
+font-weight:700;
+
+cursor:pointer;
+
+transition:.35s;
 
 }
 
-/* Divider */
+.pi-btn:hover{
 
-.auth-divider{
+background:rgba(124,58,237,.35);
 
-margin:24px 0;
+transform:translateY(-2px);
+
+}
+
+.pi-logo{
+
+width:36px;
+
+height:36px;
+
+border-radius:50%;
 
 display:flex;
 
+justify-content:center;
+
 align-items:center;
 
-gap:14px;
+background:#7C3AED;
 
-color:rgba(255,255,255,.45);
+color:#FFD54A;
 
-}
+font-size:22px;
 
-.auth-divider::before,
-.auth-divider::after{
+font-weight:bold;
 
-content:"";
+box-shadow:
 
-flex:1;
-
-height:1px;
-
-background:rgba(255,255,255,.15);
+0 0 18px rgba(124,58,237,.45);
 
 }
 
-/* Alerts */
+.fingerprint-btn{
 
-.auth-error{
+width:100%;
 
-margin-bottom:18px;
+margin-top:14px;
 
-padding:14px;
+padding:16px;
 
-border-radius:14px;
+display:flex;
 
-background:
-rgba(220,38,38,.18);
+justify-content:center;
 
-border:
-1px solid rgba(248,113,113,.35);
+align-items:center;
 
-color:#ffe4e6;
+gap:12px;
+
+background:transparent;
+
+border:1px solid rgba(255,255,255,.18);
+
+border-radius:18px;
+
+color:#fff;
+
+font-size:15px;
+
+font-weight:700;
+
+cursor:pointer;
+
+transition:.35s;
+
+}
+
+.fingerprint-btn:hover{
+
+border-color:#FFD54A;
+
+background:rgba(255,213,74,.08);
+
+color:#FFD54A;
+
+}
+
+.loader{
+
+width:20px;
+
+height:20px;
+
+border:3px solid rgba(255,255,255,.25);
+
+border-top:3px solid #111;
+
+border-radius:50%;
+
+display:inline-block;
+
+animation:spin .8s linear infinite;
+
+margin-right:10px;
+
+}
+
+@keyframes spin{
+
+100%{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+.auth-toggle{
+
+margin-top:28px;
+
+text-align:center;
+
+font-size:15px;
+
+color:#d7dff7;
+
+}
+
+.auth-toggle span{
+
+color:#FFD54A;
+
+font-weight:700;
+
+cursor:pointer;
+
+}
+
+.auth-toggle span:hover{
+
+text-decoration:underline;
+
+}
+
+.auth-footer{
+
+margin-top:25px;
+
+display:flex;
+
+justify-content:center;
+
+gap:20px;
+
+flex-wrap:wrap;
+
+font-size:13px;
+
+color:#bfc9df;
+
+}
+
+.auth-footer span{
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.auth-footer span:hover{
+
+color:#FFD54A;
+
+}
+
+@media(max-width:768px){
+
+.auth-card{
+
+padding:30px;
+
+max-width:95%;
+
+}
+
+.logo-ring{
+
+width:110px;
+
+height:110px;
+
+}
+
+.logo-circle{
+
+width:88px;
+
+height:88px;
+
+font-size:46px;
+
+}
+
+.auth-logo h1{
+
+font-size:34px;
+
+}
+
+.auth-form h2{
+
+font-size:24px;
+
+}
+
+.auth-input{
+
+padding:16px 52px;
+
+}
+
+}
+
+@media(max-width:430px){
+
+.auth-card{
+
+padding:24px;
+
+border-radius:24px;
+
+}
+
+.auth-footer{
+
+gap:12px;
+
+font-size:12px;
+
+}
+
+.auth-logo h1{
+
+font-size:30px;
+
+}
+
+.auth-logo p{
 
 font-size:14px;
 
 }
 
-.auth-success{
-
-margin-bottom:18px;
-
-padding:14px;
-
-border-radius:14px;
-
-background:
-rgba(22,163,74,.18);
-
-border:
-1px solid rgba(74,222,128,.35);
-
-color:#dcfce7;
-
-font-size:14px;
-
-}
-/* =========================================================
-   MINGLE AUTH V2.0
-   Part 4 of 4
-   ========================================================= */
-
-/* Buttons inside auth card */
-
-.auth-card button{
-  font-family:inherit;
 }
 
-/* Spacing */
-
-.auth-card .link-button{
-  margin-top:16px;
-}
-
-.auth-card .auth-links .link-button{
-  margin-top:0;
-}
-
-/* Small fade animation */
-
-.fade-in{
-  animation:fadeIn .6s ease;
-}
-
-@keyframes fadeIn{
-  from{
-    opacity:0;
-  }
-  to{
-    opacity:1;
-  }
-}
-
-/* Mobile */
-
-@media (max-width:600px){
-
-  .auth-page{
-    padding:18px;
-  }
-
-  .auth-card{
-    padding:34px 24px;
-    border-radius:24px;
-  }
-
-  .auth-logo{
-    width:90px;
-    height:90px;
-    font-size:46px;
-  }
-
-  .auth-card h1{
-    font-size:28px;
-  }
-
-  .auth-card p{
-    font-size:15px;
-  }
-
-  .auth-card input{
-    height:52px;
-    font-size:15px;
-  }
-
-  .login-button{
-    height:52px;
-    font-size:16px;
-  }
-
-  .password-box button{
-    top:11px;
-    right:10px;
-    font-size:13px;
-  }
-
-}
-
-/* Tablet */
-
-@media (min-width:601px) and (max-width:1024px){
-
-  .auth-card{
-    max-width:460px;
-  }
-
-}
-
-/* Large screens */
-
-@media (min-width:1025px){
-
-  .auth-card{
-    max-width:460px;
-  }
-
-}
-
-/* End of Mingle Auth V2 */
