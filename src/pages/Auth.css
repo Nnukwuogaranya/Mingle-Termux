@@ -1,775 +1,87 @@
-/* ==========================================================
-   MINGLE PREMIUM AUTH CSS
-   PART 1
-   ========================================================== */
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-html,body{
-width:100%;
-height:100%;
-font-family:Inter,"Segoe UI",sans-serif;
-overflow:hidden;
-}
-
-body{
-
-background:
-linear-gradient(rgba(5,8,18,.45),rgba(5,8,18,.70)),
-url("../assets/hero.png");
-
-background-size: cover;
-background-position: center;
-background-repeat: no-repeat;
-
-color: #fff;}
-
-.auth-container{
-
-position:relative;
-
-width:100%;
-
-height:100vh;
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-padding:25px;
-
-overflow:hidden;
-
-}
-
-.bg-blob{
-
-position:absolute;
-
-border-radius:50%;
-
-filter:blur(120px);
-
-opacity:.45;
-
-animation:blob 12s infinite ease-in-out;
-
-}
-
-.blob1{
-
-width:330px;
-
-height:330px;
-
-background:#FFD54A;
-
-top:-120px;
-
-left:-120px;
-
-}
-
-.blob2{
-
-width:280px;
-
-height:280px;
-
-background:#7C3AED;
-
-bottom:-100px;
-
-right:-80px;
-
-}
-
-.blob3{
-
-width:180px;
-
-height:180px;
-
-background:white;
-
-top:20%;
-
-right:12%;
-
-opacity:.18;
-
-}
-
-@keyframes blob{
-
-0%,100%{
-
-transform:translate(0,0);
-
-}
-
-50%{
-
-transform:translate(40px,50px);
-
-}
-
-}
-
-.auth-card{
-
-position:relative;
-
-width:100%;
-
-max-width:470px;
-
-padding:42px;
-
-border-radius:30px;
-
-background:rgba(255,255,255,.12);
-
-border:1px solid rgba(255,255,255,.22);
-
-backdrop-filter:blur(24px);
-
--webkit-backdrop-filter:blur(24px);
-
-box-shadow:
-
-0 25px 80px rgba(0,0,0,.45);
-
-overflow:hidden;
-
-animation:card .8s ease;
-
-}
-
-@keyframes card{
-
-from{
-
-opacity:0;
-
-transform:translateY(40px);
-
-}
-
-to{
-
-opacity:1;
-
-transform:none;
-
-}
-
-}
-
-.light-reflection{
-
-position:absolute;
-
-top:-120px;
-
-left:-120px;
-
-width:120px;
-
-height:700px;
-
-background:rgba(255,255,255,.16);
-
-transform:rotate(30deg);
-
-animation:shine 6s linear infinite;
-
-}
-
-@keyframes shine{
-
-0%{
-
-left:-180px;
-
-}
-
-100%{
-
-left:650px;
-
-}
-
-}
-/* ==========================================================
-   PART 2 - LOGO • FORM • INPUTS
-   ========================================================== */
-
-.auth-logo{
-display:flex;
-flex-direction:column;
-align-items:center;
-text-align:center;
-margin-bottom:30px;
-z-index:2;
-position:relative;
-}
-
-.logo-ring{
-
-width:130px;
-height:130px;
-
-border-radius:50%;
-
-display:flex;
-align-items:center;
-justify-content:center;
-
-background:conic-gradient(
-from 0deg,
-#FFD54A,
-#FFF5A3,
-#7C3AED,
-#FFD54A
-);
-
-animation:ringRotate 12s linear infinite;
-
-box-shadow:
-0 0 45px rgba(255,213,74,.45);
-
-margin-bottom:18px;
-
-}
-
-@keyframes ringRotate{
-
-from{
-transform:rotate(0deg);
-}
-
-to{
-transform:rotate(360deg);
-}
-
-}
-
-.logo-circle{
-
-width:105px;
-height:105px;
-
-border-radius:50%;
-
-display:flex;
-align-items:center;
-justify-content:center;
-
-font-size:54px;
-
-font-weight:900;
-
-color:#FFD54A;
-
-background:linear-gradient(
-135deg,
-#071126,
-#16284b
-);
-
-text-shadow:
-0 0 20px rgba(255,213,74,.7);
-
-}
-
-.auth-logo h1{
-
-font-size:42px;
-
-font-weight:900;
-
-letter-spacing:4px;
-
-margin-bottom:10px;
-
-}
-
-.auth-logo p{
-
-font-size:15px;
-
-line-height:1.7;
-
-opacity:.92;
-
-color:#d8dff8;
-
-}
-
-.auth-form{
-
-display:flex;
-
-flex-direction:column;
-
-gap:18px;
-
-}
-
-.auth-form h2{
-
-text-align:center;
-
-margin-bottom:8px;
-
-font-size:28px;
-
-}
-
-.input-group{
-
-position:relative;
-
-}
-
-.input-icon{
-
-position:absolute;
-
-left:18px;
-
-top:50%;
-
-transform:translateY(-50%);
-
-color:#FFD54A;
-
-font-size:18px;
-
-}
-
-.auth-input{
-
-width:100%;
-
-padding:17px 55px;
-
-border-radius:18px;
-
-border:1px solid rgba(255,255,255,.18);
-
-background:rgba(255,255,255,.08);
-
-color:white;
-
-font-size:16px;
-
-outline:none;
-
-transition:.35s;
-
-}
-
-.auth-input::placeholder{
-
-color:#d8dff8;
-
-}
-
-.auth-input:focus{
-
-border-color:#FFD54A;
-
-background:rgba(255,255,255,.12);
-
-box-shadow:
-
-0 0 20px rgba(255,213,74,.28);
-
-}
-
-.show-password{
-
-position:absolute;
-
-right:18px;
-
-top:50%;
-
-transform:translateY(-50%);
-
-border:none;
-
-background:none;
-
-color:white;
-
-font-size:18px;
-
-cursor:pointer;
-
-}
-
-.remember-row{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-font-size:14px;
-
-margin-top:-4px;
-
-}
-
-.forgot-password{
-
-color:#FFD54A;
-
-cursor:pointer;
-
-transition:.3s;
-
-}
-
-.forgot-password:hover{
-
-text-decoration:underline;
-
-}
-
-.login-btn{
-
-width:100%;
-
-padding:18px;
-
-border:none;
-
-border-radius:18px;
-
-font-size:17px;
-
-font-weight:800;
-
-background:linear-gradient(
-135deg,
-#FFD54A,
-#F4B400
-);
-
-color:#111;
-
-cursor:pointer;
-
-transition:.35s;
-
-}
-
-.login-btn:hover{
-
-transform:translateY(-3px);
-
-box-shadow:
-0 20px 35px rgba(255,213,74,.40);
-
-}
-/* ==========================================================
-   PART 3 - PI BUTTON • FINGERPRINT • FOOTER • RESPONSIVE
-   ========================================================== */
-
-.pi-btn{
-
-width:100%;
-
-margin-top:10px;
-
-padding:17px;
-
-border:none;
-
-border-radius:18px;
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-gap:14px;
-
-background:rgba(124,58,237,.18);
-
-border:1px solid rgba(124,58,237,.45);
-
-color:#fff;
-
-font-size:16px;
-
-font-weight:700;
-
-cursor:pointer;
-
-transition:.35s;
-
-}
-
-.pi-btn:hover{
-
-background:rgba(124,58,237,.35);
-
-transform:translateY(-2px);
-
-}
-
-.pi-logo{
-
-width:36px;
-
-height:36px;
-
-border-radius:50%;
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-background:#7C3AED;
-
-color:#FFD54A;
-
-font-size:22px;
-
-font-weight:bold;
-
-box-shadow:
-
-0 0 18px rgba(124,58,237,.45);
-
-}
-
-.fingerprint-btn{
-
-width:100%;
-
-margin-top:14px;
-
-padding:16px;
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-gap:12px;
-
-background:transparent;
-
-border:1px solid rgba(255,255,255,.18);
-
-border-radius:18px;
-
-color:#fff;
-
-font-size:15px;
-
-font-weight:700;
-
-cursor:pointer;
-
-transition:.35s;
-
-}
-
-.fingerprint-btn:hover{
-
-border-color:#FFD54A;
-
-background:rgba(255,213,74,.08);
-
-color:#FFD54A;
-
-}
-
-.loader{
-
-width:20px;
-
-height:20px;
-
-border:3px solid rgba(255,255,255,.25);
-
-border-top:3px solid #111;
-
-border-radius:50%;
-
-display:inline-block;
-
-animation:spin .8s linear infinite;
-
-margin-right:10px;
-
-}
-
-@keyframes spin{
-
-100%{
-
-transform:rotate(360deg);
-
-}
-
-}
-
-.auth-toggle{
-
-margin-top:28px;
-
-text-align:center;
-
-font-size:15px;
-
-color:#d7dff7;
-
-}
-
-.auth-toggle span{
-
-color:#FFD54A;
-
-font-weight:700;
-
-cursor:pointer;
-
-}
-
-.auth-toggle span:hover{
-
-text-decoration:underline;
-
-}
-
-.auth-footer{
-
-margin-top:25px;
-
-display:flex;
-
-justify-content:center;
-
-gap:20px;
-
-flex-wrap:wrap;
-
-font-size:13px;
-
-color:#bfc9df;
-
-}
-
-.auth-footer span{
-
-cursor:pointer;
-
-transition:.3s;
-
-}
-
-.auth-footer span:hover{
-
-color:#FFD54A;
-
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', sans-serif; }
+
+.auth-container { 
+  min-height: 100vh; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url("/mingle-pictures/mingle-login.jpg");
+  background-size: cover;
+  background-position: center;
+  padding: 20px;
+}
+
+.auth-card { 
+  background: rgba(255, 255, 255, 0.08); 
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 35px 25px; 
+  border-radius: 24px; 
+  width: 100%; 
+  max-width: 380px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+/* GLOWING M LOGO */
+.logo-wrapper { text-align: center; margin-bottom: 20px; }
+.logo-circle {
+  width: 80px; height: 80px; margin: 0 auto 15px;
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #9333EA 100%);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 45px; font-weight: 900; color: #FFD700;
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.7), 0 0 60px rgba(147, 51, 234, 0.5);
+  animation: glow 2s ease-in-out infinite alternate;
+}
+@keyframes glow {
+  from { box-shadow: 0 0 20px rgba(255, 215, 0, 0.5), 0 0 40px rgba(147, 51, 234, 0.3); }
+  to { box-shadow: 0 0 40px rgba(255, 215, 0, 0.9), 0 0 80px rgba(147, 51, 234, 0.6); }
+}
+
+.auth-logo h1 { font-size: 32px; letter-spacing: 4px; color: white; font-weight: 700; margin-bottom: 8px; }
+.auth-logo p { font-size: 12px; color: rgba(255,255,255,0.8); line-height: 1.5; margin-bottom: 25px; }
+
+.auth-form h2 { text-align: center; color: white; font-size: 26px; margin-bottom: 20px; }
+
+/* GLASS INPUTS WITH ICONS */
+.input-group { position: relative; margin-bottom: 15px; }
+.input-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); font-size: 18px; }
+.auth-input { 
+  width: 100%; padding: 16px 16px 16px 45px;
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 14px; color: white; font-size: 15px; outline: none;
+}
+.auth-input::placeholder { color: rgba(255,255,255,0.6); }
+.eye-icon { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; }
+
+/* ROW FOR CHECKBOX */
+.row { display: flex; justify-content: space-between; align-items: center; margin: 15px 0 20px; font-size: 13px; color: white; }
+.row a { color: #FFD700; text-decoration: none; }
+
+/* BUTTONS EXACTLY LIKE SCREENSHOT */
+.btn-primary {
+  width: 100%; padding: 16px; border: none; border-radius: 14px;
+  background: linear-gradient(135deg, #FFD700 0%, #FFC107 100%);
+  color: #000; font-weight: 700; font-size: 17px; cursor: pointer;
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4); margin-bottom: 15px;
+}
+
+.pi-btn {
+  width: 100%; padding: 16px; border: none; border-radius: 14px;
+  background: rgba(147, 51, 234, 0.3);
+  color: white; font-weight: 600; font-size: 16px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  margin-bottom: 15px;
+}
+.pi-logo { 
+  width: 28px; height: 28px; border-radius: 50%;
+  background: #9333EA; display: flex; align-items: center; justify-content: center;
+  font-weight: 900; font-size: 16px; color: #FFD700;
+}
+
+.fingerprint-btn {
+  width: 100%; padding: 16px; border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 14px; background: rgba(255,255,255,0.05);
+  color: white; font-weight: 500; font-size: 15px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
 }
-
-@media(max-width:768px){
-
-.auth-card{
-
-padding:30px;
-
-max-width:95%;
-
-}
-
-.logo-ring{
-
-width:110px;
-
-height:110px;
-
-}
-
-.logo-circle{
-
-width:88px;
-
-height:88px;
-
-font-size:46px;
-
-}
-
-.auth-logo h1{
-
-font-size:34px;
-
-}
-
-.auth-form h2{
-
-font-size:24px;
-
-}
-
-.auth-input{
-
-padding:16px 52px;
-
-}
-
-}
-
-@media(max-width:430px){
-
-.auth-card{
-
-padding:24px;
-
-border-radius:24px;
-
-}
-
-.auth-footer{
-
-gap:12px;
-
-font-size:12px;
-
-}
-
-.auth-logo h1{
-
-font-size:30px;
-
-}
-
-.auth-logo p{
-
-font-size:14px;
-
-}
-
-}
-
