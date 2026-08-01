@@ -1,0 +1,43 @@
+/* ===== MINGLE PREMIUM AUTH v1.3 - FINAL POLISH ===== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cormorant+Garamond:wght@500;600;700&display=swap');
+:root{ --navy:#050814; --purple:#7C3AED; --gold:#FFD54A; }
+*{ margin:0; padding:0; box-sizing:border-box; }
+html, body, #root{ width:100%; height:100%; overflow-x:hidden; }
+body{ font-family:Inter,"Segoe UI",sans-serif; color:#fff; background: linear-gradient(rgba(5,8,20,.55), rgba(5,8,20,.75)), url("/mingle-pictures/mingle-login.jpg"); background-size:cover; background-position:center; background-attachment:fixed; }
+.auth-container{ position:relative; min-height:100dvh; display:flex; justify-content:center; align-items:center; padding:8px 16px; overflow-y:auto; }
+.auth-card{ position:relative; width:100%; max-width:420px; padding:24px 24px; border-radius:24px; background: linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.10)); backdrop-filter:blur(28px); -webkit-backdrop-filter:blur(28px); border:1px solid rgba(255,255,255,.18); box-shadow: 0 25px 60px rgba(0,0,0,.45); z-index:5; animation:cardFade .8s ease; }
+@keyframes cardFade{ from{opacity:0; transform:translateY(25px);} to{opacity:1; transform:translateY(0);} }
+.logo-wrap{ display:flex; flex-direction:column; align-items:center; margin-bottom:18px; }
+.logo-circle{ width:90px; height:90px; border-radius:50%; display:flex; justify-content:center; align-items:center; background: radial-gradient(circle,#FFE082,#FFD54A 60%,#C99700); box-shadow: 0 0 15px rgba(255,213,74,.75); position:relative; animation:logoPulse 4s ease-in-out infinite; }
+.logo-circle::before{ content:""; position:absolute; inset:-8px; border-radius:50%; border:2px solid rgba(255,213,74,.35); animation:rotateRing 10s linear infinite, glowPulse 4.5s ease-in-out infinite; }
+.logo-m{ font-size:48px; font-weight:900; color:#061021; }
+@keyframes logoPulse{ 0%,100%{transform:scale(1);} 50%{transform:scale(1.06);} }
+@keyframes rotateRing{ from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
+@keyframes glowPulse{ 0%,100%{box-shadow:0 0 0 0 rgba(255,213,74,.0);} 50%{box-shadow:0 0 0 12px rgba(255,213,74,.25);} }
+.app-title{ margin-top:14px; font-size:28px; font-weight:800; letter-spacing:3px; color:#FFD54A; font-family:'Cormorant Garamond',serif; }
+.tagline{ margin-top:8px; text-align:center; line-height:1.5; color:rgba(255,255,255,.86); font-size:14px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.auth-tabs{ display:flex; gap:10px; margin-bottom:20px; }
+.auth-tabs button{ flex:1; height:46px; border:none; border-radius:12px; cursor:pointer; font-size:14px; font-weight:700; color:#fff; background:rgba(255,255,255,.08); transition:.35s; }
+.auth-tabs button.active{ background:linear-gradient(135deg, #7C3AED, #FFD54A); box-shadow: 0 8px 20px rgba(124,58,237,.35); }
+.input-group{ margin-bottom:16px; }
+.input-group label{ display:block; margin-bottom:6px; color:#FFD54A; font-size:13px; font-weight:600; }
+.input-group input{ width:100%; height:50px; padding:0 16px 0 44px; border-radius:14px; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.08); color:#fff; font-size:14px; outline:none; transition:.35s; }
+.input-group input::placeholder{ color:rgba(255,255,255,.65); }
+.input-group input:focus{ border-color:#FFD54A; box-shadow: 0 0 0 3px rgba(255,213,74,.25); }
+.password-box{ position:relative; }
+.password-toggle{ position:absolute; right:16px; top:50%; transform:translateY(-50%); color:#FFD54A; cursor:pointer; }
+.options-row{ display:flex; justify-content:space-between; align-items:center; margin:14px 0 20px; font-size:13px; }
+.remember-me{ display:flex; align-items:center; gap:8px; color:rgba(255,255,255,.85); cursor:pointer; }
+.remember-me input[type="checkbox"]{ appearance:none; -webkit-appearance:none; width:18px; height:18px; border:2px solid rgba(255,213,74,.6); border-radius:4px; background:transparent; cursor:pointer; position:relative; transition:.2s; }
+.remember-me input[type="checkbox"]:checked{ background:linear-gradient(135deg, #7C3AED, #FFD54A); border-color:#FFD54A; }
+.remember-me input[type="checkbox"]:checked::after{ content:"✓"; position:absolute; top:-2px; left:2px; font-size:14px; color:#061021; font-weight:900; }
+.forgot-link{ color:#FFD54A; text-decoration:none; font-weight:700; transition:.2s; }
+.forgot-link:hover{ text-decoration:underline; opacity:.8; }
+.login-btn{ width:100%; height:52px; border:none; border-radius:16px; cursor:pointer; font-size:15px; font-weight:700; color:#fff; background: linear-gradient(135deg, #7C3AED, #FFD54A); box-shadow: 0 12px 30px rgba(124,58,237,.35); }
+.divider{ display:flex; align-items:center; gap:12px; margin:20px 0; color:rgba(255,255,255,.55); font-size:13px; }
+.divider::before, .divider::after{ content:""; flex:1; height:1px; background:rgba(255,255,255,.12); }
+.pi-btn{ width:100%; height:50px; border-radius:14px; border:1px solid rgba(255,213,74,.22); background:rgba(255,255,255,.08); color:#fff; font-size:14px; font-weight:700; cursor:pointer; transition:.3s; }
+.pi-btn:hover{ background:rgba(255,213,74,.1); border-color:#FFD54A; }
+.footer-text{ margin-top:18px; text-align:center; color:rgba(255,255,255,.72); font-size:13px; }
+.footer-text a{ color:#FFD54A; text-decoration:none; font-weight:700; }
+@media(max-width:768px){ .auth-container{ padding:6px 12px; } .auth-card{ padding:20px 18px; } }

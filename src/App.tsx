@@ -1,7 +1,7 @@
-import Login from "./pages/Login";
+import Auth from "./Auth";
 
 function App() {
-return <Login />
+  return <Auth />
 }
 
 export default App
