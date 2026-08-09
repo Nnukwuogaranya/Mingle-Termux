@@ -1,0 +1,327 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Poppins:wght@300;400;500;700&display=swap');
+
+.empire-container {
+  width: 90%;
+  max-width: 1200px;
+  height: 90dvh;
+  margin: auto;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(248, 226, 49, 0.2);
+  border-radius: 30px;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  z-index: 1;
+}
+
+.empire-container .bg-lights {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(111, 66, 193, 0.3) 0%,
+      transparent 60%
+    );
+  clip-path: polygon(0 0, 100% 0, 100% 70%, 0 100%);
+  z-index: -1;
+  animation: empireLightSweep 8s infinite ease-in-out;
+}
+
+.empire-container .main-heading {
+  position: relative;
+  color: #F8E231;
+  font-family: "Cinzel", serif;
+  font-size: clamp(28px, 5vw, 48px);
+  font-weight: 900;
+  text-align: center;
+  margin-bottom: 10px;
+  z-index: 1;
+  text-shadow:
+    0 0 20px rgba(248, 226, 49, 0.5),
+    0 2px 4px rgba(0, 0, 0, 0.3);
+  animation: empireFadeDown 1.2s ease;
+}
+
+.empire-container .main-heading span {
+  color: #C0C0C0;
+  font-family: "Poppins", sans-serif;
+  font-size: clamp(14px, 2vw, 20px);
+  font-weight: 300;
+  letter-spacing: 3px;
+  display: block;
+  margin-top: 10px;
+  text-transform: uppercase;
+}
+
+.empire-container .centerpiece {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  z-index: 1;
+  flex: 1;
+  animation: empireFade 1.8s ease;
+}
+
+.empire-container .person {
+  width: 120px;
+  height: 200px;
+  border-radius: 60px 60px 20px 20px;
+  background: linear-gradient(180deg, #6F42C1, #3A1F5C);
+  border: 3px solid #D4AF37;
+  box-shadow: 0 0 40px rgba(111, 66, 193, 0.6);
+  position: relative;
+  animation: empireFloat 3s ease-in-out infinite;
+}
+
+.empire-container .person::after {
+  content: "";
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 40px;
+  background: #F8E231;
+  border-radius: 50%;
+  box-shadow: 0 0 20px #F8E231;
+}
+
+.empire-container .person.woman {
+  background: linear-gradient(180deg, #8A5CF0, #6F42C1);
+  animation-delay: 0.5s;
+}
+
+.empire-container .scrolls {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+  z-index: 1;
+}
+
+.empire-container .scroll {
+  position: relative;
+  flex: 1;
+  min-height: 280px;
+  background: linear-gradient(145deg, #F5F1E8, #E8E0D0);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+  transform: translateY(40px) scale(0.9);
+  opacity: 0;
+  animation: empireUnroll 1s forwards;
+  transition: 0.4s ease;
+}
+
+.empire-container .scroll.global {
+  animation-delay: 0.3s;
+}
+
+.empire-container .rod {
+  width: 90%;
+  height: 14px;
+  background: linear-gradient(
+    90deg,
+    #D4AF37,
+    #F8E231,
+    #D4AF37
+  );
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(212, 175, 55, 0.5);
+  flex-shrink: 0;
+}
+
+.empire-container .rod.top {
+  margin-top: 8px;
+}
+
+.empire-container .rod.bottom {
+  margin-bottom: 8px;
+}
+
+.empire-container .parchment {
+  padding: 20px 15px;
+  color: #3A2A1A;
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.empire-container .parchment h4 {
+  color: #3A2A1A;
+  font-family: "Cinzel", serif;
+  font-size: 20px;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.empire-container .parchment p {
+  color: #5A4A3A;
+  font-size: 12px;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.empire-container .parchment ul {
+  list-style: none;
+  font-size: 12px;
+  text-align: left;
+  margin-bottom: 15px;
+  flex: 1;
+  padding: 0;
+}
+
+.empire-container .parchment li {
+  margin-bottom: 6px;
+  padding-left: 18px;
+  position: relative;
+}
+
+.empire-container .parchment li::before {
+  content: "✦";
+  position: absolute;
+  left: 0;
+  color: #D4AF37;
+}
+
+.empire-container .parchment button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.empire-container .scroll.pi button {
+  background: linear-gradient(135deg, #6F42C1, #8A5CF0);
+  color: #fff;
+}
+
+.empire-container .scroll.global button {
+  background: linear-gradient(135deg, #F8E231, #D4AF37);
+  color: #111;
+}
+
+.empire-container .scroll:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 20px 50px rgba(248, 226, 49, 0.5);
+}
+
+.empire-container .scroll:hover button {
+  transform: scale(1.05);
+}
+
+.empire-container .footer {
+  position: relative;
+  color: #F8E231;
+  font-family: "Cinzel", serif;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  z-index: 1;
+  animation: empireFadeUp 2.2s ease;
+}
+
+.empire-container .footer span {
+  color: #F8F8FF;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  font-style: italic;
+  display: block;
+  margin-top: 8px;
+}
+
+@keyframes empireLightSweep {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes empireFadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes empireFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes empireUnroll {
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes empireFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes empireFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 900px) {
+  .empire-container {
+    width: 95%;
+    height: 95dvh;
+    padding: 20px 15px;
+  }
+
+  .empire-container .centerpiece {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .empire-container .person {
+    display: none;
+  }
+
+  .empire-container .scrolls {
+    flex-direction: column;
+    max-width: 400px;
+  }
+
+  .empire-container .scroll {
+    width: 100%;
+    min-height: 240px;
+  }
+}
