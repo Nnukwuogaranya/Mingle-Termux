@@ -1,13 +1,37 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mingle</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital@1&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Mingle Empire</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="scene">
+
+    <!-- REAL EMPIRE IMAGE ALREADY PROVIDED BY style.css -->
+
+    <!-- INVISIBLE CLICKABLE PI PORTAL -->
+    <div
+      class="portal portal-pi"
+      onclick="activate('pi')">
+    </div>
+
+    <!-- INVISIBLE CLICKABLE MINGLE PORTAL -->
+    <a
+      class="portal portal-mingle"
+      href="./login.html?v=2"
+      aria-label="Open Mingle Login">
+    </a>
+
+  </div>
+
+  <!-- Pi SDK -->
+  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+
+  <!-- Mingle Firebase authentication -->
+  <script type="module" src="script.js"></script>
+
+</body>
 </html>

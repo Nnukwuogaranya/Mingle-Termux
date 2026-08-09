@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mingle Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css">
+</head>
+<body style="background:radial-gradient(circle at 50% 20%, #0a1029 0%, #050814 70%); color:#F8F8FF; display:flex; justify-content:center; align-items:center; min-height:100vh; flex-direction:column; font-family:'Poppins',sans-serif;">
+  <div class="bg-lights"></div>
+  <div class="particles"></div>
+  
+  <div style="text-align:center; z-index:2; background:rgba(15,15,25,0.85); backdrop-filter:blur(20px); padding:40px 30px; border-radius:24px; border:1px solid rgba(212,175,55,0.3); box-shadow:0 0 40px rgba(212,175,55,0.2)">
+    <h1 style="font-family:'Cinzel',serif; color:#F8E231; font-size:32px; margin-bottom:15px; text-shadow:0 0 20px rgba(248,226,49,0.5)">WELCOME TO THE EMPIRE 🔥</h1>
+    <p id="user-email" style="color:#C0C0C0; margin-bottom:30px; font-size:14px">Loading user...</p>
+    <button onclick="logout()" style="background:linear-gradient(135deg,#6F42C1,#F8E231); padding:14px 40px; border:none; border-radius:12px; color:#111; font-weight:700; font-size:16px; cursor:pointer; transition:0.3s">LOGOUT</button>
+  </div>
+
+  <script type="module">
+    import { auth, signOut, onAuthStateChanged } from './firebase.js';
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        document.getElementById('user-email').innerText = "Logged in as: " + user.email;
+      } else {
+        window.location.href = "index.html";
+      }
+    });
+    async function logout() {
+      await signOut(auth);
+      window.location.href = "index.html";
+    }
+    window.logout = logout;
+  </script>
+</body>
+</html>

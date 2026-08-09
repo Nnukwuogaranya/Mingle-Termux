@@ -1,0 +1,527 @@
+import {
+  auth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+  setPersistence,
+  browserLocalPersistence,
+  onAuthStateChanged
+} from "./firebase.js";
+
+/* =========================================================
+   MINGLE EMPIRE — AUTHENTICATION
+   ========================================================= */
+
+setPersistence(auth, browserLocalPersistence).catch(() => {});
+
+/* =========================================================
+   EMPIRE PORTAL ACTIVATION
+   ========================================================= */
+
+function activate(type) {
+  if (type === "pi") {
+    openPiPortal();
+  } else if (type === "mingle") {
+    openMinglePortal();
+  }
+}
+
+window.activate = activate;
+
+/* =========================================================
+   PI PORTAL
+   ========================================================= */
+
+function openPiPortal() {
+  closeModal();
+
+  const modal = document.createElement("div");
+  modal.className = "modal";
+
+  modal.innerHTML = `
+    <div class="modal-content pi-modal">
+
+      <span class="close" onclick="closeModal()">&times;</span>
+
+      <h2>π LOGIN WITH PI</h2>
+
+      <p>
+        Connect your Pi account to enter the Pi World.
+      </p>
+
+      <div id="pi-error"
+           style="color:#ff8a8a;font-size:13px;margin:8px 0;">
+      </div>
+
+      <button
+        class="btn pi-btn"
+        id="pi-login-button"
+        onclick="piLogin()">
+        Connect Pi Wallet
+      </button>
+
+      <p class="small">
+        Powered by Pi Network
+      </p>
+
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+}
+
+window.openPiPortal = openPiPortal;
+
+/* =========================================================
+   PI LOGIN
+   ========================================================= */
+
+function piLogin() {
+  const error = document.getElementById("pi-error");
+  const button = document.getElementById("pi-login-button");
+
+  if (typeof Pi === "undefined") {
+    if (error) {
+      error.textContent =
+        "Pi Browser is required to connect your Pi account.";
+    }
+    return;
+  }
+
+  button.disabled = true;
+  button.textContent = "Connecting to Pi...";
+
+  try {
+    Pi.init({
+      version: "2.0",
+      sandbox: true
+    });
+
+    Pi.authenticate(
+      ["username"],
+      function(payment) {
+        console.log("Incomplete payment:", payment);
+      }
+    )
+      .then(function(authResult) {
+
+        localStorage.setItem(
+          "mingle_pi_user",
+          JSON.stringify(authResult.user)
+        );
+
+        window.location.href = "dashboard.html";
+
+      })
+      .catch(function(err) {
+
+        console.error("Pi login error:", err);
+
+        if (error) {
+          error.textContent =
+            "Pi login was not completed. Please try again.";
+        }
+
+        button.disabled = false;
+        button.textContent = "Connect Pi Wallet";
+      });
+
+  } catch (err) {
+
+    console.error(err);
+
+    if (error) {
+      error.textContent =
+        "Unable to connect to Pi Network.";
+    }
+
+    button.disabled = false;
+    button.textContent = "Connect Pi Wallet";
+  }
+}
+
+window.piLogin = piLogin;
+
+/* =========================================================
+   MINGLE LOGIN PORTAL
+   ========================================================= */
+
+function openMinglePortal() {
+  closeModal();
+
+  const modal = document.createElement("div");
+  modal.className = "modal";
+
+  modal.innerHTML = `
+    <div class="modal-content mingle-modal">
+
+      <span class="close" onclick="closeModal()">&times;</span>
+
+      <h2 id="auth-title">WELCOME TO MINGLE</h2>
+
+      <p id="auth-subtitle">
+        Login to continue to Mingle.
+      </p>
+
+      <div
+        id="auth-error"
+        style="
+          color:#ff8a8a;
+          font-size:13px;
+          min-height:20px;
+          margin-bottom:5px;
+        ">
+      </div>
+
+      <input
+        type="email"
+        id="email"
+        placeholder="Enter Email"
+        autocomplete="email"
+      >
+
+      <input
+        type="password"
+        id="password"
+        placeholder="Password"
+        autocomplete="current-password"
+      >
+
+      <button
+        class="btn mingle-btn"
+        id="auth-submit"
+        onclick="mingleLogin()">
+        LOGIN
+      </button>
+
+      <button
+        class="btn"
+        id="auth-switch"
+        onclick="switchAuthMode()"
+        style="
+          background:#292929;
+          color:#fff;
+          margin-top:10px;
+        ">
+        CREATE ACCOUNT
+      </button>
+
+      <a
+        href="#"
+        id="forgot-password"
+        onclick="forgotPassword(event)"
+        style="
+          display:block;
+          margin-top:14px;
+          color:#FFD700;
+          text-decoration:none;
+          font-size:13px;
+        ">
+        Forgot Password?
+      </a>
+
+      <p
+        id="auth-mode-text"
+        class="small"
+        style="margin-top:15px;">
+        Don't have an account? Create one.
+      </p>
+
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+
+  document
+    .getElementById("password")
+    .addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        const mode =
+          document.getElementById("auth-submit").dataset.mode;
+
+        if (mode === "register") {
+          mingleRegister();
+        } else {
+          mingleLogin();
+        }
+      }
+    });
+}
+
+window.openMinglePortal = openMinglePortal;
+
+/* =========================================================
+   LOGIN / REGISTER MODE
+   ========================================================= */
+
+function switchAuthMode() {
+  const submit = document.getElementById("auth-submit");
+  const switchButton = document.getElementById("auth-switch");
+  const title = document.getElementById("auth-title");
+  const subtitle = document.getElementById("auth-subtitle");
+  const modeText = document.getElementById("auth-mode-text");
+  const password = document.getElementById("password");
+
+  if (!submit) return;
+
+  const registering = submit.dataset.mode === "register";
+
+  if (registering) {
+
+    submit.dataset.mode = "login";
+    submit.textContent = "LOGIN";
+
+    switchButton.textContent = "CREATE ACCOUNT";
+
+    title.textContent = "WELCOME TO MINGLE";
+    subtitle.textContent = "Login to continue to Mingle.";
+
+    modeText.textContent =
+      "Don't have an account? Create one.";
+
+    password.autocomplete = "current-password";
+
+  } else {
+
+    submit.dataset.mode = "register";
+    submit.textContent = "CREATE ACCOUNT";
+
+    switchButton.textContent = "BACK TO LOGIN";
+
+    title.textContent = "JOIN MINGLE";
+    subtitle.textContent =
+      "Create your Mingle account.";
+
+    modeText.textContent =
+      "Already have an account? Login.";
+
+    password.autocomplete = "new-password";
+  }
+
+  clearAuthError();
+}
+
+window.switchAuthMode = switchAuthMode;
+
+/* =========================================================
+   LOGIN
+   ========================================================= */
+
+async function mingleLogin() {
+
+  const email =
+    document.getElementById("email").value.trim();
+
+  const password =
+    document.getElementById("password").value;
+
+  const error = document.getElementById("auth-error");
+  const button = document.getElementById("auth-submit");
+
+  clearAuthError();
+
+  if (!email || !password) {
+    error.textContent =
+      "Please enter your email and password.";
+    return;
+  }
+
+  button.disabled = true;
+  button.textContent = "LOGGING IN...";
+
+  try {
+
+    await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    window.location.href = "dashboard.html";
+
+  } catch (err) {
+
+    console.error(err);
+
+    error.textContent = friendlyFirebaseError(err);
+
+    button.disabled = false;
+    button.textContent = "LOGIN";
+  }
+}
+
+window.mingleLogin = mingleLogin;
+
+/* =========================================================
+   REGISTER
+   ========================================================= */
+
+async function mingleRegister() {
+
+  const email =
+    document.getElementById("email").value.trim();
+
+  const password =
+    document.getElementById("password").value;
+
+  const error = document.getElementById("auth-error");
+  const button = document.getElementById("auth-submit");
+
+  clearAuthError();
+
+  if (!email || !password) {
+    error.textContent =
+      "Please enter an email and password.";
+    return;
+  }
+
+  if (password.length < 6) {
+    error.textContent =
+      "Password must be at least 6 characters.";
+    return;
+  }
+
+  button.disabled = true;
+  button.textContent = "CREATING ACCOUNT...";
+
+  try {
+
+    await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    window.location.href = "dashboard.html";
+
+  } catch (err) {
+
+    console.error(err);
+
+    error.textContent = friendlyFirebaseError(err);
+
+    button.disabled = false;
+    button.textContent = "CREATE ACCOUNT";
+  }
+}
+
+window.mingleRegister = mingleRegister;
+
+/* =========================================================
+   FORGOT PASSWORD
+   ========================================================= */
+
+async function forgotPassword(event) {
+
+  if (event) {
+    event.preventDefault();
+  }
+
+  const email =
+    document.getElementById("email").value.trim();
+
+  const error = document.getElementById("auth-error");
+
+  clearAuthError();
+
+  if (!email) {
+    error.textContent =
+      "Enter your email first, then tap Forgot Password.";
+    return;
+  }
+
+  try {
+
+    await sendPasswordResetEmail(auth, email);
+
+    error.style.color = "#7CFF9B";
+    error.textContent =
+      "Password reset email sent. Check your inbox.";
+
+  } catch (err) {
+
+    console.error(err);
+
+    error.textContent = friendlyFirebaseError(err);
+  }
+}
+
+window.forgotPassword = forgotPassword;
+
+/* =========================================================
+   CLOSE MODAL
+   ========================================================= */
+
+function closeModal() {
+
+  const modal =
+    document.querySelector(".modal");
+
+  if (modal) {
+    modal.remove();
+  }
+}
+
+window.closeModal = closeModal;
+
+/* =========================================================
+   CLOSE WHEN CLICKING OUTSIDE
+   ========================================================= */
+
+window.addEventListener("click", function(event) {
+
+  if (event.target.classList.contains("modal")) {
+    closeModal();
+  }
+
+});
+
+/* =========================================================
+   FIREBASE ERROR TRANSLATION
+   ========================================================= */
+
+function friendlyFirebaseError(error) {
+
+  switch (error.code) {
+
+    case "auth/invalid-email":
+      return "Please enter a valid email address.";
+
+    case "auth/user-not-found":
+      return "No Mingle account was found with this email.";
+
+    case "auth/wrong-password":
+    case "auth/invalid-credential":
+      return "Incorrect email or password.";
+
+    case "auth/email-already-in-use":
+      return "This email already has a Mingle account.";
+
+    case "auth/weak-password":
+      return "Password must be at least 6 characters.";
+
+    case "auth/too-many-requests":
+      return "Too many attempts. Please try again later.";
+
+    case "auth/network-request-failed":
+      return "Network connection failed. Check your internet.";
+
+    default:
+      return error.message || "Authentication failed. Please try again.";
+  }
+}
+
+/* =========================================================
+   CLEAR ERROR
+   ========================================================= */
+
+function clearAuthError() {
+
+  const error =
+    document.getElementById("auth-error");
+
+  if (error) {
+    error.textContent = "";
+    error.style.color = "#ff8a8a";
+  }
+}
