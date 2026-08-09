@@ -2,53 +2,236 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mingle - Login</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800;900&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+  <title>Mingle — Welcome Back</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  >
+
   <link rel="stylesheet" href="login.css">
 </head>
+
 <body>
-  <div class="bg-lights"></div>
-  <div class="particles"></div>
-  <div class="auth-page">
+
+  <main class="auth-page">
+
+    <div class="water-glow glow-one"></div>
+    <div class="water-glow glow-two"></div>
+    <div class="cloud cloud-one"></div>
+    <div class="cloud cloud-two"></div>
+
     <div class="auth-card">
+
+      <!-- LOGO -->
       <div class="auth-logo">
-        <div class="logo-shell">
-          <div class="logo-3d">
-            <svg viewBox="0 0 100 100" fill="none"><path d="M10 80 L10 20 L30 50 L50 20 L70 50 L90 20 L90 80" stroke="#FFD700" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+
+        <div class="logo-orbit">
+
+          <div class="logo-ray ray-one"></div>
+          <div class="logo-ray ray-two"></div>
+          <div class="logo-ray ray-three"></div>
+          <div class="logo-ray ray-four"></div>
+          <div class="logo-ray ray-five"></div>
+          <div class="logo-ray ray-six"></div>
+
+          <div class="logo-shell">
+            <div class="logo-3d">
+              <svg viewBox="0 0 100 100" fill="none" aria-label="Mingle logo">
+                <path
+                  d="M10 78V22L30 51L50 22L70 51L90 22V78"
+                  stroke="currentColor"
+                  stroke-width="8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
           </div>
+
         </div>
+
         <h1>MINGLE</h1>
-        <p class="logo-tagline">CONNECT. SHINE. BELONG.</p>
+
+        <p class="logo-tagline">
+          CONNECT. SHINE. BELONG.
+        </p>
+
       </div>
 
+
+      <!-- HEADER -->
       <div class="auth-header">
-        <h2 class="auth-title">Welcome Back</h2>
-        <p class="auth-subtitle">Sign in to continue your journey</p>
+
+        <p class="eyebrow">
+          WELCOME TO MINGLE
+        </p>
+
+        <h2 class="auth-title">
+          Welcome Back
+        </h2>
+
+        <p class="auth-subtitle">
+          Sign in and continue your journey.
+        </p>
+
       </div>
 
+
+      <!-- TABS -->
       <div class="auth-tabs">
-        <button class="active"><span>Login</span></button>
-        <button><span>Sign Up</span></button>
+
+        <button
+          type="button"
+          class="active"
+          id="login-tab"
+        >
+          Login
+        </button>
+
+        <button
+          type="button"
+          id="signup-tab"
+        >
+          Sign Up
+        </button>
+
       </div>
 
-      <form>
+
+      <!-- ERROR / STATUS -->
+      <div
+        id="auth-error"
+        class="auth-message"
+        aria-live="polite"
+      ></div>
+
+
+      <!-- LOGIN FORM -->
+      <form id="login-form">
+
         <div class="input-group">
-          <input type="email" placeholder=" " id="email">
-          <label for="email">Email</label>
+
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder=" "
+            autocomplete="email"
+            required
+          >
+
+          <label for="email">
+            Email address
+          </label>
+
         </div>
-        <div class="input-group">
-          <input type="password" placeholder=" " id="password">
-          <label for="password">Password</label>
+
+
+        <div class="input-group password-group">
+
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder=" "
+            autocomplete="current-password"
+            required
+          >
+
+          <label for="password">
+            Password
+          </label>
+
+          <button
+            type="button"
+            class="password-toggle"
+            id="show-password"
+            aria-label="Show password"
+          >
+            ◉
+          </button>
+
         </div>
-        <div class="forgot-password"><a href="#">Forgot Password?</a></div>
-        <button type="button" class="auth-btn v-btn"><span>Login</span></button>
-        <div class="auth-divider"><span>or</span></div>
-        <button type="button" class="pi-btn v-btn"><span>Continue with Pi</span></button>
+
+
+        <div class="login-options">
+
+          <label class="remember-option">
+
+            <input
+              type="checkbox"
+              id="remember-me"
+            >
+
+            <span class="custom-check"></span>
+
+            <span>Remember me</span>
+
+          </label>
+
+
+          <a
+            href="#"
+            class="forgot-password"
+            id="forgot-password"
+          >
+            Forgot Password?
+          </a>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="auth-btn v-btn"
+          id="login-btn"
+        >
+          <span>Login to Mingle</span>
+        </button>
+
       </form>
 
-      <div class="auth-footer">By joining, you agree to our <a href="#">Terms</a> & <a href="#">Privacy</a></div>
+
+      <!-- DIVIDER -->
+      <div class="auth-divider">
+        <span>Secure Mingle Access</span>
+      </div>
+
+
+      <!-- FOOTER -->
+      <div class="auth-footer">
+
+        <p>
+          New to Mingle?
+          <button
+            type="button"
+            id="footer-signup"
+          >
+            Create your account
+          </button>
+        </p>
+
+        <small>
+          By continuing, you agree to Mingle's
+          <a href="#">Terms</a>
+          and
+          <a href="#">Privacy Policy</a>.
+        </small>
+
+      </div>
+
     </div>
-  </div>
+
+  </main>
+
+
+  <!-- Existing Mingle / Firebase logic -->
+  <script type="module" src="script.js"></script>
+
 </body>
 </html>

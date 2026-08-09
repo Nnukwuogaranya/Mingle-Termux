@@ -3,388 +3,838 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
+  sendEmailVerification,
   setPersistence,
   browserLocalPersistence,
-  onAuthStateChanged
+  onAuthStateChanged,
+  signOut
 } from "./firebase.js";
 
-/* =========================================================
-   MINGLE EMPIRE — LOGIN CONNECTION
-   ========================================================= */
-
-let activeModal = null;
-
-/* Keep users signed in */
-setPersistence(auth, browserLocalPersistence).catch(() => {});
 
 /* =========================================================
-   EMPIRE PORTALS
+   MINGLE AUTHENTICATION SYSTEM
+   Empire → Login → Verification → Profile → Mingle
    ========================================================= */
 
-function activate(type) {
-  if (type === "pi") {
-    openPiPortal();
-  }
 
-  if (type === "mingle") {
-    window.location.href = "./login.html?v=5";
-  }
+/* =========================================================
+   ELEMENTS
+   ========================================================= */
+
+const loginTab =
+  document.getElementById("login-tab");
+
+const signupTab =
+  document.getElementById("signup-tab");
+
+const loginForm =
+  document.getElementById("login-form");
+
+const emailInput =
+  document.getElementById("email");
+
+const passwordInput =
+  document.getElementById("password");
+
+const showPasswordBtn =
+  document.getElementById("show-password");
+
+const rememberMe =
+  document.getElementById("remember-me");
+
+const forgotPassword =
+  document.getElementById("forgot-password");
+
+const loginBtn =
+  document.getElementById("login-btn");
+
+const footerSignup =
+  document.getElementById("footer-signup");
+
+const errorEl =
+  document.getElementById("auth-error");
+
+
+/* =========================================================
+   STATE
+   ========================================================= */
+
+let isSignupMode = false;
+
+let signupNameInput = null;
+
+let confirmPasswordInput = null;
+
+
+/* =========================================================
+   FIREBASE PERSISTENCE
+   ========================================================= */
+
+setPersistence(
+  auth,
+  browserLocalPersistence
+).catch((error) => {
+  console.warn(
+    "Firebase persistence could not be enabled:",
+    error
+  );
+});
+
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+
+function showError(message) {
+
+  if (!errorEl) return;
+
+  errorEl.textContent = message;
+
+  errorEl.style.display = "block";
+
 }
 
-window.activate = activate;
 
-/* =========================================================
-   PI LOGIN
-   ========================================================= */
+function clearError() {
 
-function openPiPortal() {
-  closeModal();
+  if (!errorEl) return;
 
-  const modal = document.createElement("div");
-  modal.className = "modal";
+  errorEl.textContent = "";
 
-  modal.innerHTML = `
-    <div class="modal-content pi-modal">
+  errorEl.style.display = "none";
 
-      <span class="close" onclick="closeModal()">&times;</span>
-
-      <div style="
-        font-size:52px;
-        margin-bottom:8px;
-        color:#ffffff;
-        text-shadow:0 0 20px #8b5cf6;
-      ">π</div>
-
-      <h2>LOGIN WITH PI</h2>
-
-      <p>
-        Connect your Pi account to enter the Mingle Pi World.
-      </p>
-
-      <button
-        class="btn pi-btn"
-        onclick="piLogin()">
-        Continue with Pi
-      </button>
-
-      <p class="small">
-        Secure authentication through Pi Network
-      </p>
-
-      <div id="pi-error"
-        style="
-          color:#ff8f8f;
-          font-size:13px;
-          margin-top:12px;
-        ">
-      </div>
-
-    </div>
-  `;
-
-  document.body.appendChild(modal);
-  activeModal = modal;
 }
 
-window.openPiPortal = openPiPortal;
 
-/* REAL PI LOGIN */
+function setButtonLoading(loading, text = "") {
 
-async function piLogin() {
-  const errorEl = document.getElementById("pi-error");
+  if (!loginBtn) return;
 
-  try {
-    if (!window.Pi) {
-      throw new Error("Pi Network SDK is not available.");
-    }
+  loginBtn.disabled = loading;
 
-    if (errorEl) {
-      errorEl.innerText = "Connecting to Pi Network...";
-    }
+  const span =
+    loginBtn.querySelector("span");
 
-    window.Pi.init({
-      version: "2.0",
-      sandbox: true
+  if (span) {
+
+    span.textContent =
+      loading
+        ? text
+        : isSignupMode
+          ? "Create Mingle Account"
+          : "Login to Mingle";
+
+  } else {
+
+    loginBtn.textContent =
+      loading
+        ? text
+        : isSignupMode
+          ? "Create Mingle Account"
+          : "Login to Mingle";
+
+  }
+
+}
+
+
+function getErrorMessage(error) {
+
+  const code =
+    error?.code || "";
+
+  switch (code) {
+
+    case "auth/invalid-email":
+      return "Please enter a valid email address.";
+
+    case "auth/missing-password":
+      return "Please enter your password.";
+
+    case "auth/weak-password":
+      return "Password must be at least 6 characters.";
+
+    case "auth/email-already-in-use":
+      return "An account already exists with this email.";
+
+    case "auth/invalid-credential":
+    case "auth/wrong-password":
+    case "auth/user-not-found":
+      return "Incorrect email or password.";
+
+    case "auth/too-many-requests":
+      return "Too many attempts. Please try again later.";
+
+    case "auth/network-request-failed":
+      return "Network error. Check your internet connection.";
+
+    case "auth/user-disabled":
+      return "This account has been disabled.";
+
+    default:
+      return (
+        error?.message ||
+        "Something went wrong. Please try again."
+      );
+
+  }
+
+}
+
+
+/* =========================================================
+   PROFILE CHECK
+   ========================================================= */
+
+function profileIsComplete() {
+
+  return (
+    localStorage.getItem(
+      "mingle_profile_complete"
+    ) === "true"
+  );
+
+}
+
+
+function continueAfterAuthentication(user) {
+
+  if (!user) return;
+
+  if (!user.emailVerified) {
+
+    showError(
+      "Please verify your email before entering Mingle."
+    );
+
+    return;
+
+  }
+
+  if (profileIsComplete()) {
+
+    window.location.href = "home.html";
+
+  } else {
+
+    window.location.href = "profile.html";
+
+  }
+
+}
+
+
+/* =========================================================
+   CREATE SIGNUP FIELDS
+   ========================================================= */
+
+function createSignupFields() {
+
+  if (!loginForm) return;
+
+  if (
+    signupNameInput &&
+    confirmPasswordInput
+  ) {
+    return;
+  }
+
+
+  const passwordField =
+    passwordInput?.closest(".form-group") ||
+    passwordInput?.parentElement?.parentElement ||
+    passwordInput?.parentElement;
+
+
+  const nameWrapper =
+    document.createElement("div");
+
+  nameWrapper.className =
+    "dynamic-signup-field";
+
+
+  const nameLabel =
+    document.createElement("label");
+
+  nameLabel.textContent =
+    "Full Name";
+
+
+  signupNameInput =
+    document.createElement("input");
+
+  signupNameInput.type = "text";
+
+  signupNameInput.id =
+    "signup-name";
+
+  signupNameInput.name =
+    "name";
+
+  signupNameInput.placeholder =
+    "Enter your full name";
+
+  signupNameInput.autocomplete =
+    "name";
+
+
+  nameWrapper.appendChild(
+    nameLabel
+  );
+
+  nameWrapper.appendChild(
+    signupNameInput
+  );
+
+
+  const confirmWrapper =
+    document.createElement("div");
+
+  confirmWrapper.className =
+    "dynamic-signup-field";
+
+
+  const confirmLabel =
+    document.createElement("label");
+
+  confirmLabel.textContent =
+    "Confirm Password";
+
+
+  confirmPasswordInput =
+    document.createElement("input");
+
+  confirmPasswordInput.type =
+    "password";
+
+  confirmPasswordInput.id =
+    "confirm-password";
+
+  confirmPasswordInput.name =
+    "confirm-password";
+
+  confirmPasswordInput.placeholder =
+    "Confirm your password";
+
+  confirmPasswordInput.autocomplete =
+    "new-password";
+
+
+  confirmWrapper.appendChild(
+    confirmLabel
+  );
+
+  confirmWrapper.appendChild(
+    confirmPasswordInput
+  );
+
+
+  if (passwordField) {
+
+    passwordField.before(
+      nameWrapper
+    );
+
+    passwordField.after(
+      confirmWrapper
+    );
+
+  } else {
+
+    loginForm.prepend(
+      nameWrapper
+    );
+
+    loginForm.appendChild(
+      confirmWrapper
+    );
+
+  }
+
+
+  addDynamicFieldStyles();
+
+}
+
+
+/* =========================================================
+   REMOVE SIGNUP FIELDS
+   ========================================================= */
+
+function removeSignupFields() {
+
+  document
+    .querySelectorAll(
+      ".dynamic-signup-field"
+    )
+    .forEach((element) => {
+      element.remove();
     });
 
-    const authResult = await window.Pi.authenticate(
-      ["username"],
-      function (incompletePayment) {
-        console.log(
-          "Incomplete Pi payment:",
-          incompletePayment
-        );
-      }
-    );
+  signupNameInput = null;
 
-    if (!authResult || !authResult.user) {
-      throw new Error("Pi authentication was not completed.");
-    }
+  confirmPasswordInput = null;
 
-    localStorage.setItem(
-      "mingle_pi_user",
-      JSON.stringify(authResult.user)
-    );
-
-    localStorage.setItem(
-      "mingle_login_type",
-      "pi"
-    );
-
-    window.location.href = "dashboard.html";
-
-  } catch (error) {
-
-    console.error("Pi Login Error:", error);
-
-    if (errorEl) {
-      errorEl.innerText =
-        error?.message ||
-        "Unable to connect to Pi Network.";
-    }
-  }
 }
 
-window.piLogin = piLogin;
 
 /* =========================================================
-   MINGLE EMAIL LOGIN
+   DYNAMIC FIELD STYLING
    ========================================================= */
 
-function openMinglePortal() {
-  closeModal();
+function addDynamicFieldStyles() {
 
-  const modal = document.createElement("div");
-  modal.className = "modal";
-
-  modal.innerHTML = `
-    <div class="modal-content mingle-modal">
-
-      <span class="close" onclick="closeModal()">&times;</span>
-
-      <div style="
-        font-size:48px;
-        font-weight:700;
-        color:#FFD700;
-        text-shadow:0 0 25px rgba(255,215,0,.7);
-        margin-bottom:5px;
-      ">M</div>
-
-      <h2>WELCOME TO MINGLE</h2>
-
-      <p>
-        Real People. Real Connections. Real Community.
-      </p>
-
-      <div
-        id="auth-error"
-        style="
-          color:#ff8f8f;
-          font-size:13px;
-          min-height:18px;
-          margin-bottom:5px;
-        ">
-      </div>
-
-      <input
-        type="email"
-        id="email"
-        placeholder="Email Address"
-        autocomplete="email"
-      >
-
-      <input
-        type="password"
-        id="password"
-        placeholder="Password"
-        autocomplete="current-password"
-      >
-
-      <button
-        class="btn mingle-btn"
-        onclick="mingleLogin()">
-        LOGIN
-      </button>
-
-      <button
-        class="btn"
-        onclick="mingleRegister()"
-        style="
-          background:rgba(255,255,255,.08);
-          color:#FFD700;
-          border:1px solid rgba(255,215,0,.35);
-        ">
-        CREATE ACCOUNT
-      </button>
-
-      <a
-        href="#"
-        onclick="forgotPassword(); return false;"
-        style="
-          display:block;
-          margin-top:15px;
-          color:#FFD700;
-          text-decoration:none;
-          font-size:13px;
-        ">
-        Forgot Password?
-      </a>
-
-    </div>
-  `;
-
-  document.body.appendChild(modal);
-  activeModal = modal;
-
-  setTimeout(() => {
-    document.getElementById("email")?.focus();
-  }, 100);
-}
-
-window.openMinglePortal = openMinglePortal;
-
-/* =========================================================
-   MINGLE LOGIN
-   ========================================================= */
-
-async function mingleLogin() {
-
-  const email = document.getElementById("email")?.value.trim();
-  const password = document.getElementById("password")?.value;
-  const errorEl = document.getElementById("auth-error");
-  const button = document.querySelector(".mingle-modal .btn.mingle-btn");
-
-  if (errorEl) {
-    errorEl.innerText = "";
-    errorEl.style.color = "#ff8f8f";
-  }
-
-  if (!email || !password) {
-    if (errorEl) {
-      errorEl.innerText = "Please enter your email and password.";
-    }
+  if (
+    document.getElementById(
+      "mingle-dynamic-auth-style"
+    )
+  ) {
     return;
   }
 
-  if (button) {
-    button.disabled = true;
-    button.innerText = "LOGGING IN...";
+
+  const style =
+    document.createElement("style");
+
+  style.id =
+    "mingle-dynamic-auth-style";
+
+  style.textContent = `
+
+    .dynamic-signup-field {
+      margin-bottom: 16px;
+    }
+
+    .dynamic-signup-field label {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .dynamic-signup-field input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 13px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.14);
+      outline: none;
+      background: rgba(255,255,255,.06);
+      color: #fff;
+      font: inherit;
+    }
+
+    .dynamic-signup-field input:focus {
+      border-color: rgba(212,175,55,.65);
+    }
+
+  `;
+
+  document.head.appendChild(style);
+
+}
+
+
+/* =========================================================
+   SWITCH TO LOGIN
+   ========================================================= */
+
+function showLoginMode() {
+
+  isSignupMode = false;
+
+  clearError();
+
+  removeSignupFields();
+
+  if (loginTab) {
+
+    loginTab.classList.add("active");
+
   }
+
+  if (signupTab) {
+
+    signupTab.classList.remove("active");
+
+  }
+
+  if (loginBtn) {
+
+    const span =
+      loginBtn.querySelector("span");
+
+    if (span) {
+
+      span.textContent =
+        "Login to Mingle";
+
+    } else {
+
+      loginBtn.textContent =
+        "Login to Mingle";
+
+    }
+
+  }
+
+  if (footerSignup) {
+
+    footerSignup.textContent =
+      "Create your account";
+
+  }
+
+}
+
+
+/* =========================================================
+   SWITCH TO SIGNUP
+   ========================================================= */
+
+function showSignupMode() {
+
+  isSignupMode = true;
+
+  clearError();
+
+  createSignupFields();
+
+  if (loginTab) {
+
+    loginTab.classList.remove("active");
+
+  }
+
+  if (signupTab) {
+
+    signupTab.classList.add("active");
+
+  }
+
+  if (loginBtn) {
+
+    const span =
+      loginBtn.querySelector("span");
+
+    if (span) {
+
+      span.textContent =
+        "Create Mingle Account";
+
+    } else {
+
+      loginBtn.textContent =
+        "Create Mingle Account";
+
+    }
+
+  }
+
+  if (footerSignup) {
+
+    footerSignup.textContent =
+      "Back to login";
+
+  }
+
+}
+
+
+/* =========================================================
+   TAB EVENTS
+   ========================================================= */
+
+loginTab?.addEventListener(
+  "click",
+  showLoginMode
+);
+
+
+signupTab?.addEventListener(
+  "click",
+  showSignupMode
+);
+
+
+footerSignup?.addEventListener(
+  "click",
+  (event) => {
+
+    event.preventDefault();
+
+    if (isSignupMode) {
+
+      showLoginMode();
+
+    } else {
+
+      showSignupMode();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   SHOW / HIDE PASSWORD
+   ========================================================= */
+
+showPasswordBtn?.addEventListener(
+  "click",
+  () => {
+
+    if (!passwordInput) return;
+
+    const showing =
+      passwordInput.type === "text";
+
+    passwordInput.type =
+      showing
+        ? "password"
+        : "text";
+
+    showPasswordBtn.textContent =
+      showing
+        ? "◉"
+        : "◎";
+
+  }
+);
+
+
+/* =========================================================
+   FORGOT PASSWORD
+   ========================================================= */
+
+forgotPassword?.addEventListener(
+  "click",
+  async (event) => {
+
+    event.preventDefault();
+
+    clearError();
+
+    const email =
+      emailInput?.value.trim();
+
+    if (!email) {
+
+      showError(
+        "Enter your email address first."
+      );
+
+      emailInput?.focus();
+
+      return;
+
+    }
+
+    try {
+
+      await sendPasswordResetEmail(
+        auth,
+        email
+      );
+
+      showError(
+        "Password reset email sent. Check your inbox."
+      );
+
+    } catch (error) {
+
+      showError(
+        getErrorMessage(error)
+      );
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   LOGIN
+   ========================================================= */
+
+async function loginUser() {
+
+  clearError();
+
+  const email =
+    emailInput?.value.trim();
+
+  const password =
+    passwordInput?.value || "";
+
+
+  if (!email) {
+
+    showError(
+      "Please enter your email address."
+    );
+
+    emailInput?.focus();
+
+    return;
+
+  }
+
+
+  if (!password) {
+
+    showError(
+      "Please enter your password."
+    );
+
+    passwordInput?.focus();
+
+    return;
+
+  }
+
+
+  setButtonLoading(
+    true,
+    "Signing in..."
+  );
+
 
   try {
 
-    console.log("Mingle login started:", email);
+    const result =
+      await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
 
-    const result = await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
 
-    console.log("Firebase login successful:", result.user.uid);
+    const user =
+      result.user;
 
-    localStorage.setItem("mingle_login_type", "mingle");
-    localStorage.setItem(
-      "mingle_email",
-      result.user.email || email
-    );
 
-    if (errorEl) {
-      errorEl.style.color = "#7CFF9B";
-      errorEl.innerText = "Login successful. Entering Mingle...";
+    if (!user.emailVerified) {
+
+      showError(
+        "Your email has not been verified yet. Please check your inbox."
+      );
+
+      try {
+
+        await sendEmailVerification(
+          user
+        );
+
+      } catch (_) {}
+
+      return;
+
     }
 
-    setTimeout(() => {
-      window.location.href = "./dashboard.html";
-    }, 500);
+
+    continueAfterAuthentication(
+      user
+    );
+
 
   } catch (error) {
 
-    console.error("Mingle Login Error:", error);
+    showError(
+      getErrorMessage(error)
+    );
 
-    if (errorEl) {
+  } finally {
 
-      switch (error.code) {
+    setButtonLoading(
+      false
+    );
 
-        case "auth/invalid-credential":
-        case "auth/wrong-password":
-          errorEl.innerText = "Incorrect email or password.";
-          break;
-
-        case "auth/user-not-found":
-          errorEl.innerText =
-            "No Mingle account exists with this email.";
-          break;
-
-        case "auth/invalid-email":
-          errorEl.innerText =
-            "Please enter a valid email address.";
-          break;
-
-        case "auth/too-many-requests":
-          errorEl.innerText =
-            "Too many login attempts. Please try again later.";
-          break;
-
-        case "auth/network-request-failed":
-          errorEl.innerText =
-            "Network connection failed. Check your internet.";
-          break;
-
-        default:
-          errorEl.innerText =
-            error.message || "Login failed.";
-      }
-    }
-
-    if (button) {
-      button.disabled = false;
-      button.innerText = "LOGIN";
-    }
   }
+
 }
 
-window.mingleLogin = mingleLogin;
 
 /* =========================================================
-   CREATE MINGLE ACCOUNT
+   CREATE ACCOUNT
    ========================================================= */
 
-async function mingleRegister() {
+async function createAccount() {
 
-  const email = document
-    .getElementById("email")
-    ?.value
-    .trim();
+  clearError();
 
-  const password = document
-    .getElementById("password")
-    ?.value;
+  const name =
+    signupNameInput?.value.trim() || "";
 
-  const errorEl =
-    document.getElementById("auth-error");
+  const email =
+    emailInput?.value.trim();
 
-  if (errorEl) errorEl.innerText = "";
+  const password =
+    passwordInput?.value || "";
 
-  if (!email || !password) {
+  const confirmPassword =
+    confirmPasswordInput?.value || "";
 
-    if (errorEl) {
-      errorEl.innerText =
-        "Enter your email and create a password.";
-    }
+
+  if (name.length < 2) {
+
+    showError(
+      "Please enter your full name."
+    );
+
+    signupNameInput?.focus();
 
     return;
+
   }
+
+
+  if (!email) {
+
+    showError(
+      "Please enter your email address."
+    );
+
+    emailInput?.focus();
+
+    return;
+
+  }
+
 
   if (password.length < 6) {
 
-    if (errorEl) {
-      errorEl.innerText =
-        "Password must contain at least 6 characters.";
-    }
+    showError(
+      "Password must be at least 6 characters."
+    );
+
+    passwordInput?.focus();
 
     return;
+
   }
+
+
+  if (password !== confirmPassword) {
+
+    showError(
+      "Your passwords do not match."
+    );
+
+    confirmPasswordInput?.focus();
+
+    return;
+
+  }
+
+
+  setButtonLoading(
+    true,
+    "Creating account..."
+  );
+
 
   try {
 
@@ -395,138 +845,120 @@ async function mingleRegister() {
         password
       );
 
-    localStorage.setItem(
-      "mingle_login_type",
-      "mingle"
+
+    const user =
+      result.user;
+
+
+    await sendEmailVerification(
+      user
     );
 
+
     localStorage.setItem(
-      "mingle_email",
-      result.user.email || email
+      "mingle_pending_name",
+      name
     );
 
-    window.location.href = "dashboard.html";
+
+    showError(
+      "Account created! A verification email has been sent to " +
+      email +
+      ". Please verify your email, then return here and log in."
+    );
+
+
+    await signOut(auth);
+
 
   } catch (error) {
 
-    console.error("Mingle Registration Error:", error);
-
-    if (errorEl) {
-
-      switch (error.code) {
-
-        case "auth/email-already-in-use":
-          errorEl.innerText =
-            "This email already has a Mingle account. Please login.";
-          break;
-
-        case "auth/invalid-email":
-          errorEl.innerText =
-            "Please enter a valid email address.";
-          break;
-
-        case "auth/weak-password":
-          errorEl.innerText =
-            "Please choose a stronger password.";
-          break;
-
-        default:
-          errorEl.innerText =
-            error.message ||
-            "Account creation failed.";
-      }
-    }
-  }
-}
-
-window.mingleRegister = mingleRegister;
-
-/* =========================================================
-   FORGOT PASSWORD
-   ========================================================= */
-
-async function forgotPassword() {
-
-  const email =
-    document.getElementById("email")?.value.trim();
-
-  const errorEl =
-    document.getElementById("auth-error");
-
-  if (!email) {
-
-    if (errorEl) {
-      errorEl.innerText =
-        "Enter your email address first.";
-    }
-
-    return;
-  }
-
-  try {
-
-    await sendPasswordResetEmail(
-      auth,
-      email
+    showError(
+      getErrorMessage(error)
     );
 
-    if (errorEl) {
-      errorEl.style.color = "#FFD700";
-      errorEl.innerText =
-        "Password reset email sent.";
-    }
+  } finally {
 
-  } catch (error) {
+    setButtonLoading(
+      false
+    );
 
-    if (errorEl) {
-      errorEl.style.color = "#ff8f8f";
-      errorEl.innerText =
-        error.message ||
-        "Unable to send password reset email.";
-    }
   }
+
 }
 
-window.forgotPassword = forgotPassword;
 
 /* =========================================================
-   CLOSE MODAL
+   FORM SUBMISSION
    ========================================================= */
 
-function closeModal() {
+loginForm?.addEventListener(
+  "submit",
+  async (event) => {
 
-  const modal =
-    document.querySelector(".modal");
+    event.preventDefault();
 
-  if (modal) {
-    modal.remove();
+    if (isSignupMode) {
+
+      await createAccount();
+
+    } else {
+
+      await loginUser();
+
+    }
+
   }
+);
 
-  activeModal = null;
-}
 
-window.closeModal = closeModal;
+/* =========================================================
+   LOGIN BUTTON
+   ========================================================= */
 
-/* Close when clicking outside */
-document.addEventListener("click", function (event) {
+loginBtn?.addEventListener(
+  "click",
+  async (event) => {
 
-  const modal =
-    document.querySelector(".modal");
+    event.preventDefault();
 
-  if (
-    modal &&
-    event.target === modal
-  ) {
-    closeModal();
+    if (isSignupMode) {
+
+      await createAccount();
+
+    } else {
+
+      await loginUser();
+
+    }
+
   }
+);
 
-});
 
-/* Close with ESC */
-document.addEventListener("keydown", function (event) {
+/* =========================================================
+   AUTH STATE
+   ========================================================= */
 
-  if (event.key === "Escape") {
-    closeModal();
+onAuthStateChanged(
+  auth,
+  (user) => {
+
+    if (!user) return;
+
+    if (!user.emailVerified) return;
+
+    continueAfterAuthentication(
+      user
+    );
+
   }
+);
 
-});
+
+/* =========================================================
+   INITIAL MODE
+   ========================================================= */
+
+showLoginMode();
+

@@ -1,0 +1,24 @@
+diff --git a/firebase.js b/firebase.js
+index 51b8acd..7492629 100644
+--- a/firebase.js
++++ b/firebase.js
+@@ -1,9 +1,11 @@
+ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
++
+ import {
+   getAuth,
+   createUserWithEmailAndPassword,
+   signInWithEmailAndPassword,
+   sendPasswordResetEmail,
++  sendEmailVerification,
+   setPersistence,
+   browserLocalPersistence,
+   onAuthStateChanged,
+@@ -27,6 +29,7 @@ export {
+   createUserWithEmailAndPassword,
+   signInWithEmailAndPassword,
+   sendPasswordResetEmail,
++  sendEmailVerification,
+   setPersistence,
+   browserLocalPersistence,
+   onAuthStateChanged,
