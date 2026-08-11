@@ -1,91 +1,179 @@
 import "./Empire.css";
-import "./Empire.css";
-import React from "react";
 
-type EmpireProps = {
-  onMingle: () => void;
-  onPi: () => void;
-};
+interface EmpireProps {
+  onEnterMingle: () => void;
+  onEnterPi: () => void;
+}
 
-export default function Empire({ onMingle, onPi }: EmpireProps) {
+export default function Empire({
+  onEnterMingle,
+  onEnterPi,
+}: EmpireProps) {
   return (
-    <main className="empire-container">
+    <main className="empire-page">
 
-      <div className="bg-lights" />
+      <div className="empire-bg" />
+      <div className="empire-vignette" />
+      <div className="empire-grain" />
 
-      <header className="main-heading">
-        MINGLE EMPIRE
-        <span>Where People Don't Just Connect... They Belong.</span>
+      <header className="empire-header">
+        <div className="empire-brand">
+          <div className="brand-mark">
+            M
+          </div>
+
+          <div>
+            <div className="brand-name">MINGLE</div>
+            <div className="brand-subtitle">
+              EMPIRE
+            </div>
+          </div>
+        </div>
+
+        <div className="empire-status">
+          <span className="status-dot" />
+          <span>THE WORLD OF CONNECTION</span>
+        </div>
       </header>
 
-      <section className="centerpiece">
-        <div className="person" />
-        <div className="person woman" />
-      </section>
+      <section className="empire-content">
 
-      <section className="scrolls">
+        <div className="hero-copy">
 
-        <article className="scroll pi">
-          <div className="rod top" />
+          <div className="eyebrow">
+            <span />
+            THE MINGLE EXPERIENCE
+            <span />
+          </div>
 
-          <div className="parchment">
-            <h4>Pi World</h4>
+          <h1>
+            Enter the
+            <strong>Mingle Empire</strong>
+          </h1>
 
-            <p>
-              Enter the dedicated Mingle experience
-              for the Pi community.
+          <p>
+            Where people don't just connect...
+            <br />
+            <span>they belong.</span>
+          </p>
+
+        </div>
+
+        <div className="world-portals">
+
+          {/* PI ENTRANCE */}
+
+          <article className="world-card pi-world">
+
+            <div className="portal-glow" />
+
+            <div className="portal-top">
+
+              <div className="portal-symbol pi-symbol">
+                π
+              </div>
+
+              <div>
+                <div className="portal-label">
+                  PI AUTHENTICATION
+                </div>
+
+                <h2>
+                  Continue with Pi
+                </h2>
+              </div>
+
+            </div>
+
+            <p className="world-description">
+              Use your Pi identity to enter the Mingle social platform.
             </p>
 
             <ul>
-              <li>Pi community</li>
-              <li>Pi profile & identity</li>
-              <li>Pi marketplace</li>
-              <li>Pi services</li>
+              <li>Sign in with your Pi identity</li>
+              <li>No separate Mingle authorization</li>
+              <li>Access the same Mingle social world</li>
+              <li>Pi identity can enrich your Mingle profile</li>
             </ul>
 
-            <button type="button" onClick={onPi}>
-              Enter Pi World
+            <button
+              className="portal-button pi-button"
+              onClick={onEnterPi}
+              type="button"
+            >
+              <span>Continue with Pi</span>
+              <b>→</b>
             </button>
-          </div>
 
-          <div className="rod bottom" />
-        </article>
+          </article>
 
 
-        <article className="scroll global">
-          <div className="rod top" />
+          {/* MINGLE ACCOUNT ENTRANCE */}
 
-          <div className="parchment">
-            <h4>Mingle World</h4>
+          <article className="world-card mingle-world">
 
-            <p>
-              Connect, share, discover and belong
-              in the world of Mingle.
+            <div className="portal-glow" />
+
+            <div className="portal-top">
+
+              <div className="portal-symbol mingle-symbol">
+                M
+              </div>
+
+              <div>
+                <div className="portal-label">
+                  THE GLOBAL COMMUNITY
+                </div>
+
+                <h2>
+                  Enter Mingle
+                </h2>
+              </div>
+
+            </div>
+
+            <p className="world-description">
+              Create or access your Mingle account and build meaningful
+              relationships.
             </p>
 
             <ul>
-              <li>Social connections</li>
-              <li>Posts & stories</li>
-              <li>Messenger</li>
-              <li>Marketplace & communities</li>
+              <li>People & communities</li>
+              <li>Posts, stories & moments</li>
+              <li>Messenger & conversations</li>
+              <li>Marketplace & discovery</li>
             </ul>
 
-            <button type="button" onClick={onMingle}>
-              Enter Mingle
+            <button
+              className="portal-button mingle-button"
+              onClick={onEnterMingle}
+              type="button"
+            >
+              <span>Enter Mingle</span>
+              <b>→</b>
             </button>
-          </div>
 
-          <div className="rod bottom" />
-        </article>
+          </article>
+
+        </div>
+
+        <div className="empire-divider">
+          <span />
+          <div>M</div>
+          <span />
+        </div>
+
+        <footer className="empire-footer">
+          <p>
+            One platform. Two entrances. One place to belong.
+          </p>
+
+          <span>
+            © 2026 Mingle Empire
+          </span>
+        </footer>
 
       </section>
-
-      <footer className="footer">
-        MINGLE
-        <span>
-          An empire where people don't just connect... they belong.
-        </span>
-      </footer>
 
     </main>
   );

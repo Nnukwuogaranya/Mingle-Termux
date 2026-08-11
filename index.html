@@ -1,37 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no"
+  />
+
+  <meta name="theme-color" content="#050814" />
+
   <title>Mingle Empire</title>
-  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+  <div id="root"></div>
 
-  <div class="scene">
-
-    <!-- REAL EMPIRE IMAGE ALREADY PROVIDED BY style.css -->
-
-    <!-- INVISIBLE CLICKABLE PI PORTAL -->
-    <div
-      class="portal portal-pi"
-      onclick="activate('pi')">
-    </div>
-
-    <!-- INVISIBLE CLICKABLE MINGLE PORTAL -->
-    <a
-      class="portal portal-mingle"
-      href="./login.html?v=2"
-      aria-label="Open Mingle Login">
-    </a>
-
-  </div>
-
-  <!-- Pi SDK -->
+  <!-- Pi Network SDK -->
   <script src="https://sdk.minepi.com/pi-sdk.js"></script>
 
-  <!-- Mingle Firebase authentication -->
-  <script type="module" src="script.js"></script>
-
+  <!-- React application -->
+  <script type="module" src="/src/main.tsx"></script>
 </body>
 </html>
