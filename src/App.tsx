@@ -1,79 +1,165 @@
-import { useState } from "react";
-import Empire from "./Empire";
-import Auth from "./Auth";
+import React from "react";
+import Auth, { type MingleUser } from "./Auth";
+import Entrance from "./Entrance";
+import CreateProfile from "./CreateProfile";
+import EmailVerification from "./EmailVerification";
+import MingleHome from "./MingleHome";
+import "./mingle.css";
 
-function App() {
-  const [world, setWorld] = useState<"empire" | "mingle" | "pi">("empire");
+type AppStage =
+  | "entrance"
+  | "auth"
+  | "profile"
+  | "verification"
+  | "home";
 
-  if (world === "mingle") {
-    return <Auth />;
-  }
+export default function App() {
+  const [stage, setStage] = React.useState<AppStage>("entrance");
+  const [user, setUser] = React.useState<MingleUser | null>(null);
 
-  if (world === "pi") {
+  /*
+   * ========================================================
+   * PORTAL → NORMAL LOGIN
+   * ========================================================
+   */
+  const handlePortalLogin = () => {
+    setStage("auth");
+  };
+
+  /*
+   * ========================================================
+   * PORTAL → PI LOGIN
+   * ========================================================
+   *
+   * Pi authentication will be connected here.
+   * For now, we keep the Pi gate separate from
+   * the normal Mingle authentication flow.
+   */
+  const handlePiLogin = () => {
+    console.log("Pi Login selected");
+  };
+
+  /*
+   * ========================================================
+   * EXISTING USER LOGIN
+   * ========================================================
+   */
+  const handleLogin = (mingleUser: MingleUser) => {
+    setUser(mingleUser);
+    setStage("home");
+  };
+
+  /*
+   * ========================================================
+   * NEW USER REGISTRATION
+   * ========================================================
+   */
+  const handleRegister = (mingleUser: MingleUser) => {
+    setUser(mingleUser);
+    setStage("profile");
+  };
+
+  /*
+   * ========================================================
+   * PROFILE COMPLETE
+   * ========================================================
+   */
+  const handleProfileComplete = (mingleUser: MingleUser) => {
+    setUser(mingleUser);
+    setStage("verification");
+  };
+
+  /*
+   * ========================================================
+   * EMAIL VERIFIED
+   * ========================================================
+   *
+   * After verification, send the user back to LOGIN.
+   */
+  const handleEmailVerified = () => {
+    setStage("auth");
+  };
+
+  /*
+   * ========================================================
+   * LOGOUT
+   * ========================================================
+   */
+  const handleLogout = () => {
+    setUser(null);
+    setStage("entrance");
+  };
+
+  /*
+   * ========================================================
+   * 1. ENTRANCE PORTAL
+   * ========================================================
+   */
+  if (stage === "entrance") {
     return (
-      <div
-        style={{
-          minHeight: "100dvh",
-          display: "grid",
-          placeItems: "center",
-          padding: "24px",
-          background:
-            "radial-gradient(circle at 50% 20%, #5b21b6, #180b35 55%, #050814)",
-          color: "#fff",
-          fontFamily: "Inter, sans-serif",
-          textAlign: "center",
-        }}
-      >
-        <div
-          style={{
-            width: "100%",
-            maxWidth: "430px",
-            padding: "40px 28px",
-            borderRadius: "28px",
-            background: "rgba(255,255,255,.10)",
-            border: "1px solid rgba(255,255,255,.18)",
-            backdropFilter: "blur(24px)",
-            boxShadow: "0 30px 80px rgba(0,0,0,.45)",
-          }}
-        >
-          <div style={{ fontSize: "64px", marginBottom: "16px" }}>π</div>
-
-          <h1 style={{ margin: 0, fontSize: "32px" }}>
-            Pi World
-          </h1>
-
-          <p style={{ opacity: 0.75, lineHeight: 1.6 }}>
-            Your dedicated Mingle experience for the Pi community is
-            being prepared.
-          </p>
-
-          <button
-            onClick={() => setWorld("empire")}
-            style={{
-              width: "100%",
-              marginTop: "24px",
-              height: "52px",
-              border: 0,
-              borderRadius: "15px",
-              background: "linear-gradient(135deg,#7c3aed,#a855f7)",
-              color: "#fff",
-              fontWeight: 700,
-              fontSize: "15px",
-            }}
-          >
-            ← Back to Mingle Empire
-          </button>
-        </div>
-      </div>
+      <Entrance
+        onLogin={handlePortalLogin}
+        onPiLogin={handlePiLogin}
+      />
     );
   }
 
-  return (
-    <Empire
-      onEnterMingle={() => setWorld("mingle")}
-      onEnterPi={() => setWorld("pi")}
-    />
-  );
-}
+  /*
+   * ========================================================
+   * 2. LOGIN / REGISTER
+   * ========================================================
+   */
+  if (stage === "auth") {
+    return (
+      <Auth
+        onLogin={handleLogin}
+        onRegister={handleRegister}
+      />
+    );
+  }
 
-export default App;
+  /*
+   * ========================================================
+   * 3. CREATE PROFILE
+   * ========================================================
+   */
+  if (stage === "profile" && user) {
+    return (
+      <CreateProfile
+        user={user}
+        onComplete={handleProfileComplete}
+      />
+    );
+  }
+
+  /*
+   * ========================================================
+   * 4. EMAIL VERIFICATION
+   * ========================================================
+   */
+  if (stage === "verification" && user) {
+    return (
+      <EmailVerification
+        user={user}
+        onVerified={handleEmailVerified}
+        onBackToLogin={() => setStage("auth")}
+      />
+    );
+  }
+
+  /*
+   * ========================================================
+   * 5. MINGLE HOME
+   * ========================================================
+   */
+  if (stage === "home" && user) {
+    return (
+      <MingleHome
+        user={user}
+        onLogout={handleLogout}
+      />
+    );
+  }
+
+  return null;
+}

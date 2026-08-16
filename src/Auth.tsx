@@ -33,14 +33,17 @@ export interface MingleUser {
 
 interface AuthProps {
   onLogin?: (user: MingleUser) => void;
+  onRegister?: (user: MingleUser) => void;
 }
 
-export default function Auth({ onLogin }: AuthProps) {
+export default function Auth({ onLogin, onRegister }: AuthProps) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [showPassword, setShowPassword] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
 
@@ -96,6 +99,16 @@ export default function Auth({ onLogin }: AuthProps) {
       return;
     }
 
+    if (!isLogin && !confirmPassword) {
+      setError("Please confirm your password.");
+      return;
+    }
+
+    if (!isLogin && password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -110,10 +123,15 @@ export default function Auth({ onLogin }: AuthProps) {
       const mingleUser = createMingleUser(firebaseUser);
 
       /*
-       * Both login and registration now enter
-       * the SAME Mingle platform.
+       * LOGIN → enter Mingle directly.
+       *
+       * REGISTER → create profile first.
        */
-      onLogin?.(mingleUser);
+      if (isLogin) {
+        onLogin?.(mingleUser);
+      } else {
+        onRegister?.(mingleUser);
+      }
     } catch (err: any) {
       setError(
         err?.message ||
@@ -325,6 +343,39 @@ export default function Auth({ onLogin }: AuthProps) {
             </div>
           </div>
 
+          {/* CONFIRM PASSWORD — REGISTER ONLY */}
+          {!isLogin && (
+            <div className="input-group">
+              <label>Confirm Password</label>
+              <div className="password-box">
+                <input
+                  type={showConfirmPassword ? "text" : "password"}
+                  placeholder="Confirm your password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  style={{ paddingLeft: "45px" }}
+                />
+                <FaLock
+                  style={{
+                    position: "absolute",
+                    left: "16px",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    color: "var(--gold)",
+                  }}
+                />
+                <div
+                  className="password-toggle"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  role="button"
+                  tabIndex={0}
+                >
+                  {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* ERROR */}
           {error && (
             <div
@@ -332,8 +383,10 @@ export default function Auth({ onLogin }: AuthProps) {
                 marginTop: "10px",
                 padding: "10px",
                 borderRadius: "10px",
-                color: "#ffb4b4",
-                background: "rgba(255, 0, 0, 0.08)",
+                color: "#7f0000",
+                background: "rgba(255, 235, 235, 0.88)",
+                border: "1px solid rgba(180, 0, 0, 0.30)",
+                fontWeight: "600",
                 fontSize: "14px",
                 textAlign: "center",
               }}
@@ -393,16 +446,6 @@ export default function Auth({ onLogin }: AuthProps) {
 
           {/* DIVIDER */}
           <div className="divider">OR</div>
-
-          {/* PI AUTH */}
-          <button
-            className="pi-btn"
-            type="button"
-            onClick={handlePiLogin}
-            disabled={loading}
-          >
-            🟣 Continue with Pi
-          </button>
 
           {/* FOOTER */}
           <div className="footer-text">
