@@ -4,6 +4,8 @@ import Entrance from "./Entrance";
 import CreateProfile from "./CreateProfile";
 import EmailVerification from "./EmailVerification";
 import MingleHome from "./MingleHome";
+import WelcomeBuzzer from "./WelcomeBuzzer";
+import { auth } from "./firebase";
 import "./mingle.css";
 
 type AppStage =
@@ -11,15 +13,22 @@ type AppStage =
   | "auth"
   | "profile"
   | "verification"
+  | "welcome"
   | "home";
 
+const welcomeKey = (uid: string) =>
+  `mingle_welcome_completed_${uid}`;
+
 export default function App() {
-  const [stage, setStage] = React.useState<AppStage>("entrance");
-  const [user, setUser] = React.useState<MingleUser | null>(null);
+  const [stage, setStage] =
+    React.useState<AppStage>("entrance");
+
+  const [user, setUser] =
+    React.useState<MingleUser | null>(null);
 
   /*
    * ========================================================
-   * PORTAL → NORMAL LOGIN
+   * PORTAL → LOGIN
    * ========================================================
    */
   const handlePortalLogin = () => {
@@ -28,12 +37,10 @@ export default function App() {
 
   /*
    * ========================================================
-   * PORTAL → PI LOGIN
+   * PI LOGIN
    * ========================================================
    *
-   * Pi authentication will be connected here.
-   * For now, we keep the Pi gate separate from
-   * the normal Mingle authentication flow.
+   * Real Pi SDK authentication will be connected here.
    */
   const handlePiLogin = () => {
     console.log("Pi Login selected");
@@ -41,11 +48,47 @@ export default function App() {
 
   /*
    * ========================================================
-   * EXISTING USER LOGIN
+   * LOGIN
    * ========================================================
+   *
+   * Firebase authentication has already happened inside Auth.
+   * Here we decide where the verified user goes next.
    */
   const handleLogin = (mingleUser: MingleUser) => {
+    const firebaseUser = auth.currentUser;
+
+    if (!firebaseUser) {
+      return;
+    }
+
+    /*
+     * Email verification is mandatory for normal Mingle accounts.
+     */
+    if (!firebaseUser.emailVerified) {
+      setUser(mingleUser);
+      setStage("verification");
+      return;
+    }
+
     setUser(mingleUser);
+
+    /*
+     * First verified login:
+     * trigger the one-time Mingle welcome buzzer.
+     */
+    const completed = localStorage.getItem(
+      welcomeKey(firebaseUser.uid)
+    );
+
+    if (completed !== "true") {
+      setStage("welcome");
+      return;
+    }
+
+    /*
+     * Returning verified user:
+     * straight to Mingle.
+     */
     setStage("home");
   };
 
@@ -71,13 +114,29 @@ export default function App() {
 
   /*
    * ========================================================
-   * EMAIL VERIFIED
+   * EMAIL VERIFIED → LOGIN
    * ========================================================
-   *
-   * After verification, send the user back to LOGIN.
    */
   const handleEmailVerified = () => {
     setStage("auth");
+  };
+
+  /*
+   * ========================================================
+   * GOLDEN BUZZER COMPLETE
+   * ========================================================
+   */
+  const handleWelcomeComplete = () => {
+    const firebaseUser = auth.currentUser;
+
+    if (firebaseUser) {
+      localStorage.setItem(
+        welcomeKey(firebaseUser.uid),
+        "true"
+      );
+    }
+
+    setStage("home");
   };
 
   /*
@@ -92,7 +151,7 @@ export default function App() {
 
   /*
    * ========================================================
-   * 1. ENTRANCE PORTAL
+   * 1. ENTRANCE
    * ========================================================
    */
   if (stage === "entrance") {
@@ -149,7 +208,20 @@ export default function App() {
 
   /*
    * ========================================================
-   * 5. MINGLE HOME
+   * 5. ONE-TIME GOLDEN BUZZER
+   * ========================================================
+   */
+  if (stage === "welcome") {
+    return (
+      <WelcomeBuzzer
+        onComplete={handleWelcomeComplete}
+      />
+    );
+  }
+
+  /*
+   * ========================================================
+   * 6. MINGLE HOME
    * ========================================================
    */
   if (stage === "home" && user) {
