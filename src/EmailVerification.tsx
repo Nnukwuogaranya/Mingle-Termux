@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import type { MingleUser } from "./Auth";
 import { FaEnvelope } from "react-icons/fa";
-import { sendEmailVerification } from "firebase/auth";
+import {
+  sendEmailVerification,
+  reload,
+} from "firebase/auth";
 import { auth } from "./firebase";
 
 interface EmailVerificationProps {
@@ -19,6 +22,12 @@ export default function EmailVerification({
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
+  /*
+   * ========================================================
+   * SEND VERIFICATION EMAIL
+   * ========================================================
+   */
+
   const handleSendVerification = async () => {
     setError("");
     setMessage("");
@@ -28,7 +37,16 @@ export default function EmailVerification({
       const currentUser = auth.currentUser;
 
       if (!currentUser) {
-        setError("Your registration session has expired. Please login again.");
+        setError(
+          "Your registration session has expired. Please login again."
+        );
+        return;
+      }
+
+      if (currentUser.emailVerified) {
+        setMessage(
+          "Your email is already verified. You can continue."
+        );
         return;
       }
 
@@ -47,6 +65,12 @@ export default function EmailVerification({
     }
   };
 
+  /*
+   * ========================================================
+   * CHECK VERIFICATION
+   * ========================================================
+   */
+
   const handleContinue = async () => {
     setError("");
     setMessage("");
@@ -56,20 +80,52 @@ export default function EmailVerification({
       const currentUser = auth.currentUser;
 
       if (!currentUser) {
-        setError("Your session has expired. Please login again.");
-        return;
-      }
-
-      await currentUser.reload();
-
-      if (!currentUser.emailVerified) {
         setError(
-          "Your email has not been verified yet. Please verify it first."
+          "Your session has expired. Please login again."
         );
         return;
       }
 
-      onVerified();
+      /*
+       * Reload Firebase so we get the latest
+       * emailVerified status.
+       */
+
+      await reload(currentUser);
+
+      if (!currentUser.emailVerified) {
+        setError(
+          "Your email has not been verified yet. Please check your inbox and click the verification link."
+        );
+        return;
+      }
+
+      /*
+       * Verification is complete.
+       */
+
+      localStorage.setItem(
+        "mingle_email_verified",
+        "true"
+      );
+
+      localStorage.removeItem(
+        "mingle_verification_pending"
+      );
+
+      setMessage(
+        "Email verified successfully. Please login to continue."
+      );
+
+      /*
+       * Give the success message a moment to appear
+       * before returning to the login screen.
+       */
+
+      setTimeout(() => {
+        onVerified();
+      }, 900);
+
     } catch (err: any) {
       setError(
         err?.message ||
@@ -80,6 +136,12 @@ export default function EmailVerification({
     }
   };
 
+  /*
+   * ========================================================
+   * UI
+   * ========================================================
+   */
+
   return (
     <div className="profile-page">
       <div className="profile-card">
@@ -88,7 +150,9 @@ export default function EmailVerification({
           <FaEnvelope />
         </div>
 
-        <h1>Verify Your Email</h1>
+        <h1>
+          VERIFY YOUR EMAIL
+        </h1>
 
         <p className="profile-subtitle">
           We sent a verification link to
@@ -116,8 +180,13 @@ export default function EmailVerification({
           onClick={handleContinue}
           disabled={loading}
         >
-          {loading ? "Checking..." : "I've Verified My Email"}
-          {!loading && <span>→</span>}
+          {loading
+            ? "CHECKING..."
+            : "I'VE VERIFIED MY EMAIL"}
+
+          {!loading && (
+            <span>→</span>
+          )}
         </button>
 
         <button
@@ -126,7 +195,7 @@ export default function EmailVerification({
           onClick={handleSendVerification}
           disabled={loading}
         >
-          Resend Verification Email
+          RESEND VERIFICATION EMAIL
         </button>
 
         <button
@@ -135,8 +204,12 @@ export default function EmailVerification({
           onClick={onBackToLogin}
           disabled={loading}
         >
-          Back to Login
+          BACK TO LOGIN
         </button>
+
+        <div className="auth-footer">
+          MINGLE • WHERE PEOPLE BELONG
+        </div>
 
       </div>
     </div>

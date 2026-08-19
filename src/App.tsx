@@ -3,9 +3,8 @@ import Auth, { type MingleUser } from "./Auth";
 import Entrance from "./Entrance";
 import CreateProfile from "./CreateProfile";
 import EmailVerification from "./EmailVerification";
-import MingleHome from "./MingleHome";
 import WelcomeBuzzer from "./WelcomeBuzzer";
-import { auth } from "./firebase";
+import MingleHome from "./MingleHome";
 import "./mingle.css";
 
 type AppStage =
@@ -13,11 +12,33 @@ type AppStage =
   | "auth"
   | "profile"
   | "verification"
-  | "welcome"
+  | "buzzer"
   | "home";
 
-const welcomeKey = (uid: string) =>
-  `mingle_welcome_completed_${uid}`;
+interface PiUser {
+  uid?: string;
+  username?: string;
+}
+
+interface PiAuthResult {
+  user?: PiUser;
+  accessToken?: string;
+}
+
+interface PiSDK {
+  init: (options: { version: string }) => Promise<void> | void;
+
+  authenticate: (
+    scopes: string[],
+    onIncompletePaymentFound?: (payment: unknown) => void
+  ) => Promise<PiAuthResult>;
+}
+
+declare global {
+  interface Window {
+    Pi?: PiSDK;
+  }
+}
 
 export default function App() {
   const [stage, setStage] =
@@ -27,133 +48,251 @@ export default function App() {
     React.useState<MingleUser | null>(null);
 
   /*
-   * ========================================================
-   * PORTAL → LOGIN
-   * ========================================================
+   * LOAD PI SDK
+   *
+   * The Pi SDK is loaded automatically.
+   * Nothing needs to be added manually to index.html.
    */
+
+  React.useEffect(() => {
+    const existingScript =
+      document.querySelector(
+        'script[src="https://sdk.minepi.com/pi-sdk.js"]'
+      );
+
+    if (existingScript) {
+      return;
+    }
+
+    const script = document.createElement("script");
+
+    script.src = "https://sdk.minepi.com/pi-sdk.js";
+    script.async = true;
+
+    script.onload = () => {
+      try {
+        if (window.Pi) {
+          window.Pi.init({
+            version: "2.0",
+          });
+
+          console.log("Pi SDK initialized.");
+        }
+      } catch (error) {
+        console.error(
+          "Pi SDK initialization failed:",
+          error
+        );
+      }
+    };
+
+    script.onerror = () => {
+      console.error(
+        "Unable to load Pi SDK."
+      );
+    };
+
+    document.head.appendChild(script);
+  }, []);
+
+  /*
+   * GOLD MINGLE GATE
+   *
+   * RIGHT SIDE OF ENTRANCE
+   *
+   * Goes directly to normal Mingle
+   * login / registration.
+   */
+
   const handlePortalLogin = () => {
     setStage("auth");
   };
 
   /*
-   * ========================================================
-   * PI LOGIN
-   * ========================================================
+   * PURPLE PI GATE
    *
-   * Real Pi SDK authentication will be connected here.
+   * LEFT SIDE OF ENTRANCE
+   *
+   * Uses the real Pi SDK.
    */
-  const handlePiLogin = () => {
-    console.log("Pi Login selected");
+
+  const handlePiLogin = async () => {
+    try {
+      if (!window.Pi) {
+        alert(
+          "Pi Login is available through Pi Browser. Please open Mingle in Pi Browser and try again."
+        );
+
+        return;
+      }
+
+      const auth =
+        await window.Pi.authenticate(
+          ["username"],
+          (payment: unknown) => {
+            console.log(
+              "Incomplete Pi payment:",
+              payment
+            );
+          }
+        );
+
+      console.log(
+        "Pi authentication successful:",
+        auth
+      );
+
+      const piUser = auth.user;
+
+      if (!piUser) {
+        throw new Error(
+          "Pi authentication returned no user."
+        );
+      }
+
+      /*
+       * Pi is only an entrance into Mingle.
+       * The authenticated person becomes
+       * a normal Mingle user.
+       */
+
+      const mingleUser = {
+        name:
+          piUser.username ||
+          "Pi Pioneer",
+
+        username:
+          piUser.username ||
+          "",
+
+        email: "",
+
+        authMethod: "pi",
+
+        piProfile: piUser,
+      } as MingleUser;
+
+      setUser(mingleUser);
+
+      setStage("home");
+
+    } catch (error) {
+      console.error(
+        "Pi authentication failed:",
+        error
+      );
+
+      alert(
+        "Pi authentication was not completed. Please try again."
+      );
+    }
   };
 
   /*
-   * ========================================================
-   * LOGIN
-   * ========================================================
-   *
-   * Firebase authentication has already happened inside Auth.
-   * Here we decide where the verified user goes next.
+   * EXISTING USER LOGIN
    */
-  const handleLogin = (mingleUser: MingleUser) => {
-    const firebaseUser = auth.currentUser;
 
-    if (!firebaseUser) {
-      return;
-    }
-
-    /*
-     * Email verification is mandatory for normal Mingle accounts.
-     */
-    if (!firebaseUser.emailVerified) {
-      setUser(mingleUser);
-      setStage("verification");
-      return;
-    }
-
+  const handleLogin = (
+    mingleUser: MingleUser
+  ) => {
     setUser(mingleUser);
-
-    /*
-     * First verified login:
-     * trigger the one-time Mingle welcome buzzer.
-     */
-    const completed = localStorage.getItem(
-      welcomeKey(firebaseUser.uid)
-    );
-
-    if (completed !== "true") {
-      setStage("welcome");
-      return;
-    }
-
-    /*
-     * Returning verified user:
-     * straight to Mingle.
-     */
     setStage("home");
   };
 
   /*
-   * ========================================================
    * NEW USER REGISTRATION
-   * ========================================================
    */
-  const handleRegister = (mingleUser: MingleUser) => {
+
+  const handleRegister = (
+    mingleUser: MingleUser
+  ) => {
     setUser(mingleUser);
+
+    localStorage.setItem(
+      "mingle_profile_pending",
+      "true"
+    );
+
     setStage("profile");
   };
 
   /*
-   * ========================================================
    * PROFILE COMPLETE
-   * ========================================================
    */
-  const handleProfileComplete = (mingleUser: MingleUser) => {
+
+  const handleProfileComplete = (
+    mingleUser: MingleUser
+  ) => {
     setUser(mingleUser);
+
+    localStorage.removeItem(
+      "mingle_profile_pending"
+    );
+
+    localStorage.setItem(
+      "mingle_verification_pending",
+      "true"
+    );
+
     setStage("verification");
   };
 
   /*
-   * ========================================================
-   * EMAIL VERIFIED → LOGIN
-   * ========================================================
+   * EMAIL VERIFIED
    */
+
   const handleEmailVerified = () => {
     setStage("auth");
   };
 
   /*
-   * ========================================================
-   * GOLDEN BUZZER COMPLETE
-   * ========================================================
+   * FIRST LOGIN AFTER REGISTRATION
    */
-  const handleWelcomeComplete = () => {
-    const firebaseUser = auth.currentUser;
 
-    if (firebaseUser) {
-      localStorage.setItem(
-        welcomeKey(firebaseUser.uid),
-        "true"
-      );
-    }
+  const handleFirstLogin = (
+    mingleUser: MingleUser
+  ) => {
+    setUser(mingleUser);
 
+    localStorage.removeItem(
+      "mingle_profile_pending"
+    );
+
+    localStorage.removeItem(
+      "mingle_verification_pending"
+    );
+
+    localStorage.setItem(
+      "mingle_welcome_seen",
+      "true"
+    );
+
+    setStage("buzzer");
+  };
+
+  /*
+   * GOLDEN BUZZER COMPLETE
+   */
+
+  const handleBuzzerComplete = () => {
     setStage("home");
   };
 
   /*
-   * ========================================================
    * LOGOUT
-   * ========================================================
    */
+
   const handleLogout = () => {
     setUser(null);
     setStage("entrance");
   };
 
   /*
-   * ========================================================
-   * 1. ENTRANCE
-   * ========================================================
+   * =======================================================
+   * MINGLE ENTRANCE
+   * =======================================================
    */
+
   if (stage === "entrance") {
     return (
       <Entrance
@@ -164,24 +303,27 @@ export default function App() {
   }
 
   /*
-   * ========================================================
-   * 2. LOGIN / REGISTER
-   * ========================================================
+   * =======================================================
+   * MINGLE LOGIN / REGISTER
+   * =======================================================
    */
+
   if (stage === "auth") {
     return (
       <Auth
         onLogin={handleLogin}
         onRegister={handleRegister}
+        onFirstLogin={handleFirstLogin}
       />
     );
   }
 
   /*
-   * ========================================================
-   * 3. CREATE PROFILE
-   * ========================================================
+   * =======================================================
+   * CREATE PROFILE
+   * =======================================================
    */
+
   if (stage === "profile" && user) {
     return (
       <CreateProfile
@@ -192,38 +334,48 @@ export default function App() {
   }
 
   /*
-   * ========================================================
-   * 4. EMAIL VERIFICATION
-   * ========================================================
+   * =======================================================
+   * EMAIL VERIFICATION
+   * =======================================================
    */
+
   if (stage === "verification" && user) {
     return (
       <EmailVerification
         user={user}
         onVerified={handleEmailVerified}
-        onBackToLogin={() => setStage("auth")}
+        onBackToLogin={() =>
+          setStage("auth")
+        }
       />
     );
   }
 
   /*
-   * ========================================================
-   * 5. ONE-TIME GOLDEN BUZZER
-   * ========================================================
+   * =======================================================
+   * PREMIUM WELCOME / GOLDEN BUZZER
+   * =======================================================
    */
-  if (stage === "welcome") {
+
+  if (stage === "buzzer" && user) {
     return (
       <WelcomeBuzzer
-        onComplete={handleWelcomeComplete}
+        userName={
+          user.name ||
+          user.username ||
+          "Mingle User"
+        }
+        onComplete={handleBuzzerComplete}
       />
     );
   }
 
   /*
-   * ========================================================
-   * 6. MINGLE HOME
-   * ========================================================
+   * =======================================================
+   * MINGLE HOME
+   * =======================================================
    */
+
   if (stage === "home" && user) {
     return (
       <MingleHome

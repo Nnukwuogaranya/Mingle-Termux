@@ -1,68 +1,81 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./WelcomeBuzzer.css";
 
 interface WelcomeBuzzerProps {
+  userName?: string;
   onComplete: () => void;
 }
 
 export default function WelcomeBuzzer({
+  userName = "Mingle User",
   onComplete,
 }: WelcomeBuzzerProps) {
-  const [pressed, setPressed] = useState(false);
+  const [show, setShow] = useState(false);
 
-  const handlePress = () => {
-    if (pressed) return;
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setShow(true);
+    }, 300);
 
-    setPressed(true);
+    return () => window.clearTimeout(timer);
+  }, []);
 
-    setTimeout(() => {
+  const handleEnter = () => {
+    setShow(false);
+
+    window.setTimeout(() => {
       onComplete();
-    }, 1500);
+    }, 650);
   };
 
   return (
-    <div className="mingle-welcome">
+    <div
+      className={`welcome-buzzer ${
+        show ? "welcome-buzzer-visible" : ""
+      }`}
+    >
+      <div className="welcome-buzzer-glow" />
 
-      <div className="welcome-glow" />
+      <div className="welcome-buzzer-content">
+        <div className="welcome-logo-mark">M</div>
 
-      <div className="welcome-content">
-
-        <div className="welcome-logo">
-          M
+        <div className="welcome-word">
+          {"WELCOME".split("").map((letter, index) => (
+            <span
+              key={`${letter}-${index}`}
+              style={{
+                animationDelay: `${index * 0.09}s`,
+              }}
+            >
+              {letter}
+            </span>
+          ))}
         </div>
 
-        <h1>WELCOME TO MINGLE</h1>
+        <div className="welcome-divider" />
 
-        <p>
-          Where People Don't Just Connect...
-          <br />
-          <strong>They Belong.</strong>
-        </p>
+        <div className="welcome-user">
+          {userName.toUpperCase()}
+        </div>
 
         <button
+          className="welcome-buzzer-button"
           type="button"
-          className={`golden-buzzer ${
-            pressed ? "buzzer-pressed" : ""
-          }`}
-          onClick={handlePress}
-          disabled={pressed}
+          onClick={handleEnter}
           aria-label="Enter Mingle"
         >
-          <span className="buzzer-ring">
-            <span className="buzzer-core">
-              {pressed ? "✓" : "M"}
-            </span>
+          <span className="welcome-buzzer-core">
+            <span className="welcome-buzzer-m">M</span>
           </span>
 
-          <span className="buzzer-label">
-            {pressed
-              ? "ENTERING MINGLE..."
-              : "ENTER MINGLE"}
+          <span className="welcome-buzzer-ring ring-one" />
+          <span className="welcome-buzzer-ring ring-two" />
+
+          <span className="welcome-buzzer-label">
+            ENTER MINGLE
           </span>
         </button>
-
       </div>
-
     </div>
   );
 }

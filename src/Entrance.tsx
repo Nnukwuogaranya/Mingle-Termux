@@ -11,30 +11,24 @@ export default function Entrance({
   onPiLogin,
 }: EntranceProps) {
   return (
-    <div className="mingle-entrance">
+    <main className="mingle-entrance">
 
+      {/* RIGHT GOLD GATE — ENTER MINGLE */}
       <button
         type="button"
-        className="portal-gate portal-gate-login"
+        className="portal-hotspot portal-hotspot-login"
         onClick={onLogin}
-        aria-label="Login"
-      >
-        <span className="portal-icon">M</span>
-        <span className="portal-label">LOGIN</span>
-        <span className="portal-arrow">→</span>
-      </button>
+        aria-label="Enter Mingle"
+      />
 
+      {/* LEFT PURPLE GATE — LOGIN WITH PI */}
       <button
         type="button"
-        className="portal-gate portal-gate-pi"
+        className="portal-hotspot portal-hotspot-pi"
         onClick={onPiLogin}
         aria-label="Login with Pi"
-      >
-        <span className="portal-icon">π</span>
-        <span className="portal-label">LOGIN WITH PI</span>
-        <span className="portal-arrow">→</span>
-      </button>
+      />
 
-    </div>
+    </main>
   );
 }
