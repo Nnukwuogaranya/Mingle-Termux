@@ -142,21 +142,64 @@ export default function App() {
         auth
       );
 
-      const piUser = auth.user;
+      /*
+       * SECURITY:
+       * Do not trust the Pi identity returned directly
+       * by the browser SDK.
+       *
+       * Send the Pi access token to the Mingle backend
+       * so Pi can verify the authenticated identity.
+       */
 
-      if (!piUser) {
+      const accessToken = auth.accessToken;
+
+      if (!accessToken) {
         throw new Error(
-          "Pi authentication returned no user."
+          "Pi authentication returned no access token."
         );
       }
 
+      const verificationResponse = await fetch(
+        "/api/pi/me",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            accessToken,
+          }),
+        }
+      );
+
+      const verification =
+        await verificationResponse.json();
+
+      if (
+        !verificationResponse.ok ||
+        !verification.success ||
+        !verification.user
+      ) {
+        throw new Error(
+          verification.error ||
+          "Pi identity verification failed."
+        );
+      }
+
+      const piUser = verification.user;
+
       /*
        * Pi is only an entrance into Mingle.
-       * The authenticated person becomes
-       * a normal Mingle user.
+       *
+       * After Pi verifies the identity,
+       * the person becomes a normal Mingle user.
        */
 
-      const mingleUser = {
+      const mingleUser: MingleUser = {
+        id:
+          piUser.uid ||
+          `pi-${Date.now()}`,
+
         name:
           piUser.username ||
           "Pi Pioneer",
@@ -169,8 +212,11 @@ export default function App() {
 
         authMethod: "pi",
 
-        piProfile: piUser,
-      } as MingleUser;
+        piProfile: {
+          uid: piUser.uid,
+          username: piUser.username,
+        },
+      };
 
       setUser(mingleUser);
 
