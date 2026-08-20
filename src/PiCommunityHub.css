@@ -1,0 +1,542 @@
+/* =========================================================
+   MINGLE — PI COMMUNITY HUB
+   ========================================================= */
+
+.pi-hub-page {
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  background:
+    radial-gradient(
+      circle at 15% 10%,
+      rgba(111, 66, 193, 0.18),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 85% 20%,
+      rgba(212, 175, 55, 0.15),
+      transparent 30%
+    ),
+    linear-gradient(
+      145deg,
+      #fdfbf7 0%,
+      #f4effa 48%,
+      #eef2f8 100%
+    );
+  color: #1f2a44;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+.pi-hub-background {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(255, 255, 255, 0.9),
+      transparent 42%
+    );
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.pi-hub-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  padding: 14px 18px;
+  background: rgba(253, 251, 247, 0.82);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(111, 66, 193, 0.12);
+}
+
+.pi-hub-header-inner {
+  width: min(1120px, 100%);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.pi-hub-back {
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(111, 66, 193, 0.15);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.7);
+  color: #1f2a44;
+  font-size: 24px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.pi-hub-back:hover {
+  transform: translateX(-2px);
+  border-color: rgba(212, 175, 55, 0.55);
+}
+
+.pi-hub-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pi-hub-logo {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 15px;
+  background:
+    linear-gradient(
+      145deg,
+      #7b4bc4,
+      #5b2fa8
+    );
+  color: #fff;
+  font-size: 27px;
+  font-weight: 800;
+  box-shadow:
+    0 8px 22px rgba(111, 66, 193, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.pi-hub-eyebrow {
+  display: block;
+  margin-bottom: 2px;
+  color: #b08b21;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.pi-hub-brand h1 {
+  margin: 0;
+  font-size: 19px;
+  line-height: 1.1;
+  color: #1f2a44;
+}
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.pi-hub-content {
+  position: relative;
+  z-index: 1;
+  width: min(1120px, calc(100% - 28px));
+  margin: 0 auto;
+  padding: 24px 0 50px;
+}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.pi-hub-hero {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  padding: 34px;
+  margin-bottom: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.82);
+  border-radius: 30px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.82),
+      rgba(248, 242, 255, 0.7)
+    );
+  box-shadow:
+    0 22px 55px rgba(31, 42, 68, 0.09),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.pi-hub-hero-glow {
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  right: -80px;
+  top: -110px;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.16);
+  filter: blur(15px);
+}
+
+.pi-hub-hero-icon {
+  position: relative;
+  flex-shrink: 0;
+  width: 110px;
+  height: 110px;
+  display: grid;
+  place-items: center;
+  border-radius: 34px;
+  background:
+    linear-gradient(
+      145deg,
+      #7c4bc7,
+      #5a2fa7
+    );
+  color: white;
+  font-size: 65px;
+  font-weight: 800;
+  box-shadow:
+    0 18px 35px rgba(111, 66, 193, 0.28),
+    inset 0 2px 0 rgba(255, 255, 255, 0.3);
+}
+
+.pi-hub-hero-copy {
+  position: relative;
+  max-width: 720px;
+}
+
+.pi-hub-label {
+  display: inline-block;
+  margin-bottom: 8px;
+  color: #b08b21;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.pi-hub-hero-copy h2 {
+  margin: 0 0 10px;
+  font-size: clamp(28px, 5vw, 44px);
+  line-height: 1.05;
+  color: #1f2a44;
+}
+
+.pi-hub-hero-copy h2 span {
+  color: #6f42c1;
+}
+
+.pi-hub-hero-copy p {
+  max-width: 650px;
+  margin: 0;
+  color: #667085;
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+/* =========================================================
+   SECTION HEADING
+   ========================================================= */
+
+.pi-hub-section {
+  margin-bottom: 30px;
+}
+
+.pi-hub-section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 15px;
+  margin-bottom: 17px;
+}
+
+.pi-hub-section-heading span {
+  color: #b08b21;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.pi-hub-section-heading h2 {
+  margin: 4px 0 0;
+  font-size: 25px;
+  color: #1f2a44;
+}
+
+.pi-hub-count {
+  padding: 8px 12px;
+  border: 1px solid rgba(111, 66, 193, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.65);
+  color: #6f42c1;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* =========================================================
+   RESOURCE CARDS
+   ========================================================= */
+
+.pi-hub-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.pi-hub-card {
+  position: relative;
+  min-height: 190px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.86);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.66);
+  color: #1f2a44;
+  text-align: left;
+  cursor: pointer;
+  box-shadow:
+    0 10px 30px rgba(31, 42, 68, 0.055),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease;
+}
+
+.pi-hub-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(212, 175, 55, 0.45);
+  box-shadow:
+    0 16px 35px rgba(31, 42, 68, 0.1);
+}
+
+.pi-hub-card.active {
+  border-color: rgba(111, 66, 193, 0.4);
+  box-shadow:
+    0 16px 38px rgba(111, 66, 193, 0.13);
+}
+
+.pi-hub-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pi-hub-card-icon {
+  width: 47px;
+  height: 47px;
+  display: grid;
+  place-items: center;
+  border-radius: 15px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(111, 66, 193, 0.12),
+      rgba(212, 175, 55, 0.12)
+    );
+  font-size: 24px;
+}
+
+.pi-hub-card-arrow {
+  color: #b08b21;
+  font-size: 19px;
+  transition: transform 0.2s ease;
+}
+
+.pi-hub-card:hover .pi-hub-card-arrow {
+  transform: translateX(4px);
+}
+
+.pi-hub-card h3 {
+  margin: 17px 0 7px;
+  font-size: 17px;
+  color: #1f2a44;
+}
+
+.pi-hub-card p {
+  margin: 0;
+  color: #737b8c;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.pi-hub-card-message {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 15px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(111, 66, 193, 0.1);
+}
+
+.pi-hub-card-message span {
+  color: #6f42c1;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.pi-hub-card-message small {
+  color: #7d8492;
+  font-size: 11px;
+}
+
+/* =========================================================
+   SAFETY
+   ========================================================= */
+
+.pi-hub-safety {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 23px;
+  margin-top: 12px;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 23px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 252, 237, 0.88),
+      rgba(255, 255, 255, 0.68)
+    );
+  box-shadow:
+    0 12px 32px rgba(31, 42, 68, 0.055);
+}
+
+.pi-hub-safety-icon {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 15px;
+  background: rgba(212, 175, 55, 0.13);
+  font-size: 23px;
+}
+
+.pi-hub-safety span {
+  color: #b08b21;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.pi-hub-safety h2 {
+  margin: 4px 0 6px;
+  color: #1f2a44;
+  font-size: 18px;
+}
+
+.pi-hub-safety p {
+  margin: 0;
+  color: #697386;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.pi-hub-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 35px 10px 5px;
+  color: #7b8493;
+  text-align: center;
+}
+
+.pi-hub-footer-logo {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 11px;
+  background: #1f2a44;
+  color: #d4af37;
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.pi-hub-footer strong {
+  display: block;
+  color: #1f2a44;
+  font-size: 13px;
+}
+
+.pi-hub-footer p {
+  margin: 2px 0 0;
+  font-size: 10px;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 850px) {
+  .pi-hub-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 650px) {
+  .pi-hub-content {
+    width: min(100% - 20px, 1120px);
+    padding-top: 15px;
+  }
+
+  .pi-hub-hero {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 25px;
+    border-radius: 25px;
+  }
+
+  .pi-hub-hero-icon {
+    width: 82px;
+    height: 82px;
+    border-radius: 25px;
+    font-size: 48px;
+  }
+
+  .pi-hub-hero-copy h2 {
+    font-size: 30px;
+  }
+
+  .pi-hub-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pi-hub-card {
+    min-height: 160px;
+  }
+
+  .pi-hub-safety {
+    padding: 18px;
+  }
+}
+
+@media (max-width: 420px) {
+  .pi-hub-brand h1 {
+    font-size: 16px;
+  }
+
+  .pi-hub-logo {
+    width: 42px;
+    height: 42px;
+  }
+
+  .pi-hub-back {
+    width: 40px;
+    height: 40px;
+  }
+
+  .pi-hub-section-heading h2 {
+    font-size: 22px;
+  }
+
+  .pi-hub-count {
+    font-size: 10px;
+  }
+}
