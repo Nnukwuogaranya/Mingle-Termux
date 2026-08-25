@@ -47,36 +47,119 @@ export default function App() {
   const [user, setUser] =
     React.useState<MingleUser | null>(null);
 
+  const piInitPromiseRef =
+    React.useRef<Promise<void> | null>(null);
+
   /*
-   * LOAD PI SDK
+   * INITIALIZE PI SDK
    *
-   * The Pi SDK is loaded automatically.
-   * Nothing needs to be added manually to index.html.
+   * The SDK must be initialized before
+   * Pi.authenticate() is called.
    */
 
   React.useEffect(() => {
-    const existingScript =
-      document.querySelector(
-        'script[src="https://sdk.minepi.com/pi-sdk.js"]'
-      );
+    let cancelled = false;
 
-    if (existingScript) {
-      return;
-    }
-
-    const script = document.createElement("script");
-
-    script.src = "https://sdk.minepi.com/pi-sdk.js";
-    script.async = true;
-
-    script.onload = () => {
+    const initializePi = async () => {
       try {
+        /*
+         * If the SDK is already available, initialize it.
+         */
         if (window.Pi) {
-          window.Pi.init({
+          await window.Pi.init({
             version: "2.0",
           });
 
-          console.log("Pi SDK initialized.");
+          if (!cancelled) {
+            console.log("Pi SDK initialized.");
+          }
+
+          return;
+        }
+
+        /*
+         * Check whether the SDK script is already loading.
+         */
+        let script =
+          document.querySelector<HTMLScriptElement>(
+            'script[src="https://sdk.minepi.com/pi-sdk.js"]'
+          );
+
+        /*
+         * If the script does not exist, create it.
+         */
+        if (!script) {
+          script = document.createElement("script");
+
+          script.src =
+            "https://sdk.minepi.com/pi-sdk.js";
+
+          script.async = true;
+
+          document.head.appendChild(script);
+        }
+
+        /*
+         * Wait until the SDK becomes available.
+         */
+        await new Promise<void>(
+          (resolve, reject) => {
+            if (window.Pi) {
+              resolve();
+              return;
+            }
+
+            const timeout =
+              window.setTimeout(() => {
+                reject(
+                  new Error(
+                    "Pi SDK did not become available."
+                  )
+                );
+              }, 15000);
+
+            const checkPi =
+              window.setInterval(() => {
+                if (window.Pi) {
+                  window.clearInterval(checkPi);
+                  window.clearTimeout(timeout);
+                  resolve();
+                }
+              }, 100);
+
+            script?.addEventListener(
+              "error",
+              () => {
+                window.clearInterval(checkPi);
+                window.clearTimeout(timeout);
+
+                reject(
+                  new Error(
+                    "Unable to load Pi SDK."
+                  )
+                );
+              },
+              { once: true }
+            );
+          }
+        );
+
+        const pi = window.Pi as PiSDK | undefined;
+
+        if (!pi) {
+          throw new Error(
+            "Pi SDK is unavailable."
+          );
+        }
+
+        await pi.init({
+          version: "2.0",
+        });
+
+        if (!cancelled) {
+          console.log(
+            "Pi SDK initialized successfully."
+          );
         }
       } catch (error) {
         console.error(
@@ -86,13 +169,12 @@ export default function App() {
       }
     };
 
-    script.onerror = () => {
-      console.error(
-        "Unable to load Pi SDK."
-      );
-    };
+    piInitPromiseRef.current =
+      initializePi();
 
-    document.head.appendChild(script);
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   /*
@@ -118,13 +200,22 @@ export default function App() {
 
   const handlePiLogin = async () => {
     try {
-      if (!window.Pi) {
-        alert(
-          "Pi Login is available through Pi Browser. Please open Mingle in Pi Browser and try again."
-        );
-
-        return;
+      /*
+       * Wait for Pi SDK initialization.
+       */
+      if (piInitPromiseRef.current) {
+        await piInitPromiseRef.current;
       }
+
+      if (!window.Pi) {
+        throw new Error(
+          "Pi SDK is not available. Please open Mingle in Pi Browser."
+        );
+      }
+
+      console.log(
+        "Starting Pi authentication..."
+      );
 
       const auth =
         await window.Pi.authenticate(
@@ -151,7 +242,8 @@ export default function App() {
        * so Pi can verify the authenticated identity.
        */
 
-      const accessToken = auth.accessToken;
+      const accessToken =
+        auth.accessToken;
 
       if (!accessToken) {
         throw new Error(
@@ -159,18 +251,17 @@ export default function App() {
         );
       }
 
-      const verificationResponse = await fetch(
-        "/api/pi/me",
-        {
+      const verificationResponse =
+        await fetch("/api/pi/me", {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type":
+              "application/json",
           },
           body: JSON.stringify({
             accessToken,
           }),
-        }
-      );
+        });
 
       const verification =
         await verificationResponse.json();
@@ -182,11 +273,12 @@ export default function App() {
       ) {
         throw new Error(
           verification.error ||
-          "Pi identity verification failed."
+            "Pi identity verification failed."
         );
       }
 
-      const piUser = verification.user;
+      const piUser =
+        verification.user;
 
       /*
        * Pi is only an entrance into Mingle.
@@ -221,15 +313,19 @@ export default function App() {
       setUser(mingleUser);
 
       setStage("home");
-
     } catch (error) {
       console.error(
         "Pi authentication failed:",
         error
       );
 
+      const message =
+        error instanceof Error
+          ? error.message
+          : String(error);
+
       alert(
-        "Pi authentication was not completed. Please try again."
+        `Pi authentication failed: ${message}`
       );
     }
   };
@@ -385,7 +481,10 @@ export default function App() {
    * =======================================================
    */
 
-  if (stage === "verification" && user) {
+  if (
+    stage === "verification" &&
+    user
+  ) {
     return (
       <EmailVerification
         user={user}
