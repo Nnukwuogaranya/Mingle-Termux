@@ -1,8 +1,6 @@
 /* =========================================================
    MINGLE ENTRANCE
    FINAL GATE VERSION
-   Artwork supplies the complete visual design.
-   Only the two actual gates are clickable.
    ========================================================= */
 
 * {
@@ -26,32 +24,26 @@ body {
 
 .mingle-entrance {
   position: relative;
-
   width: 100%;
   height: 100dvh;
   min-height: 100dvh;
-
   overflow: hidden;
 
-  background-image:
-    url("/mingle-pictures/mingle-entrance.png");
-
+  background-image: url("/mingle-pictures/mingle-entrance.png");
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
 }
 
 /* =========================================================
-   INVISIBLE GATE BUTTONS
+   CLICKABLE GATES
    ========================================================= */
 
 .portal-hotspot {
   position: absolute;
-
-  z-index: 100;
+  z-index: 1000;
 
   display: block;
-
   margin: 0;
   padding: 0;
 
@@ -61,11 +53,10 @@ body {
   background: transparent;
 
   cursor: pointer;
+  pointer-events: auto;
 
   appearance: none;
   -webkit-appearance: none;
-
-  -webkit-tap-highlight-color: transparent;
 
   touch-action: manipulation;
 }
@@ -97,7 +88,6 @@ body {
    ========================================================= */
 
 @media (min-width: 651px) {
-
   .portal-hotspot-pi {
     left: 10%;
     top: 47%;
@@ -118,7 +108,6 @@ body {
    ========================================================= */
 
 @media (max-width: 380px) {
-
   .portal-hotspot-pi {
     left: 8%;
     top: 48%;

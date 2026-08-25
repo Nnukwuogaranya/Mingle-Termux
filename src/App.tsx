@@ -200,14 +200,10 @@ export default function App() {
 
   const handlePiLogin = async () => {
     try {
-      alert("1/6 — Pi button reached handlePiLogin.");
 
       if (!piInitPromiseRef.current) {
-        alert("2/6 — No Pi initialization promise found.");
       } else {
-        alert("2/6 — Waiting for Pi SDK initialization...");
         await piInitPromiseRef.current;
-        alert("3/6 — Pi SDK initialization completed.");
       }
 
       const pi = window.Pi;
@@ -218,7 +214,6 @@ export default function App() {
         );
       }
 
-      alert("4/6 — Pi SDK is available. Calling Pi.authenticate...");
 
       let auth: PiAuthResult;
 
@@ -250,7 +245,6 @@ export default function App() {
         throw authError;
       }
 
-      alert("5/6 — Pi authentication returned.");
 
       console.log(
         "Pi authentication successful:",
@@ -265,7 +259,6 @@ export default function App() {
         );
       }
 
-      alert("6/6 — Sending Pi access token for verification...");
 
       const verificationResponse =
         await fetch("/api/pi/me", {
