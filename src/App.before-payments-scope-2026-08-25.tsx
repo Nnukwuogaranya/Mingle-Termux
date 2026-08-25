@@ -220,7 +220,7 @@ export default function App() {
 
       try {
         auth = await pi.authenticate(
-          ["username", "payments"],
+          ["username"],
           (payment: unknown) => {
             console.log(
               "Incomplete Pi payment:",
